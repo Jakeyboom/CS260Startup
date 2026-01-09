@@ -25,7 +25,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Have you ever had a hard time organizing your coursework? AmigoOrganizado is here to help you thrive in all of your classes! Just by providing simple information about your classes and coursework, AmigoOrganizado will prioritize which assignments should be completed first, show you which assignments are due today and show you a calendar with all of your assignments.
 
 ### Design
 
@@ -42,20 +42,20 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Courswork prioritizer--a window on the main page showing the order in which you should complete your assignments
+- Urgent section--a window on the main page showing which assignments are due today
+- Schedule--shows which assignments are due for each day in a given month.
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - I will use HTML to organize and structre my web page and the elements / contents on it
+- **CSS** - I will use CSS to add page animations, create a more dynamic experience and style the web page
+- **React** - I will use React to make my web application "alive"--add reactive components that change based on user input and data changes
+- **Service** - I will use web services to provide a connection between the frontend and backend of my web application
+- **DB/Login** - I will use a database to store specific user information to be used within the web application and enable login for a use to retrieve/manipulate said data from the Database
+- **WebSocket** - I will use Websocket to create a peer to peer connection with the server of AmigoOrganizado so that data can be efficiently sent and updated on both ends at any time
 
 ## 🚀 AWS deliverable
 
