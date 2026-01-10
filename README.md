@@ -17,11 +17,19 @@ AmigoOrganizado is a web application intended for helping college students to or
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] Proper use of Markdown
+    -  I read through the Markdown document and confirmed that I used markdown correctly
+- [x] A concise and compelling elevator pitch
+    - I added a concise and compelling elevator pitch
+- [x] Description of key features
+    - I added a description of key features as asked
+- [x] Description of how you will use each technology
+    - I read through the basic function of each technology and wrote how I think I will use each one
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+    - I embedded the images
+
+> [!NOTE]
+> Hi TA's! Let me know if I checked the boxes correctly for this assignment, as I think that I might have gone overboard in the description of each one.
 
 ### Elevator pitch
 
