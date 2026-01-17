@@ -70,7 +70,8 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://amigoorganizado.click/).
+    I rented the domain amigoorganizado.click, setup the server, and edited the Caddy file.
 
 ## 🚀 HTML deliverable
 
