@@ -21,28 +21,31 @@
   
     <main>
       <!-- Here is the code that creates the login part of the page -->
-      <div>
-        <form action="/login" method="post"> 
+      <form action="main.html" method="get"> 
           <!-- here is the email input box: -->
-          <label for =
-          "email">Email:
-          </label>
-          <input type="email" id="email" name="email"/>
+          <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="email@email.com"/>
+          </div>
           <br/>
 
 
 
           <!-- here is the password input box: -->
-          <label for =
-          "password">Password:</label>
-          <input type="password" id="password" name="password" />
-          <br/>
+          <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="passWord123" />
+          </div>
+
+          <!-- Here is the login/create account/forgot password buttons: -->
+          <button type="submit">Login</button>
+          <button type="submit">Create Account</button>
+          <button type="submit">Forgot Password</button>
         </form>
-      </div>
     </main>
 
     <footer>
-      <rf/>
+      <hr> <br/>
       *****Web Page Under Construction*****
       <p>Please use these links to navigate throught each web page</p>
       <nav class="nav-bar">
@@ -52,6 +55,8 @@
         <a href="add_assignment.html">Add Assignment</a>
         <a href="schedule.html">Schedule</a>
       </nav>
+      <p>Author: Jake Robert Schulz</p>
+      <a href="https://www.github.com">My Github</a>
     </footer>
     
 
