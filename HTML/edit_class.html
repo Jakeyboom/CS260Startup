@@ -13,9 +13,34 @@
 
     <main> 
         <p>Class: <span id="class">Geography</span></p>
+
+        <form action="main.html" method="get">
+
+            <fieldset>
+                <legend>Difficulty</legend>
+
+                <label>
+                    <input type="radio" name="difficulty" value="easy"/> Easy
+                </label>
+
+                <label>
+                    <input type="radio" name="difficulty" value="medium"/> Medium
+                </label>
+                <label>
+                    <input type="radio" name="difficulty" value="hard"/> Hard
+                </label>
+
+
+            </fieldset>
+
+            <button class="interface-button" type="submit">Save Changes</button>
+            <button class="interface-button" type="submit">Delete Class</button>
+            <button class="interface-button" type="submit">Cancel</button>
+        </form>
     </main>
     <footer>
         <hr />
         <span class="text-reset">Jake Schulz, BYU Student</span>
+    </footer>
   </body>
 </html>
