@@ -12,11 +12,23 @@
 
     <main> 
         <label for="assignments-due-today">Assignments Due Today:</label>
+        <label for="classes">Class: </label>
         <ol id="assignments-due-today">
-            <ol>
-                <li></li>
-            </ol>
+            <ul class="classes"> Geography
+                <li>Assignment 1</li>
+                <li>Assignment 2</li>
+                <li>Assignment 3</li>
+            </ul>
+
+            <ul class="classes"> CS240</ul>
+                <li>Assignment 1</li>
+                <li>Assignment 2</li>
+            </ul>  
         </ol>
+
+        <form action="main.html" method="get">
+            <button class="interface-button" type="submit">Return to Overview</button>
+        </form>
     </main>
     <footer>
         <hr />
