@@ -25,11 +25,16 @@
         </ol>
         </div>
 
-        <ol id="due-today">
-            <li> Ex. Assignment Class: Literature</li>
-            <li> Ex. Assignment Class: Literature</li>
-            <li> Ex. Assignment Class: CS240</li>
-        </ol>
+        <!-- Code for Due Today: -->
+         <div>
+            <label for="due-today"><i>Due Today:</i></label>
+            <ol id="due-today">
+                <li> Ex. Assignment Class: Literature</li>
+                <li> Ex. Assignment Class: Literature</li>
+                <li> Ex. Assignment Class: CS240</li>
+            </ol>
+         </div>
+        
 
         <p>
             <b>INSPIRATIONAL QUOTE HERE:</b> <i>When life gives you lemons, don’t make lemonade. Make life take the lemons back!</i>
@@ -38,8 +43,27 @@
     <footer>
         <hr />
         <span class="text-reset">Jake Schulz, BYU Student</span>
-        <form action="index.html" method="get">
-            <button class="interface-button" type="submit">logout</button>
-        </form>
+
+        <!-- Buttons for navigation: -->
+        <div>
+            <form action="add_class.html" method="get">
+                <button class="interface-button" type="submit">Add Class</button>
+            </form>
+
+            <form action="add_assignment.html" method="get">
+                <button class="interface-button" type="submit">Add Assignment</button>
+            </form>
+
+            <form action="schedule.html" method="get">
+                <button class="interface-button" type="submit">Schedule</button>
+            </form>
+
+            <form action="index.html" method="get">
+                <button class="interface-button" type="submit">Logout</button>
+            </form>
+        </div>
+        
+
+
   </body>
 </html>
