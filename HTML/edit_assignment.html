@@ -8,22 +8,24 @@
   <body>
 
     <header> 
-        <h1> <b>Add Assignment</b></h1>
+        <h1> <b>Edit Assignment</b></h1>
     </header>
 
     <main> 
 
         <form action="main.html" method="get">
 
-            <label for="assignment-name">Assignment Name:</label>
-            <input type="text" id="assignment-name" name="assignmentName" placeholder="Assignment name here">
+            <h2 id="assignment-name">Section 2.4 HW</h2>
+
+            <label for="change-assignment-name">Change Assignment Name</label>
+            <input type="text" id="change-assignment-name" name="changeAssignmentName" placeholder="Assignment name here">
             
 
 
-            <!-- Code for selecting which class the assignment belongs to -->
+            <!-- Code for changing which class the assignment belongs to -->
             <div>
-                <label for="class-select">Select Class:</label>
-                <select id="class-select" name="classSelect">
+                <label for="class-change">Change Class:</label>
+                <select id="class-change" name="classChange">
 
                     <option disabled selected>----</option>
                     <option value="math" required>Math</option>
@@ -34,18 +36,18 @@
             </div>
 
 
-            <label for="due-date">Due Date:</label>
-            <input type="date" id="due-date" name="dueDate" required>
+            <label for="change-due-date">Change Due Date:</label>
+            <input type="date" id="change-due-date" name="changeDueDate" required>
 
             </br>
 
-            <!-- Code for setting an assignment's difficulty-->
+            <!-- Code for changing an assignment's difficulty-->
             <div>
                 <fieldset>
                     <legend>Difficulty</legend>
 
                     <label>
-                        <input type="radio" name="difficulty" value="easy"/> Easy
+                        <input type="radio" name="difficulty" value="easy" required/> Easy
                     </label>
 
                     <label>
@@ -63,7 +65,11 @@
 
             
             <button class="interface-button" type="submit">Save Changes</button>
-            <button class="interface-button" type="submit">Cancel</button>
+            <button class="interface-button" type="submit">Delete Assignment</button>
+        </form>
+
+        <form action="main.html" method="get">
+            <button class="interface-button">Cancel</button>
         </form>
     </main>
     <footer>
