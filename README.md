@@ -44,14 +44,13 @@ Have you ever had a hard time organizing your coursework? AmigoOrganizado is her
 ![Design editClass](assets/edit_class.jpeg)
 ![Design editAssignment](assets/edit_assignment.jpeg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 
 ### Key features
 
 - Courswork prioritizer--a window on the main page showing the order in which you should complete your assignments
-- Urgent section--a window on the main page showing which assignments are due today
-- Schedule--shows which assignments are due for each day in a given month.
+- Due Today Window--a window on the main page showing which assignments are due today
+- Calendar--shows which assignments are due for each day in a given month.
 
 ### Technologies
 
@@ -75,15 +74,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [X] **HTML pages** - Created basic HTML structure for my web page
+- [X] **Proper HTML element usage** - Used basic HTML elements and element containers to create code that is easy to read
+- [X] **Links** - used hyperlinks where appropriate to simulate editing classes and assignments.
+- [X] **Text** - Added text and comments where needed to readability
+- [X] **3rd party API placeholder** - Added placeholder inspirational quote and calendar for the APIs.
+- [X] **Images** - Added images where needed as reference.
+- [X] **Login placeholder** - Created simple login page
+- [X] **DB data placeholder** - I completed this part of the deliverable.
+- [X] **WebSocket placeholder** - I will use WebSocket to update table data and with communication with the Google Calendar and Inspirational Quotes APIs.
 
 ## 🚀 CSS deliverable
 
