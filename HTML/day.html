@@ -3,55 +3,32 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>AmigoOrganizado</title>
+    <title>Day View</title>
   </head>
   <body>
     <header> 
       <h1>View Day</h1> 
       <p>1/1/2000</p>
-      <h1>View Day</h1> 
-      <p>1/1/2000</p>
+
     </header>
 
     <main> 
         <label for="assignments-due-today">Assignments due on this day:</label>
-        <ol id="assignments-due-today">
-            <ul class="classes">
-                <li>
-                    <a href="edit_assignment.html">Assignment 1</a>
-                    <a href="edit_class.html">Geography</a>
-                </li>
-                <li>
-                    <a href="edit_assignment.html">Assignment 2</a>
-                    <a href="edit_class.html">Geography</a>
-                </li>
-                <li>
-                    <a href="edit_assignment.html">Assignment 3</a>
-                    <a href="edit_class.html">Math</a>
-                </li>
-
-            <ul class="classes">
-                <li>
-                    <a href="edit_assignment.html">Assignment 1</a>
-                    <a href="edit_class.html">Geography</a>
-                </li>
-                <li>
-                    <a href="edit_assignment.html">Assignment 2</a>
-                    <a href="edit_class.html">Geography</a>
-                </li>
-                <li>
-                    <a href="edit_assignment.html">Assignment 3</a>
-                    <a href="edit_class.html">Math</a>
-                </li>
-
-            </ul>
-                
-                
-            
-                
-                
-            
-        </ol>
+        <ul class="assignments-due-today" id="assignments-due-today">
+            <li>
+                <a href="edit_assignment.html">Assignment 1</a>
+                 <a href="edit_class.html">Geography</a>
+            </li>
+            <li>
+                <a href="edit_assignment.html">Assignment 2</a>
+                <a href="edit_class.html">Geography</a>
+            </li>
+            <li>
+                <a href="edit_assignment.html">Assignment 3</a>
+                <a href="edit_class.html">Math</a>
+            </li>
+        </ul>                
+        
 
         <form action="main.html" method="get">
             <button class="interface-button" type="submit">Return to Overview</button>
