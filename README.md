@@ -28,8 +28,6 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
     - I embedded the images
 
-> [!NOTE]
-> Hi TA's! Let me know if I checked the boxes correctly for this assignment, as I think that I might have gone overboard in the description of each one.
 
 ### Elevator pitch
 
@@ -37,14 +35,14 @@ Have you ever had a hard time organizing your coursework? AmigoOrganizado is her
 
 ### Design
 
-![Desgin loginPage](sign_in.jpeg)
-![Design mainPage](main_screen.jpeg)
-![Design calendarPage](calendar.jpeg)
-![Design calendarDayViewPage](calendar_day.jpeg)
-![Design addClass](add_class.jpeg)
-![Design addAssignment](add_assignment.jpeg)
-![Design editClass](edit_class.jpeg)
-![Design editAssignment](edit_assignment.jpeg)
+![Desgin loginPage](assets/sign_in.jpeg)
+![Design mainPage](assets/main_screen.jpeg)
+![Design calendarPage](assets/calendar.jpeg)
+![Design calendarDayViewPage](assets/calendar_day.jpeg)
+![Design addClass](assets/add_class.jpeg)
+![Design addAssignment](assets/add_assignment.jpeg)
+![Design editClass](assets/edit_class.jpeg)
+![Design editAssignment](assets/edit_assignment.jpeg)
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
