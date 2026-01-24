@@ -16,16 +16,16 @@
         <form action="main.html" method="get">
 
             <label for="assignment-name">Assignment Name:</label>
-            <input type="text" id="assignment-name" name="assignmentName" placeholder="Assignment name here">
+            <input type="text" id="assignment-name" name="assignmentName" placeholder="Assignment name here" required>
             
 
 
             <!-- Code for selecting which class the assignment belongs to -->
             <div>
                 <label for="class-select">Select Class:</label>
-                <select id="class-select" name="classSelect" required>
+                <select id="class-select" name="classSelect">
 
-                    <option disabled selected>----</option>
+                    <option disabled selected required>----</option>
                     <option value="math">Math</option>
                     <option value="history">History</option>
                     <option value="geography">Geography</option>
