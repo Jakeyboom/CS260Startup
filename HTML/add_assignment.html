@@ -15,40 +15,53 @@
 
         <form action="main.html" method="get">
 
+            <label for="assignment-name">Assignment Name:</label>
+            <input type="text" id="assignment-name" name="assignmentName" placeholder="Assignment name here">
+            
 
-            <label for="class-select">Select Class:</label>
-            <select id="class-select" name="classSelect">
-                
-                <option disabled selected>----</option>
-                <option value="math" required>Math</option>
-                <option value="history">History</option>
-                <option value="geography">Geography</option>
-            </select>
+
+            <!-- Code for selecting which class the assignment belongs to -->
+            <div>
+                <label for="class-select">Select Class:</label>
+                <select id="class-select" name="classSelect">
+
+                    <option disabled selected>----</option>
+                    <option value="math" required>Math</option>
+                    <option value="history">History</option>
+                    <option value="geography">Geography</option>
+                </select>
+
+            </div>
+
+
+            <label for="due-date">Due Date:</label>
+            <input type="date" id="due-date" name="dueDate" required>
 
             </br>
 
-            <!-- Code for setting an assignment's name and difficulty-->
-            <label for="assignment-name">Assignment Name:</label>
-            <input type="text" id="assignment-name" name="assignmentName" placeholder="Assignment name here">
+            <!-- Code for setting an assignment's difficulty-->
+            <div>
+                <fieldset>
+                    <legend>Difficulty</legend>
 
-            <fieldset>
-                <legend>Difficulty</legend>
+                    <label>
+                        <input type="radio" name="difficulty" value="easy"/> Easy
+                    </label>
 
-                <label>
-                    <input type="radio" name="difficulty" value="easy"/> Easy
-                </label>
-
-                <label>
-                    <input type="radio" name="difficulty" value="medium"/> Medium
-                </label>
+                    <label>
+                        <input type="radio" name="difficulty" value="medium"/> Medium
+                    </label>
                 
-                <label>
-                    <input type="radio" name="difficulty" value="hard"/> Hard
-                </label>
+                    <label>
+                        <input type="radio" name="difficulty" value="hard"/> Hard
+                    </label>
 
 
-            </fieldset>
+                </fieldset>
+            </div>
 
+
+            
             <button class="interface-button" type="submit">Save Changes</button>
             <button class="interface-button" type="submit">Cancel</button>
         </form>
