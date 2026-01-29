@@ -1,0 +1,80 @@
+header {
+    background-color: black;
+    border-bottom: solid thick white;
+    padding: 2em;
+    margin-bottom:2em;
+}
+
+body {
+    background-color: grey;
+    color: white;
+    height: 100vh;
+    
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+
+
+#prioritizer, #due-today {
+    border: solid thick white;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    margin: 3em;
+
+}
+
+#prioritizer-section, #due-today-section {
+    flex: 2;
+}
+
+li {
+    padding: 0.5em;
+    margin:0.3em;
+    background-color: green;
+    border: solid thin white;
+    font-size: 1em;
+    
+}
+
+li:hover {
+    background-color: lightcoral;
+    cursor: pointer;
+}
+
+label {
+    font-size: 3em;
+    margin:0.5 em;
+}
+
+#buttons {
+    flex: 1;
+}
+
+#inspirational-quote {
+    flex: 0.1;
+}
+
+
+
+@media (orientation: portrait) and (max-height:500px) {
+    header {
+        display: none;
+        
+    }
+    footer {
+        display: none;
+    }
+}
+
+@media (orientation: portrait) {
+    main {
+        flex-direction: column;
+    }
+}
+
