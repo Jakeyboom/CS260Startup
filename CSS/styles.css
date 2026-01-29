@@ -1,23 +1,26 @@
 h1 {
-    color: red;
+    color: black;
     font-size: 2.5em;
     text-align: center;
     padding: 0.2em;
-    border: 0.5em solid #ACDDDE;
+    border-bottom: tick solid black;
 }
 
 body {
-    background-color: FEF8DD;
+    background-color: #E8DDB5;
+    border: solid #B2C9AB thick;
 }
 
 button {
-    background-color: gray;
+    background-color: #B2C9AB;
     color: white;
-    font-size: 1.8em;
+    font-size: 1em;
+    border-radius: 0.1em;
+    font-weight: bold;
+    -webkit-text-stroke: black 0.05em;
+    margin: 0.5em;
 }
 
 button:hover {
-    background-color:yellowgreen;
-    font-size:10em;
-    animation: move 0.5s infinite;
+    background-color:lightblue;
 }
