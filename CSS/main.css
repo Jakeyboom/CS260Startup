@@ -44,6 +44,11 @@ main {
     flex: 1;
 }
 
+.assignments-section div {
+    display: flex;
+    flex-direction: column;
+}
+
 li {
     padding: 0.5em;
     margin:0.3em;
@@ -52,9 +57,12 @@ li {
     border: solid thin black;
     font-size: 1em;
     color: black;
-    text-align: end;
+    text-align: center;
     box-shadow: inset -3px -3px 5px black;
     animation:normal 3s slide-in;
+    display: flex;
+    justify-content: space-between;
+    flex-direction:row;
 }
 
 li:hover {
@@ -112,16 +120,18 @@ label {
     from {
         opacity: 0;
         transform: translateX(-100%);
+        
     }
 
     to {
         transform: translateX(0);
         opacity: 1;
+        border-left: solid thick black;
     }
 }
 
 a {
-    color: white;
+    color: black;
 }
 
 @keyframes spin {
