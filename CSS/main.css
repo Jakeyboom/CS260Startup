@@ -1,13 +1,18 @@
 header {
+    color:white;
     background-color: black;
-    border-bottom: solid thick white;
+    border-radius: 2em;
     padding: 2em;
     margin-bottom:2em;
+    box-shadow: 10px 10px 15px lightblue;
+    text-align: center;
+    animation: 3s spin;
+
 }
 
 body {
-    background-color: grey;
-    color: white;
+    color: black;
+    background-color: white;
     height: 100vh;
     
 }
@@ -21,25 +26,35 @@ main {
 
 
 #prioritizer, #due-today {
-    border: solid thick white;
+    border: solid thick black;
+    border-radius: 1em;
+    box-shadow: 1em 1em 2em grey;
     display: flex;
     flex-direction: column;
     padding: 1em;
     margin: 3em;
+    list-style: none;
+    flex: 2;
+    
+    
 
 }
 
-#prioritizer-section, #due-today-section {
-    flex: 2;
+.assignments-section {
+    flex: 1;
 }
 
 li {
     padding: 0.5em;
     margin:0.3em;
-    background-color: green;
-    border: solid thin white;
+    background-color: lightblue;
+    border-radius: 0.4em;
+    border: solid thin black;
     font-size: 1em;
-    
+    color: black;
+    text-align: end;
+    box-shadow: inset -3px -3px 5px black;
+    animation:normal 3s slide-in;
 }
 
 li:hover {
@@ -50,6 +65,8 @@ li:hover {
 label {
     font-size: 3em;
     margin:0.5 em;
+    color: black;
+    text-align: center;
 }
 
 #buttons {
@@ -58,6 +75,8 @@ label {
 
 #inspirational-quote {
     flex: 0.1;
+    text-align: center;
+    font-size: 1.2em;
 }
 
 
@@ -75,6 +94,42 @@ label {
 @media (orientation: portrait) {
     main {
         flex-direction: column;
+        border: none;
     }
 }
 
+@media (orientation: landscape) {
+    div:first-child {
+        border: none;
+    }
+
+    div {
+        border-left: solid thick black;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+a {
+    color: white;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(1080deg);
+    }
+}
