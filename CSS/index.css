@@ -18,16 +18,22 @@ header {
     max-height: 10vh;
 }
 
+
+
+
 main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    
+    justify-content: center;
+    align-items: center;
 
     
 }
 
 footer {
- 
+    background-color: black;
+    color: white;
+    padding:1em;
 
 }
