@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+header {
+    
+    color:white;
+    background-color: black;
+    border-radius: 2em;
+    padding: 2em;
+    margin-bottom:2em;
+    box-shadow: 10px 10px 15px lightgreen;
+    text-align: center;
+   
+    max-height: 10vh;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    
+
+    
+}
+
+footer {
+ 
+
+}

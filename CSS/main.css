@@ -19,10 +19,15 @@ body {
 
 main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between
 }
 
+#classes-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 
 
 #prioritizer, #due-today {
@@ -83,13 +88,21 @@ label {
 }
 
 
-
+#main-buttons {
+    flex:0.5;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 
 #inspirational-quote {
+    padding: 1em;
+    margin: 1em;
     flex: 0.1;
     text-align: center;
     font-size: 1.2em;
 }
+
 
 
 
@@ -104,7 +117,7 @@ label {
 }
 
 @media (orientation: portrait) {
-    main {
+    #classes-section {
         flex-direction: column;
         border: none;
     }
@@ -134,9 +147,6 @@ label {
     }
 }
 
-a {
-    color: black;
-}
 
 @keyframes spin {
     from {
