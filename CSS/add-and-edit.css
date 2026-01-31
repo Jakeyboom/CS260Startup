@@ -16,12 +16,35 @@ footer {
 }
 
 body {
+    font-size: 1.2em;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     min-height: 100vh;
 }
 
 main {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch center;
+    justify-content: center;
     flex: 1;
+    max-width: 80em;
+}
+
+form {
+    padding: 2em;
+    padding-bottom: 16em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 20vh;
+    background-color: tan;
+    border: solid thick black;
+    border-radius: 1em;
+}
+
+form button {
+    max-width: 10em
 }
 
