@@ -9,9 +9,16 @@ header {
     
 }
 
+footer {
+    background-color: black;
+    color: white;
+    padding: 1em;
+}
+
 body {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 main {
