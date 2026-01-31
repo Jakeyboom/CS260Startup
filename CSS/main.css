@@ -27,6 +27,7 @@ main {
 
 #prioritizer, #due-today {
     border: solid thick black;
+    background-color: lightgrey;
     border-radius: 1em;
     box-shadow: 1em 1em 2em grey;
     display: flex;
@@ -44,10 +45,7 @@ main {
     flex: 1;
 }
 
-.assignments-section div {
-    display: flex;
-    flex-direction: column;
-}
+
 
 li {
     padding: 0.5em;
@@ -72,14 +70,20 @@ li:hover {
 
 label {
     font-size: 3em;
-    margin:0.5 em;
+    padding:1em;
+    
     color: black;
-    text-align: center;
+    vertical-align: middle;
 }
 
-#buttons {
-    flex: 1;
+#footer-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
+
+
+
 
 #inspirational-quote {
     flex: 0.1;
