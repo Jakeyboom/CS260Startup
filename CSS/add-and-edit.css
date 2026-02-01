@@ -38,13 +38,48 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-height: 20vh;
     background-color: tan;
     border: solid thick black;
     border-radius: 1em;
 }
 
+fieldset {
+    margin-bottom: 1em;
+    border: solid black thin;
+    border-radius: 0.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    background-color: white;
+    justify-content: center;
+    padding: 0.25em;
+    
+}
+
+label {
+    font-weight: bold;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    background-color:lightblue;
+    border: solid thin black;
+    border-radius: 0.5em;
+}
+
+
+
+label {
+    padding: em;
+}
+
 form button {
     max-width: 10em
+}
+
+#buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around
 }
 
