@@ -37,3 +37,21 @@ footer {
     padding:1em;
 
 }
+
+
+.form-row {
+    margin: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid thin black;
+    
+    
+}
+
+.form-row label {
+    font-size: 1.2em;
+    margin-right: 1em;
+    text-align: center;
+    width: 6em;
+}

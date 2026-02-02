@@ -134,12 +134,8 @@ label {
 }
 
 @media (orientation: landscape) {
-    div:first-child {
-        border: none;
-    }
-
-    div {
-        border-left: solid thick black;
+    #prioritizer-section {
+        border-inline-end: solid thick black;
     }
 }
 
