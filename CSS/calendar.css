@@ -21,6 +21,7 @@ body {
     justify-content: center;
     min-height: 100vh;
     font-family: 'Lato', sans-serif;
+    min-width: 180px;
 
 }
 
@@ -41,4 +42,14 @@ form {
     max-height: 60vh;
     min-width: 15em;
     min-height: 20em;
+}
+
+@media (width <= 180px) {
+    header {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
 }

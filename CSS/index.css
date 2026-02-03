@@ -4,7 +4,7 @@ body {
     justify-content: center;
     min-height: 100vh;
     font-family: 'Lato', sans-serif;
-
+    min-width: 290px;
 }
 
 header {
@@ -37,6 +37,13 @@ main {
     
 }
 
+#login-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1em;
+    gap: 1em;
+}
+
 
 
 
@@ -55,4 +62,24 @@ main {
     margin-right: 1em;
     text-align: center;
     width: 6em;
+}
+
+@media (orientation: portrait) {
+    header {
+        font-size: 1em;
+        overflow-wrap: break-word;
+    }
+
+    footer {
+        overflow-wrap: break-word;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    #login-buttons {
+        flex-direction: column;
+    }
+
 }

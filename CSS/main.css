@@ -7,6 +7,7 @@ header {
     box-shadow: 10px 10px 15px lightblue;
     text-align: center;
     animation: 3s spin;
+    min-width: 280px;
 
 }
 
@@ -23,6 +24,11 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Lato', sans-serif;
+}
+
+a {
+    color: black;
+    
 }
 
 main {
@@ -72,6 +78,7 @@ label {
     padding: 1em;
     margin: 3em;
     list-style: none;
+    min-width: 180px;
     
     
     
@@ -92,6 +99,7 @@ label {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+
 }
 
 
@@ -99,11 +107,11 @@ label {
     flex:0.5;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     margin:1em;
 }
 
-#main-buttons button {
+button {
     min-width: 5em;
     margin: 0.5em;
 }
@@ -132,9 +140,33 @@ label {
 }
 
 @media (orientation: portrait) {
+    header {
+        font-size: 1em;
+        overflow-wrap: break-word;
+    }
+
     #classes-section {
         flex-direction: column;
         border: none;
+    }
+
+    #main-buttons {
+        flex-direction: column;
+    }
+    li {
+        flex-direction: column;
+    }
+
+    a {
+        overflow-wrap: break-word;
+    }
+
+    .due-date {
+        overflow-wrap: break-word;
+    }
+
+    label {
+        word-wrap: break-word;
     }
 }
 

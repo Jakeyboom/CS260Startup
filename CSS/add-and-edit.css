@@ -35,6 +35,7 @@ main {
 form {
     padding: 2em;
     padding-bottom: 4em;
+    margin-bottom: 1em;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -83,6 +84,33 @@ form button {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+@media (orientation: portrait) {
+    #buttons {
+        flex-direction: column;
+        min-width: 7em;
+    }
+
+    form {
+        justify-content: center;
+        min-width: 220px;
+    }
+
+}
+
+@media (width <= 250px) {
+    header {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+
+    form {
+        margin: 0;
+    }
 }
 
 
