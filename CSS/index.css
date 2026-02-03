@@ -6,16 +6,15 @@ body {
 }
 
 header {
-    
     color:white;
     background-color: black;
     border-radius: 2em;
     padding: 2em;
     margin-bottom:2em;
-    box-shadow: 10px 10px 15px lightgreen;
+    box-shadow: 10px 10px 15px lightblue;
     text-align: center;
-   
-    max-height: 10vh;
+    animation: 3s spin;
+
 }
 
 

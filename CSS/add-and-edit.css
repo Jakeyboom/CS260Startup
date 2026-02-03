@@ -34,7 +34,7 @@ main {
 
 form {
     padding: 2em;
-    padding-bottom: 16em;
+    padding-bottom: 4em;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -80,8 +80,10 @@ label {
 form button {
     max-width: 10em;
     justify-content: flex-end;
-    min-width: 1em;
-    
+    min-width: 5em;
+    margin: 0.5em;
+    max-height: auto;
+    font-size: auto;
 }
 
 #buttons {
