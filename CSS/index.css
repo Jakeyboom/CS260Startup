@@ -3,6 +3,8 @@ body {
     flex-direction: column;
     justify-content: center;
     min-height: 100vh;
+    font-family: 'Lato', sans-serif;
+
 }
 
 header {

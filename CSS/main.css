@@ -22,7 +22,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    
+    font-family: 'Lato', sans-serif;
 }
 
 main {
@@ -101,6 +101,11 @@ label {
     flex-direction: row;
     justify-content: space-around;
     margin:1em;
+}
+
+#main-buttons button {
+    min-width: 5em;
+    margin: 0.5em;
 }
 
 #inspirational-quote {
