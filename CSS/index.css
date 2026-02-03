@@ -17,7 +17,12 @@ header {
 
 }
 
+footer {
+    background-color: black;
+    color: white;
+    padding:1em;
 
+}
 
 
 main {
@@ -30,12 +35,7 @@ main {
     
 }
 
-footer {
-    background-color: black;
-    color: white;
-    padding:1em;
 
-}
 
 
 .form-row {

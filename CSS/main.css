@@ -32,35 +32,6 @@ main {
     flex-grow: 1;
 }
 
-#classes-section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-
-.classes {
-    border: solid thick black;
-    background-color: lightgrey;
-    border-radius: 1em;
-    box-shadow: 1em 1em 2em grey;
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
-    margin: 3em;
-    list-style: none;
-    
-    
-    
-
-}
-
-.assignments-section {
-    flex: 1;
-}
-
-
-
 li {
     padding: 0.5em;
     margin:0.3em;
@@ -88,6 +59,33 @@ label {
     
     color: black;
     vertical-align: middle;
+}
+
+
+.classes {
+    border: solid thick black;
+    background-color: lightgrey;
+    border-radius: 1em;
+    box-shadow: 1em 1em 2em grey;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    margin: 3em;
+    list-style: none;
+    
+    
+    
+
+}
+
+.assignments-section {
+    flex: 1;
+}
+
+#classes-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 #footer-buttons {

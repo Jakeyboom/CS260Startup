@@ -71,12 +71,6 @@ label {
 
 }
 
-
-
-label {
-    padding: em;
-}
-
 form button {
     max-width: 10em;
     justify-content: flex-end;
