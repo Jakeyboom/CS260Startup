@@ -19,7 +19,6 @@ body {
     font-size: 1.2em;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     min-height: 100vh;
     font-family: 'Lato', sans-serif;
 }
@@ -42,7 +41,7 @@ form {
     background-color: lightgrey;
     border: solid thick black;
     border-radius: 1em;
-    width: 80vw
+    width: 80vw;
 }
 
 fieldset {
@@ -78,7 +77,6 @@ form button {
     min-width: 5em;
     margin: 0.5em;
     max-height: auto;
-    font-size: auto;
 }
 
 #buttons {

@@ -39,4 +39,6 @@ form {
 #calendar-placeholder {
     max-width: 80vw;
     max-height: 60vh;
+    min-width: 15em;
+    min-height: 20em;
 }
