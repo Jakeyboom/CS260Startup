@@ -119,6 +119,8 @@ label {
 
 
 
+
+
 @media (orientation: portrait) and (max-height:500px) {
     header {
         display: none;
