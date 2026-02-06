@@ -5,7 +5,7 @@ import './app.css';
 export default function App() {
   return (
 
-    <div>
+    <div className="app">
       <header> 
         <h1>
             Welcome to AmigoOrganizado, user!
@@ -13,8 +13,9 @@ export default function App() {
       </header>
 
       
-      
-      App will display here
+      <main>
+
+      </main>
 
 
       <footer>
