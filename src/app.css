@@ -17,7 +17,7 @@ footer {
     padding:1em;
 }
 
-body {
+.app {
     color: black;
     background-color: white;
     min-height: 100vh;
