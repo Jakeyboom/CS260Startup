@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "[My Notes](notes.md)",
   "main": "index.js",
-    "scripts": {
+  "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -22,5 +22,9 @@
   "homepage": "https://github.com/Jakeyboom/CS260Startup#readme",
   "devDependencies": {
     "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react-bootstrap": "^2.10.10"
   }
 }
