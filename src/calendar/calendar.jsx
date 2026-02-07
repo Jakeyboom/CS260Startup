@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './calendar.css';
+import '../../CSS/calendar.css';
 
 export default function Calendar() {
     return(

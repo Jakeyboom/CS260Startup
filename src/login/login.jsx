@@ -1,5 +1,5 @@
 import React from 'react';
-import './login.css';
+import '../../CSS/login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Login() {
