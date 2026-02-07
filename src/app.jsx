@@ -9,6 +9,7 @@ import { About } from './about/about.jsx';
 import { Calendar } from './calendar/calendar.jsx';
 import { DayView } from './day/day.jsx';
 import { Login } from './login/login.jsx';
+import { Prioritizer } from './prioritizer/prioritizer.jsx';
 // import { AddAssignment } from './add_assignment/add_assignment';
 // import { EditAssignment } from './edit_assignment/edit_assignment';
 // import { AddClass } from './add_class/add_class';
@@ -30,6 +31,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Login />} exact/>
           <Route path='/about' element={<About />} />
+
         </Routes>
             
 
