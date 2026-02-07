@@ -31,6 +31,10 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Login />} exact/>
           <Route path='/about' element={<About />} />
+          <Route path='/prioritizer' element={<Prioritizer />} />
+          <Route path='/calendar' element={<Calendar />} />
+          <Route path='/day' element={<DayView />} />
+          <Route path='/*' element={<NotFound />} />
 
         </Routes>
             

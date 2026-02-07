@@ -4,9 +4,146 @@ import {NavLink} from 'react-router-dom';
 
 export function Prioritizer() {
     return(
-        <main>
-            <h1>Prioritizer Page will be here!</h1>
+            <main> 
+        
 
-        </main>
+        <section id="classes-section">
+            <div className="assignments-section" id="prioritizer-section">
+            <label for="prioritizer"><i>Prioritizer:</i></label>
+            <ol id="prioritizer" className="classes">
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
+                    <NavLink to="edit_class.html">Math</NavLink>
+                    <span id="due-date" className="due-date"> Due 1/1/2000</span>
+                </li>
+
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/1/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/3/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 3</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/5/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 4</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/7/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 5</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/9/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
+                    <NavLink to="edit_class.html">Math</NavLink>
+                    <span className="due-date"> Due 1/9/2000</span>
+                </li>
+
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
+                    <NavLink to="edit_class.html">Math</NavLink>
+                    <span className="due-date"> Due 1/1/2000</span>
+                </li>
+
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/1/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/3/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 3</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/5/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 4</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/7/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 5</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <span className="due-date"> Due 1/9/2000</span>
+                </li>
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
+                    <NavLink to="edit_class.html">Math</NavLink>
+                    <span className="due-date"> Due 1/9/2000</span>
+                </li>
+
+        </ol>
+        </div>
+
+         <div className="assignments-section">
+            <label for="due-today"><i>Due Today:</i></label>
+            <ol id="due-today" className="classes">
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                </li>
+                                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                </li>
+                                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
+                    <NavLink to="edit_class.html">Math</NavLink>
+                </li>
+
+                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                </li>
+                                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
+                    <NavLink to="edit_class.html">Geography</NavLink>
+                </li>
+                                <li>                    
+                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
+                    <NavLink to="edit_class.html">Math</NavLink>
+                </li>
+
+            </ol>
+         </div>
+
+
+        </section>
+
+          <div id="main-buttons">
+            <form action="add_class.html" method="get">
+                <button className="btn btn-primary btn-lg" type="submit">Add Class</button>
+            </form>
+
+            <form action="add_assignment.html" method="get">
+                <button className="btn btn-primary btn-lg" type="submit">Add Assignment</button>
+            </form>
+
+            <form action="calendar.html" method="get">
+                <button className="btn btn-primary btn-lg" type="submit">See Calendar</button>
+            </form>
+          </div>
+
+
+        
+        <p id="inspirational-quote">
+            <b>INSPIRATIONAL QUOTE HERE:</b> <i>When life gives you lemons, don’t make lemonade. Make life take the lemons back!</i>
+        </p>
+
+    </main>
+
     )
 }
