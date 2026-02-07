@@ -80,14 +80,14 @@ form button {
     max-height: auto;
 }
 
-#buttons {
+#add-buttons-container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
 @media (orientation: portrait) {
-    #buttons {
+    #add-buttons-container {
         flex-direction: column;
         min-width: 7em;
     }

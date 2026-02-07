@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 
-export default function EditAssignment() {
+export function EditAssignment() {
     return(
         <div>
             Edit Assignment Page will be here!

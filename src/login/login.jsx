@@ -1,11 +1,11 @@
 import React from 'react';
-import '../../CSS/login.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../CSS/login.css';
 
-export default function Login() {
+export  function Login() {
     return(
         <div>
-
+            Login page will be here!
         </div>
     )
 }

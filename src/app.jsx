@@ -5,14 +5,14 @@ import './app.css';
 //This is the main app component that is rendered in index.jsx.
 //Here, I will integrate the basic app componenets.
 
-import {About} from './about/about.jsx';
-import {Calendar} from './calendar/calendar.jsx';
-import {DayView} from './day/day.jsx';
-import {Login} from './login/login.jsx';
-import {AddAssignment} from './add_assignment/add_assignemnt';
-import {EditAssignment} from './edit_assignment/edit_assignment';
-import {AddClass} from './add_class/add_class';
-import {EditClass} from './edit_class/edit_class';
+import { About } from './about/about.jsx';
+import { Calendar } from './calendar/calendar.jsx';
+import { DayView } from './day/day.jsx';
+import { Login } from './login/login.jsx';
+// import { AddAssignment } from './add_assignment/add_assignment';
+// import { EditAssignment } from './edit_assignment/edit_assignment';
+// import { AddClass } from './add_class/add_class';
+// import { EditClass }  from './edit_class/edit_class';
 
 import {BrowserRouter, NavLink, Route, Routes} from 'react-router-dom';
 
@@ -28,12 +28,17 @@ export default function App() {
 
       
           <main>
-
+          <Routes>
+            <Route path='/' element={<Login />} exact/>
+          </Routes>
+            
           </main>
 
 
           <footer>
             <div id="footer-buttons">
+
+
               <form action="index.html" method="get">
                 <button className="btn btn-secondary btn-lg" type="submit">Logout</button>
               </form>
@@ -48,10 +53,15 @@ export default function App() {
         <a href="https://github.com/Jakeyboom/CS260Startup">My Github</a>
           </footer>
 
+
       </div>
 
     
     </BrowserRouter>
   
   );
+}
+
+function NotFound() {
+  return <main className="containter-fluid bg-secondary">404: Return to Sender. Address unknown</main>
 }
