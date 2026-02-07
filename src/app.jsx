@@ -27,25 +27,20 @@ export default function App() {
           </header>
 
       
-          <main>
-          <Routes>
-            <Route path='/' element={<Login />} exact/>
-          </Routes>
+        <Routes>
+          <Route path='/' element={<Login />} exact/>
+          <Route path='/about' element={<About />} />
+        </Routes>
             
-          </main>
 
 
           <footer>
-            <div id="footer-buttons">
+            <div id="footer-buttons-container">
+
+              <NavLink to="/" className="btn btn-secondary btn-lg footer-button">Logout</NavLink>
+              <NavLink to="/about" className="btn btn-secondary btn-lg footer-button">About</NavLink>
 
 
-              <form action="index.html" method="get">
-                <button className="btn btn-secondary btn-lg" type="submit">Logout</button>
-              </form>
-        
-              <form action="about.html" method="get">
-                  <button className="btn btn-secondary btn-lg" type="submit">About</button>
-              </form>
 
             </div>
         

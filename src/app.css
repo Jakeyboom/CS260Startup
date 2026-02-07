@@ -95,7 +95,7 @@ label {
     justify-content: space-around;
 }
 
-#footer-buttons {
+#footer-buttons-container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -111,7 +111,7 @@ label {
     margin:1em;
 }
 
-button {
+.footer-button {
     min-width: 5em;
     margin: 0.5em;
 }

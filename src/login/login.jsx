@@ -4,8 +4,8 @@ import '../../CSS/login.css';
 
 export  function Login() {
     return(
-        <div>
+        <main>
             Login page will be here!
-        </div>
+        </main>
     )
 }
