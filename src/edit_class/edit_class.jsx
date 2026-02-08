@@ -4,25 +4,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function EditClass() {
     return(
-         <main> 
+         <main className="main-add-edit"> 
 
         <form action="main.html" method="get" class="add-and-edit-form">
 
-            <label for="class-name">Change Class Name:</label>
+            <label className="add-edit-label"for="class-name">Change Class Name:</label>
             <input type="text" id="class-name" name="className" required placeholder="Class name here"/>
 
             <fieldset>
                 <legend>Difficulty</legend>
 
-                <label>
+                <label className="add-edit-label">
                     <input type="radio" name="difficulty" value="easy" required/> Easy
                 </label>
 
-                <label>
+                <label className="add-edit-label">
                     <input type="radio" name="difficulty" value="medium"/> Medium
                 </label>
 
-                <label>
+                <label className="add-edit-label">
                     <input type="radio" name="difficulty" value="hard"/> Hard
                 </label>
 
