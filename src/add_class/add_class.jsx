@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function AddClass() {
     return(
-        <div>
+        <main>
             Add Class page will be here!
-        </div>
+        </main>
     )
 }

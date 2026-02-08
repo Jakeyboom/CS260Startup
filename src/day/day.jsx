@@ -3,8 +3,8 @@ import React from 'react';
 
 export function DayView() {
     return(
-        <div>
+        <main>
             Day View Page will be here!
-        </div>
+        </main>
     )
 }

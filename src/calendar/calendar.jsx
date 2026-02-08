@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function Calendar() {
     return(
-        <div>
+        <main>
             Calendar Page wil be here!
-        </div>
+        </main>
     )
 }
