@@ -10,10 +10,10 @@ import { Calendar } from './calendar/calendar.jsx';
 import { DayView } from './day/day.jsx';
 import { Login } from './login/login.jsx';
 import { Prioritizer } from './prioritizer/prioritizer.jsx';
-// import { AddAssignment } from './add_assignment/add_assignment';
-// import { EditAssignment } from './edit_assignment/edit_assignment';
-// import { AddClass } from './add_class/add_class';
-// import { EditClass }  from './edit_class/edit_class';
+import { AddAssignment } from './add_assignment/add_assignment';
+import { EditAssignment } from './edit_assignment/edit_assignment';
+import { AddClass } from './add_class/add_class';
+import { EditClass }  from './edit_class/edit_class';
 
 import {BrowserRouter, NavLink, Route, Routes} from 'react-router-dom';
 

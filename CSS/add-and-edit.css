@@ -32,7 +32,7 @@ main {
     max-width: 100vw;
 }
 
-form {
+.add-and-edit-form {
     padding: 2em;
     padding-bottom: 4em;
     margin-bottom: 1em;
@@ -72,7 +72,7 @@ label {
 
 }
 
-form button {
+.add-and-edit-form button {
     max-width: 10em;
     justify-content: flex-end;
     min-width: 5em;
@@ -80,19 +80,19 @@ form button {
     max-height: auto;
 }
 
-#add-buttons-container {
+.add-buttons-container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
 @media (orientation: portrait) {
-    #add-buttons-container {
+    .add-buttons-container {
         flex-direction: column;
         min-width: 7em;
     }
 
-    form {
+    .add-and-edit-form {
         justify-content: center;
         min-width: 220px;
     }
@@ -108,7 +108,7 @@ form button {
         display: none;
     }
 
-    form {
+    .add-and-edit-form {
         margin: 0;
     }
 }
