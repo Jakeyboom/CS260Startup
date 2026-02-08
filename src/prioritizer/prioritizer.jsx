@@ -12,76 +12,76 @@ export function Prioritizer() {
             <label for="prioritizer"><i>Prioritizer:</i></label>
             <ol id="prioritizer" className="classes">
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
-                    <NavLink to="edit_class.html">Math</NavLink>
+                    <NavLink to="edit_assignment">Assignment 1</NavLink>
+                    <NavLink to="edit_class">Math</NavLink>
                     <span id="due-date" className="due-date"> Due 1/1/2000</span>
                 </li>
 
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 1</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/1/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 2</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/3/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 3</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 3</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/5/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 4</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 4</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/7/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 5</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 5</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/9/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
-                    <NavLink to="edit_class.html">Math</NavLink>
+                    <NavLink to="edit_assignment">Assignment 2</NavLink>
+                    <NavLink to="edit_class">Math</NavLink>
                     <span className="due-date"> Due 1/9/2000</span>
                 </li>
 
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
-                    <NavLink to="edit_class.html">Math</NavLink>
+                    <NavLink to="edit_assignment">Assignment 1</NavLink>
+                    <NavLink to="edit_class">Math</NavLink>
                     <span className="due-date"> Due 1/1/2000</span>
                 </li>
 
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 1</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/1/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 2</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/3/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 3</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 3</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/5/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 4</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 4</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/7/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 5</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 5</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                     <span className="due-date"> Due 1/9/2000</span>
                 </li>
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
-                    <NavLink to="edit_class.html">Math</NavLink>
+                    <NavLink to="edit_assignment">Assignment 2</NavLink>
+                    <NavLink to="edit_class">Math</NavLink>
                     <span className="due-date"> Due 1/9/2000</span>
                 </li>
 
@@ -92,29 +92,29 @@ export function Prioritizer() {
             <label for="due-today"><i>Due Today:</i></label>
             <ol id="due-today" className="classes">
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 1</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                 </li>
                                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 2</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                 </li>
                                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
-                    <NavLink to="edit_class.html">Math</NavLink>
+                    <NavLink to="edit_assignment">Assignment 1</NavLink>
+                    <NavLink to="edit_class">Math</NavLink>
                 </li>
 
                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 1</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                 </li>
                                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 2</NavLink>
-                    <NavLink to="edit_class.html">Geography</NavLink>
+                    <NavLink to="edit_assignment">Assignment 2</NavLink>
+                    <NavLink to="edit_class">Geography</NavLink>
                 </li>
                                 <li>                    
-                    <NavLink to="edit_assignment.html">Assignment 1</NavLink>
-                    <NavLink to="edit_class.html">Math</NavLink>
+                    <NavLink to="edit_assignment">Assignment 1</NavLink>
+                    <NavLink to="edit_class">Math</NavLink>
                 </li>
 
             </ol>
@@ -124,17 +124,11 @@ export function Prioritizer() {
         </section>
 
           <div id="main-buttons">
-            <form action="add_class.html" method="get">
-                <button className="btn btn-primary btn-lg" type="submit">Add Class</button>
-            </form>
 
-            <form action="add_assignment.html" method="get">
-                <button className="btn btn-primary btn-lg" type="submit">Add Assignment</button>
-            </form>
+            <NavLink to="/add_class" className="btn btn-primary btn-lg">Add Class</NavLink>
+            <NavLink to="/add_assignment" className="btn btn-primary btn-lg">Add Assignment</NavLink>
+            <NavLink to="/calendar" className="btn btn-primary btn-lg">See Calendar</NavLink>
 
-            <form action="calendar.html" method="get">
-                <button className="btn btn-primary btn-lg" type="submit">See Calendar</button>
-            </form>
           </div>
 
 

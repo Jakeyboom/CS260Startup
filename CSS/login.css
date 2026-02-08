@@ -1,33 +1,8 @@
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100vh;
-    font-family: 'Lato', sans-serif;
-    min-width: 290px;
-}
-
-header {
-    color:white;
-    background-color: black;
-    border-radius: 2em;
-    padding: 2em;
-    margin-bottom:2em;
-    box-shadow: 10px 10px 15px lightblue;
-    text-align: center;
-    animation: 3s spin;
-
-}
-
-footer {
-    background-color: black;
-    color: white;
-    padding:1em;
-
-}
 
 
-main {
+
+
+#login-main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -65,14 +40,7 @@ main {
 }
 
 @media (orientation: portrait) {
-    header {
-        font-size: 1em;
-        overflow-wrap: break-word;
-    }
 
-    footer {
-        overflow-wrap: break-word;
-    }
 
     .form-row {
         flex-direction: column;

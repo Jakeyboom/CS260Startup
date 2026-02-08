@@ -4,7 +4,7 @@ import '../../CSS/login.css';
 
 export  function Login() {
     return(
-        <main>
+        <main id="login-main">
                   <h2>
         (<i>Please Login or Signup</i>)
       </h2>

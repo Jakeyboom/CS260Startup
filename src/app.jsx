@@ -34,6 +34,8 @@ export default function App() {
           <Route path='/prioritizer' element={<Prioritizer />} />
           <Route path='/calendar' element={<Calendar />} />
           <Route path='/day' element={<DayView />} />
+          <Route path='/edit_assignment' element={<EditAssignment />} />
+          <Route path='edit_class' element={<EditClass />} />
           <Route path='/*' element={<NotFound />} />
 
         </Routes>
