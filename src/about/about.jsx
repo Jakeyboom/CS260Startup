@@ -1,9 +1,13 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../CSS/calendar.css'
+import { Nav } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
 
 export function About() {
     return(
-        <main>
+        <main className="main-calendar">
             <p> 
                 Amigo organizado is a "simple" web application that I developed
                 with the goal of helping students organize their academic workload.
@@ -14,9 +18,7 @@ export function About() {
             </p>
             Have Fun!
 
-            <form action="main.html" method="get">
-                <button class="btn btn-secondary btn" type="submit">Return to Overview</button>
-            </form>
+            <NavLink to='/prioritizer' className="btn btn-secondary btn">Return to Overview</NavLink>
 
         </main>
     )
