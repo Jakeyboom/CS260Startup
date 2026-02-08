@@ -32,11 +32,13 @@
     
 }
 
+
 .form-row label {
     font-size: 1.2em;
     margin-right: 1em;
     text-align: center;
     width: 6em;
+    padding: 0.5em;
 }
 
 @media (orientation: portrait) {
