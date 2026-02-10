@@ -12,8 +12,10 @@ export function EditClass() {
     const cancelChanges = () => {navigate("/prioritizer")};
 
     return(
-         <main className="main-add-edit"> 
 
+         <main className="main-add-edit">
+            <h2 className="assignment-or-class-title">Selected Class: Math</h2>
+ 
         <form action="main.html" method="get" className="add-and-edit-form">
 
             <label className="add-edit-label"for="class-name">Change Class Name:</label>

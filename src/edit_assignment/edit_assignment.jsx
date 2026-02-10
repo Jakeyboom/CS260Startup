@@ -11,6 +11,9 @@ export function EditAssignment() {
     const cancelChanges = () => {navigate("/prioritizer")};
     return(
     <main className="main-add-edit">
+
+        <h2 className="assignment-or-class-title">Selected Assignment: Assignment 3</h2>
+
         <form action="main.html" method="get" className="add-and-edit-form">
 
             

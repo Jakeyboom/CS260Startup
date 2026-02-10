@@ -72,6 +72,10 @@ input {
         min-width: 220px;
     }
 
+    .class-or-assignment-title {
+        overflow-wrap: break-word;
+    }
+
 }
 
 @media (width <= 250px) {
@@ -85,6 +89,10 @@ input {
 
     .add-and-edit-form {
         margin: 0;
+    }
+
+    .class-or-assignment-title {
+        overflow-wrap: break-word;
     }
 }
 

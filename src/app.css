@@ -209,6 +209,7 @@ label {
     label {
         word-wrap: break-word;
     }
+
 }
 
 @media (orientation: landscape) {
