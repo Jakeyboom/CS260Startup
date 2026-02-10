@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'src/login/login.css';
+import './login.css';
 import { useNavigate } from 'react-router-dom';
 
 export  function Login() {
