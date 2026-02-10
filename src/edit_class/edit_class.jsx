@@ -1,9 +1,16 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function EditClass() {
+
+    const navigate = useNavigate();
+
+    const saveChanges = () => {console.log("Save Channges requested"); navigate("/prioritizer")};
+    const deleteClass = () => {console.log("Delete Class requested"); navigate("/prioritizer")};
+    const cancelChanges = () => {navigate("/prioritizer")};
+
     return(
          <main className="main-add-edit"> 
 
@@ -31,15 +38,14 @@ export function EditClass() {
             </fieldset>
             
             <div className="add-buttons-container">
-                <button className="btn btn-primary btn" type="submit">Save Changes</button>
-                <button className="btn btn-primary btn" type="submit">Delete Class</button>
-
+                <button className="btn btn-primary btn" type="button" onClick={saveChanges}>Save Changes</button>
+                <button className="btn btn-primary btn" type="button" onClick={deleteClass}>Delete Class</button>
+                <button className="btn btn-primary btn" type="button" onClick={cancelChanges}>Cancel</button>
             </div>
             
             
             
         </form>
-        <NavLink to='/prioritizer' className="btn btn-secondary btn">Cancel</NavLink>
 
        
     </main>

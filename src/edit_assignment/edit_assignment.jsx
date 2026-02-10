@@ -1,9 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../CSS/add-and-edit.css';
 
 export function EditAssignment() {
+    const navigate = useNavigate();
+
+    const saveChanges = () => {console.log("Save Channges requested"); navigate("/prioritizer")};
+    const deleteAssignment = () => {console.log("Delete Assignment requested"); navigate("/prioritizer")};
+    const cancelChanges = () => {navigate("/prioritizer")};
     return(
     <main className="main-add-edit">
         <form action="main.html" method="get" className="add-and-edit-form">
@@ -54,13 +59,14 @@ export function EditAssignment() {
 
 
             <div className="add-buttons-container">
-                <button className="btn btn-primary btn" type="submit">Save Changes</button>
-                <button className="btn btn-primary btn" type="submit">Delete Assignment</button>
+                <button className="btn btn-primary btn" type="button" onClick={saveChanges}>Save Changes</button>
+                <button className="btn btn-primary btn" type="button" onClick={deleteAssignment}>Delete Assignment</button>
+                <button className='btn btn-primary btn' type="button" onClick={cancelChanges}>Cancel</button>
             </div>
 
         </form>
 
-        <NavLink to='/prioritizer' className="btn btn-secondary btn">Cancel</NavLink>
+        
 
     </main>
     )
