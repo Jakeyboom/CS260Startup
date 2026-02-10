@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
+import { NavLink } from 'react-router-dom';
 
 export function AddAssignment() {
     return(
@@ -53,11 +54,12 @@ export function AddAssignment() {
 
             <div className="add-buttons-container">
                 <button className="btn btn-primary btn" type="submit">Save Changes</button>
-                <button className="btn btn-primary btn" onclick="window.location.href='main.html'">Cancel</button>
-                
+    
             </div>
             
         </form>
+
+        <NavLink to='/prioritizer' className="btn btn-secondary btn">Cancel</NavLink>
 
         
     </main>

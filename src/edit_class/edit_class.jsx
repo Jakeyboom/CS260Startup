@@ -1,12 +1,13 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../CSS/add-and-edit.css';
+import '../../CSS/add-and-edit.css';
+import { NavLink } from 'react-router-dom';
 
 export function EditClass() {
     return(
          <main className="main-add-edit"> 
 
-        <form action="main.html" method="get" class="add-and-edit-form">
+        <form action="main.html" method="get" className="add-and-edit-form">
 
             <label className="add-edit-label"for="class-name">Change Class Name:</label>
             <input type="text" id="class-name" name="className" required placeholder="Class name here"/>
@@ -32,13 +33,13 @@ export function EditClass() {
             <div className="add-buttons-container">
                 <button className="btn btn-primary btn" type="submit">Save Changes</button>
                 <button className="btn btn-primary btn" type="submit">Delete Class</button>
-                <button className="btn btn-primary btn" onclick="window.location.href='main.html'">Cancel</button>
 
             </div>
             
             
             
         </form>
+        <NavLink to='/prioritizer' className="btn btn-secondary btn">Cancel</NavLink>
 
        
     </main>

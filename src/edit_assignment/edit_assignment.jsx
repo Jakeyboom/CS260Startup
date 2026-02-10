@@ -1,11 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../CSS/add-and-edit.css';
+import { NavLink } from 'react-router-dom';
+import '../../CSS/add-and-edit.css';
 
 export function EditAssignment() {
     return(
     <main className="main-add-edit">
-        <form action="main.html" method="get" class="add-and-edit-form">
+        <form action="main.html" method="get" className="add-and-edit-form">
 
             
 
@@ -52,14 +53,14 @@ export function EditAssignment() {
             </div>
 
 
-            <div class="add-buttons-container">
-                <button class="btn btn-primary btn" type="submit">Save Changes</button>
-                <button class="btn btn-primary btn" type="submit">Delete Assignment</button>
-                <button class="btn btn-primary btn" onclick="window.location.href='main.html'">Cancel</button>
+            <div className="add-buttons-container">
+                <button className="btn btn-primary btn" type="submit">Save Changes</button>
+                <button className="btn btn-primary btn" type="submit">Delete Assignment</button>
             </div>
-            
 
         </form>
+
+        <NavLink to='/prioritizer' className="btn btn-secondary btn">Cancel</NavLink>
 
     </main>
     )

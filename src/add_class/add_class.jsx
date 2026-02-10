@@ -1,6 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../CSS/add-and-edit.css';
+import '../../CSS/add-and-edit.css';
 
 export function AddClass() {
     return(
@@ -33,10 +34,10 @@ export function AddClass() {
 
             <div class="add-buttons-container">
                 <button class="btn btn-primary btn" type="submit">Save Changes</button>
-                <button class="btn btn-primary btn" onclick="window.location.href='main.html'">Cancel</button>
             </div>
             
         </form>
+                <NavLink to='/prioritizer' className="btn btn-secondary btn">Cancel</NavLink>
 
         
             
