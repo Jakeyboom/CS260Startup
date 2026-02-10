@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink } from 'react-router-dom';
 import '../../CSS/calendar.css';
+import '../../public/calendar.jpeg';
 
 export function Calendar() {
     return(
@@ -18,7 +19,7 @@ export function Calendar() {
 
 
 
-      <img src="assets/calendar.jpeg" alt="Example Calendar" id="calendar-placeholder" />
+      <img src="calendar.jpeg" alt="Example Calendar" id="calendar-placeholder" />
     </main>
 
     )

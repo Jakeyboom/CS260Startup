@@ -143,6 +143,43 @@ label {
     }
 }
 
+@media (orientation: landscape) and (max-height: 500px) {
+    header {
+        display: none;
+        
+    }
+    footer {
+        display: none;
+    }
+
+    #classes-section {
+        flex-direction: column;
+        border: none;
+    }
+
+    #main-buttons {
+        flex-direction: column;
+    }
+    li {
+        flex-direction: column;
+    }
+
+    a {
+        overflow-wrap: break-word;
+    }
+
+    .due-date {
+        overflow-wrap: break-word;
+    }
+
+    label {
+        word-wrap: break-word;
+    }
+
+
+
+}
+
 @media (orientation: portrait) {
     header {
         font-size: 1em;

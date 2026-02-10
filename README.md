@@ -35,14 +35,14 @@ Have you ever had a hard time organizing your coursework? AmigoOrganizado is her
 
 ### Design
 
-![Desgin loginPage](assets/sign_in.jpeg)
-![Design mainPage](assets/main_screen.jpeg)
-![Design calendarPage](assets/calendar.jpeg)
-![Design calendarDayViewPage](assets/calendar_day.jpeg)
-![Design addClass](assets/add_class.jpeg)
-![Design addAssignment](assets/add_assignment.jpeg)
-![Design editClass](assets/edit_class.jpeg)
-![Design editAssignment](assets/edit_assignment.jpeg)
+![Desgin loginPage](public/sign_in.jpeg)
+![Design mainPage](public/main_screen.jpeg)
+![Design calendarPage](public/calendar.jpeg)
+![Design calendarDayViewPage](public/calendar_day.jpeg)
+![Design addClass](public/add_class.jpeg)
+![Design addAssignment](public/add_assignment.jpeg)
+![Design editClass](public/edit_class.jpeg)
+![Design editAssignment](public/edit_assignment.jpeg)
 
 
 

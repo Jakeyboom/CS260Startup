@@ -23,7 +23,7 @@ export default function App() {
       <div className="app">
           <header> 
             <h1>
-              Welcome to AmigoOrganizado, user!
+              Welcome to AmigoOrganizado!
             </h1>
           </header>
 
