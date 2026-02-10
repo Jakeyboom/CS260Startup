@@ -7,7 +7,7 @@ export function AddAssignment() {
     return(
         <main className="main-add-edit"> 
 
-        <form action="main.html" method="get" class="add-and-edit-form">
+        <form action="main.html" method="get" className="add-and-edit-form">
 
             <label className="add-edit-label" for="assignment-name">Assignment Name:</label>
             <input type="text" id="assignment-name" name="assignmentName" placeholder="Assignment name here" required />

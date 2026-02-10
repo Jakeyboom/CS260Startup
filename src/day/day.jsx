@@ -6,7 +6,7 @@ export function DayView() {
     return(
     <main> 
         <label for="assignments-due-today">Assignments due on this day:</label>
-        <ul class="classes" id="assignments-due-today">
+        <ul className="classes" id="assignments-due-today">
             <li>                    
                 <NavLink to="/edit_assignment">Assignment 1</NavLink>
                 <NavLink to="/edit_class">Math</NavLink>

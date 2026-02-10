@@ -8,7 +8,7 @@ export function AddClass() {
     <main className="main-add-edit"> 
         
         
-        <form action="main.html" method="get" class="add-and-edit-form">
+        <form action="main.html" method="get" className="add-and-edit-form">
 
             <label className="add-edit-label" for="class-name">Class Name:</label>
             <input type="text" id="class-name" name="className" required placeholder="Class name here" />
@@ -32,8 +32,8 @@ export function AddClass() {
 
             </fieldset>
 
-            <div class="add-buttons-container">
-                <button class="btn btn-primary btn" type="submit">Save Changes</button>
+            <div className="add-buttons-container">
+                <button className="btn btn-primary btn" type="submit">Save Changes</button>
             </div>
             
         </form>
