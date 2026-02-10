@@ -7,18 +7,19 @@ export function DayView() {
     <main> 
         <label for="assignments-due-today">Assignments due on this day:</label>
         <ul class="classes" id="assignments-due-today">
-            <li>
-                <a href="edit_assignment.html">Assignment 1</a>
-                 <a href="edit_class.html">Geography</a>
-            </li>
-            <li>
-                <a href="edit_assignment.html">Assignment 2</a>
-                <a href="edit_class.html">Geography</a>
-            </li>
-            <li>
-                <a href="edit_assignment.html">Assignment 3</a>
-                <a href="edit_class.html">Math</a>
-            </li>
+                <li>                    
+                    <a href="edit_assignment.html">Assignment 1</a>
+                    <a href="edit_class.html">Math</a>
+                </li>
+
+                <li>                    
+                    <a href="edit_assignment.html">Assignment 1</a>
+                    <a href="edit_class.html">Geography</a>
+                </li>
+                <li>                    
+                    <a href="edit_assignment.html">Assignment 2</a>
+                    <a href="edit_class.html">Geography</a>
+                </li>
         </ul>                
         
         <form action="main.html" method="get" id="return-button-form">
