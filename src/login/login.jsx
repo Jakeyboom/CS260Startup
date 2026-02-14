@@ -21,6 +21,7 @@ export  function Login() {
 
     //Here will be the Create Account handler
     const handleCreateAccount = (event) => {
+      event.preventDefault();
       console.log("Create Account requested"); 
       if(createAccount(email, password)) {
         navigate("/prioritizer");
@@ -29,7 +30,7 @@ export  function Login() {
       }
     };
 
-    
+
     const handleForgotPassword = (event) => {console.log("Forgot Password requrested"); navigate("/prioritizer")};
 
 
