@@ -1,7 +1,9 @@
 //Here will implement the assignment service that will allow a user to create, read, update, and delete assignments. For now, this will be a simple implementation that uses local storage to store the assignments, but in the future, this will be replaced with a more robust implementation that uses a backend server and database.
 
-export function createAssignment(assignmentName, className, dueDate) {
-    console.log('Attempting to create assignment: ' + assignmentName + ', class: ' + className + ', due date: ' + dueDate);
+export function createAssignment(assignmentName, className, dueDate, difficulty) {
+    console.log('Attempting to create assignment: ' + assignmentName + ', class: ' + className + ', due date: ' + dueDate +', difficulty: ' + difficulty);
+    console.log('Assignment created successfully.');
+    return true;
 }
 
 export function editAssignment(assignmentId, assignmentName, className, dueDate) {

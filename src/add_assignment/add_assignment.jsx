@@ -2,12 +2,23 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 import { useNavigate } from 'react-router-dom';
+import { createAssignment } from '../assignment-service.js';
 
 export function AddAssignment() {
+    const [assignmentName, setAssignmentName] = React.useState("");
+    const [className, setClassName] = React.useState("");
+    const [dueDate, setDueDate] = React.useState("");
+    const [difficulty, setDifficulty] = React.useState("");
 
     const navigate = useNavigate();
 
-    const saveChanges = () => {console.log("Save Changes requested"); navigate("/prioritizer")};
+    const saveChanges = () => {
+        if(createAssignment(assignmentName, className, dueDate, difficulty)) {
+            navigate("/prioritizer");
+        } else {
+            console.log("Failed to create assignment. Please try again.");
+        }
+    };
     const cancelChanges = () => {navigate("/prioritizer")};
 
 
@@ -24,9 +35,8 @@ export function AddAssignment() {
 
             <div>
                 <label className="add-edit-label" for="class-select">Select Class:</label>
-                <select id="class-select" name="classSelect">
+                <select id="class-select" name="classSelect" required onChange={(e) => setClassName(e.target.value)}>
 
-                    <option disabled selected required>----</option>
                     <option value="math">Math</option>
                     <option value="history">History</option>
                     <option value="geography">Geography</option>
@@ -36,7 +46,7 @@ export function AddAssignment() {
 
 
             <label className="add-edit-label" for="due-date">Due Date:</label>
-            <input type="date" id="due-date" name="dueDate" required />
+            <input type="date" id="due-date" name="dueDate" required onChange={(e) => setDueDate(e.target.value)} />
 
 
             <div>
@@ -44,15 +54,15 @@ export function AddAssignment() {
                     <legend>Difficulty</legend>
 
                     <label className="add-edit-label">
-                        <input type="radio" name="difficulty" value="easy" required/> Easy
+                        <input type="radio" name="difficulty" value="0" required onChange={(e) => setDifficulty(e.target.value)}/> Easy
                     </label>
 
                     <label className="add-edit-label">
-                        <input type="radio" name="difficulty" value="medium"/> Medium
+                        <input type="radio" name="difficulty" value="1" onChange={(e) => setDifficulty(e.target.value)}/> Medium
                     </label>
                 
                     <label className="add-edit-label">
-                        <input type="radio" name="difficulty" value="hard"/> Hard
+                        <input type="radio" name="difficulty" value="2" onChange={(e) => setDifficulty(e.target.value)}/> Hard
                     </label>
 
 
