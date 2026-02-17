@@ -46,3 +46,7 @@ export function logout() {
     localStorage.removeItem("currentUser");
     console.log("User logged out successfully.");
 }
+
+export function isLoggedIn() {
+    return getCurrentUser() !== null;
+}
