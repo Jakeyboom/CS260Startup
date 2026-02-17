@@ -39,14 +39,17 @@ export function createAccount(email, password) {
 
 export function getCurrentUser() {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    console.log("Current user: " + (currentUser ? currentUser.email : "None"));
     return currentUser ? currentUser.email : null;
 }
 
+//logs out the current user by removing the current user from local storage.
 export function logout() {
     localStorage.removeItem("currentUser");
     console.log("User logged out successfully.");
 }
 
+//Checks if a user is currently logged in by checking if there is a current user in local storage.
 export function isLoggedIn() {
     return getCurrentUser() !== null;
 }
