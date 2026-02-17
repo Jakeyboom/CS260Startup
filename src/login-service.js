@@ -9,6 +9,8 @@ export function login(email, password) {
     const users = JSON.parse(localStorage.getItem("users")) || [];
     if(users.some((user) => user.email === email && user.password === password)) {
         console.log("User authenticated successfully.");
+        localStorage.setItem("currentUser", JSON.stringify({email}))
+
         return true;
     } else {
         console.log("Authentication failed. Invalid email or password.");
@@ -35,3 +37,12 @@ export function createAccount(email, password) {
     //TODO: Implement account creation and verification here.
 }
 
+export function getCurrentUser() {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    return currentUser ? currentUser.email : null;
+}
+
+export function logout() {
+    localStorage.removeItem("currentUser");
+    console.log("User logged out successfully.");
+}
