@@ -2,8 +2,13 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import '../../CSS/add-and-edit.css';
+import { isLoggedIn } from '../login-service.js';
 
 export function EditAssignment() {
+    if(!isLoggedIn()) {
+        return <main> <h2>Please log in to edit assignments. </h2> </main>
+    }
+
     const navigate = useNavigate();
 
     const saveChanges = () => {console.log("Save Channges requested"); navigate("/prioritizer")};

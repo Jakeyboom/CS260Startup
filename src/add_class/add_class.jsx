@@ -2,9 +2,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
+import { isLoggedIn } from '../login-service.js';
 
 export function AddClass() {
 
+    if(!isLoggedIn()) {
+        return <main> <h2>Please log in to add classes. </h2> </main>
+    }
 
     const navigate = useNavigate();
 

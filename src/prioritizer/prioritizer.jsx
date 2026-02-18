@@ -1,8 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from 'react-router-dom';
+import {isLoggedIn} from '../login-service.js';
 
 export function Prioritizer() {
+    if(!isLoggedIn()) {
+        return <main> <h2>Please log in to view the prioritizer. </h2> </main>
+    }
     return(
             <main> 
         

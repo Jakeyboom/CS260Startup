@@ -2,8 +2,12 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 import { useNavigate } from 'react-router-dom';
+import {isLoggedIn} from '../login-service.js';
 
 export function EditClass() {
+    if(!isLoggedIn()) {
+        return <main> <h2>Please log in to edit classes. </h2> </main>
+    }
 
     const navigate = useNavigate();
 

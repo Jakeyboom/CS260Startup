@@ -1,6 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
+import { logout } from './login-service.js';
+import { isLoggedIn } from './login-service.js';
 
 //This is the main app component that is rendered in index.jsx.
 //Here, I will integrate the basic app componenets.
@@ -48,7 +50,7 @@ export default function App() {
           <footer>
             <div id="footer-buttons-container">
 
-              <NavLink to="/" className="btn btn-secondary btn-lg footer-button">Logout</NavLink>
+              <NavLink to="/" className="btn btn-secondary btn-lg footer-button" onClick = { logout } >Logout</NavLink>
               <NavLink to="/about" className="btn btn-secondary btn-lg footer-button">About</NavLink>
 
 

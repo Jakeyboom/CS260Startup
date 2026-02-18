@@ -3,8 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 import { useNavigate } from 'react-router-dom';
 import { createAssignment } from '../assignment-service.js';
+import { isLoggedIn } from '../login-service.js';
 
 export function AddAssignment() {
+    if(!isLoggedIn()) {
+        return <main> <h2>Please log in to add assignments. </h2> </main>
+    }
+    
     const [assignmentName, setAssignmentName] = React.useState("");
     const [className, setClassName] = React.useState("");
     const [dueDate, setDueDate] = React.useState("");
