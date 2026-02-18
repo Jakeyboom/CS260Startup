@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
-import { isLoggedIn } from '../login-service.js';
+import { isLoggedIn, getCurrentUser, getCurrentUserClasses } from '../login-service.js';
+import { createClass } from '../class-service.js';
 
 export function AddClass() {
 
@@ -12,7 +13,18 @@ export function AddClass() {
 
     const navigate = useNavigate();
 
-    const saveChanges = () => {console.log("Save Changes requested"); navigate("/prioritizer")};
+    const saveChanges = (event) => {
+        debugger;
+        event.preventDefault();
+        console.log("Save Changes requested"); 
+        //Right here will check if a class with the same name already exists for the user.
+
+        if(createClass(event.target.currentClassName.value, event.target.difficulty.value)) {
+        navigate("/prioritizer")
+        } else {
+            console.log("Failed to create class. Please try again.");
+        };
+    }
     const cancelChanges = () => {navigate("/prioritizer")};
 
 
@@ -20,10 +32,10 @@ export function AddClass() {
     <main className="main-add-edit"> 
         
         
-        <form action="main.html" method="get" className="add-and-edit-form">
+        <form action="main.html" method="get" className="add-and-edit-form" onSubmit= { saveChanges }>
 
             <label className="add-edit-label" for="class-name">Class Name:</label>
-            <input type="text" id="class-name" name="className" required placeholder="Class name here" />
+            <input type="text" id="class-name" name="currentClassName" required placeholder="Class name here" />
 
 
             <fieldset>
@@ -45,7 +57,7 @@ export function AddClass() {
             </fieldset>
 
             <div className="add-buttons-container">
-                <button className="btn btn-primary btn" type="button" onClick={saveChanges}>Save Changes</button>
+                <button className="btn btn-primary btn" type="submit">Save Changes</button>
                 <button className="btn btn-primary btn" type="button" onClick={cancelChanges}>Cancel</button>
             </div>
             

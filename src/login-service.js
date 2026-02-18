@@ -2,7 +2,7 @@
 //Note that the temporary implementation will simply allow a user to login locally using a password, but in the future, this will be replaced with a more secure authentication method (some kind of hashing).
 
 export function login(email, password) {
-    debugger;
+
     //for now, this will just push the email and password to local storage and do a log.
     console.log('Attempting to log in with email:' + email + ', password: ' + password);
 
@@ -27,7 +27,7 @@ export function createAccount(email, password) {
     //Right here, I will check if the email is already in use; if not, I will create the account and push it to local storage.
 
     if(!users.some((user) => user.email === email)) {
-        localStorage.setItem("users", JSON.stringify([...users, {email, password}]));
+        localStorage.setItem("users", JSON.stringify([...users, {email, password, classes: []}]));
         return login(email, password);
     } else {
         console.log("Email is already in use.");
@@ -38,7 +38,6 @@ export function createAccount(email, password) {
 }
 
 export function getCurrentUser() {
-    debugger
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     console.log("Current user: " + (currentUser ? currentUser.email : "None"));
     return currentUser ? currentUser.email : null;
@@ -46,7 +45,6 @@ export function getCurrentUser() {
 
 //logs out the current user by removing the current user from local storage.
 export function logout() {
-    debugger
     localStorage.removeItem("currentUser");
     console.log("User logged out successfully.");
 }
@@ -54,4 +52,52 @@ export function logout() {
 //Checks if a user is currently logged in by checking if there is a current user in local storage.
 export function isLoggedIn() {
     return getCurrentUser() !== null;
+}
+
+export function getCurrentUserClasses() {
+    const email = getCurrentUser();
+
+    if(!email) {
+        console.log("No user is currently logged in. Cannot get classes.");
+        return [];
+    }
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const userObject = users.find((user) => user.email === email);
+
+    if(!userObject) {
+        console.log("User has not made an account (somehow). Please make an account and try again.");
+        return [];
+    }
+
+    return userObject.userClasses || [];;
+}
+
+export function pushClassToCurrentUser(classObject) {
+    const email = getCurrentUser();
+
+    if(!email) {
+        console.log("No user is currently logged in. Cannot push class.");
+        return false;
+    }
+
+}
+
+export function getCurrentUserObject() {
+    const email = getCurrentUser();
+    
+    if(!email) {
+        console.log("No user is currently logged in. Cannot retrieve user object");
+        return null;
+    }
+
+    const users = JSON.parse(localStorage.getItem("users)") || []);
+    const userObject = users.find((user) => user.email === email);
+
+    if(!userObject) {
+        console.log("User has not made an account (somehow). Please make an account and try again.");
+        return null;
+    }
+
+    return userObject;
 }
