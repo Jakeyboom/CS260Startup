@@ -10,6 +10,13 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
         return false;
     }
 
+    if(className === "" || assignmentName === "" || dueDate === "" || difficulty === "") {
+        console.log("All fields are required. Cannot create assignment.");
+        return false;
+    }
+
+    //Maybe implement some more validation here in the future (like checking if the due date is a valid date, etc.)
+
     const email = getCurrentUser();
 
     const classes = getCurrentUserClasses();
