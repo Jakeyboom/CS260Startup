@@ -3,6 +3,7 @@ import { getCurrentUserClasses } from "./class-service.js";
 import { getCurrentUser, isLoggedIn } from "./login-service.js";
 
 export function createAssignment(assignmentName, className, dueDate, difficulty) {
+    debugger
     console.log('Attempting to create assignment: ' + assignmentName + ', class: ' + className + ', due date: ' + dueDate +', difficulty: ' + difficulty);
     if(!isLoggedIn()) {
         console.log("No user is currently logged in. Cannot create assignment.");

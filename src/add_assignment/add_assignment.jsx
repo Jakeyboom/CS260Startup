@@ -14,14 +14,14 @@ export function AddAssignment() {
     const currentUserClasses = getCurrentUserClasses();
     
     const [assignmentName, setAssignmentName] = React.useState("");
-    const [className, setClassName] = React.useState("");
+    const [userClassName, setClassName] = React.useState("");
     const [dueDate, setDueDate] = React.useState("");
     const [difficulty, setDifficulty] = React.useState("");
 
     const navigate = useNavigate();
 
     const saveChanges = () => {
-        if(createAssignment(assignmentName, className, dueDate, difficulty)) {
+        if(createAssignment(assignmentName, userClassName, dueDate, difficulty)) {
             navigate("/prioritizer");
         } else {
             console.log("Failed to create assignment. Please try again.");
@@ -45,7 +45,8 @@ export function AddAssignment() {
                 <label className="add-edit-label" for="class-select">Select Class:</label>
                 <select id="class-select" name="classSelect" required onChange={(e) => setClassName(e.target.value)}>
                     
-                    {currentUserClasses.map((c) => <option key = {c.className} value = {c.className}>{c.className}</option>)}
+                    <option value="" disabled selected>-------</option>
+                    {currentUserClasses.map((c) => <option key={c.className} value={c.className}>{c.className}</option>)}
                 </select>
 
             </div>

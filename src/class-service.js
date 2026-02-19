@@ -4,7 +4,6 @@ import { getCurrentUser } from "./login-service.js";
 
 //Returns the array containing the classes of the current user.  If the user is not logged in or is logged in but has not made an account (somehow), this will return null.
 export function getCurrentUserClasses() {
-    debugger
     const email = getCurrentUser();
 
     if(!email) {
