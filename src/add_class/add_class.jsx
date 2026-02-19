@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
-import { isLoggedIn, getCurrentUser, getCurrentUserClasses } from '../login-service.js';
-import { createClass } from '../class-service.js';
+import { isLoggedIn, getCurrentUser } from '../login-service.js';
+import { pushClassToCurrentUser } from '../class-service.js';
 
 export function AddClass() {
 
@@ -19,8 +19,8 @@ export function AddClass() {
         console.log("Save Changes requested"); 
         //Right here will check if a class with the same name already exists for the user.
 
-        if(createClass(event.target.currentClassName.value, event.target.difficulty.value)) {
-        navigate("/prioritizer")
+        if(pushClassToCurrentUser({className: event.target.currentClassName.value, difficulty: event.target.difficulty.value, assignments: []})) {
+            navigate("/prioritizer")
         } else {
             console.log("Failed to create class. Please try again.");
         };
