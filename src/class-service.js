@@ -37,3 +37,14 @@ export function pushClassToCurrentUser(classObject) {
     console.log("Class pushed successfully.");
     return true;
 }
+
+
+//These functions will be implemented for editing and deleting classes.  For now, they will just be placeholders.
+
+export function editClass(className, newClassName, newDifficulty) {
+    console.log("Attempting to edit clase: " + className + ", new name: " + newClassName + ", new difficulty: " + newDifficulty);
+}
+
+export function deleteClass(className) {
+    console.log("Attempting to delete class: " + className);
+}

@@ -6,6 +6,7 @@ import { isLoggedIn, getCurrentUser } from '../login-service.js';
 import { pushClassToCurrentUser } from '../class-service.js';
 
 export function AddClass() {
+    //Theoretically, This should be almost done.  Save changes has been implemented, and the function to push checks to see if there is a duplicate class.  Cancel is cancel.
 
     if(!isLoggedIn()) {
         return <main> <h2>Please log in to add classes. </h2> </main>

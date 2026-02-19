@@ -1,7 +1,30 @@
 //Here will implement the assignment service that will allow a user to create, read, update, and delete assignments. For now, this will be a simple implementation that uses local storage to store the assignments, but in the future, this will be replaced with a more robust implementation that uses a backend server and database.
+import { getCurrentUserClasses } from "./class-service.js";
+import { getCurrentUser, isLoggedIn } from "./login-service.js";
 
 export function createAssignment(assignmentName, className, dueDate, difficulty) {
     console.log('Attempting to create assignment: ' + assignmentName + ', class: ' + className + ', due date: ' + dueDate +', difficulty: ' + difficulty);
+    if(!isLoggedIn()) {
+        console.log("No user is currently logged in. Cannot create assignment.");
+        return false;
+    }
+
+    const email = getCurrentUser();
+
+    const classes = getCurrentUserClasses();
+    //Right here, I will check if the class exists; if it does not, I will return false.
+    if(!classes.some((c) => c.className === className)) {
+        console.log("Class does not exist. Cannot create assignment.");
+        return false;
+    }
+
+    const classIndex = classes.findIndex((c) => c.className === className);
+    const newAssignment = {name: assignmentName, dueDate: dueDate, difficulty: difficulty};
+    classes[classIndex].assignments.push(newAssignment);
+
+    localStorage.setItem(`classes_${email}`, JSON.stringify(classes));
+
+
     console.log('Assignment created successfully.');
     return true;
 }

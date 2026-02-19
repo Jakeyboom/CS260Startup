@@ -34,7 +34,7 @@ export function AddAssignment() {
         <form action="main.html" method="get" className="add-and-edit-form">
 
             <label className="add-edit-label" for="assignment-name">Assignment Name:</label>
-            <input type="text" id="assignment-name" name="assignmentName" placeholder="Assignment name here" required />
+            <input type="text" id="assignment-name" name="assignmentName" placeholder="Assignment name here" required onChange = {(e) => setAssignmentName(e.target.value)}/>
             
 
 
