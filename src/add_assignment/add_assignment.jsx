@@ -61,15 +61,15 @@ export function AddAssignment() {
                     <legend>Difficulty</legend>
 
                     <label className="add-edit-label">
-                        <input type="radio" name="difficulty" value="0" required onChange={(e) => setDifficulty(e.target.value)}/> Easy
+                        <input type="radio" name="difficulty" value="easy" required onChange={(e) => setDifficulty(e.target.value)}/> Easy
                     </label>
 
                     <label className="add-edit-label">
-                        <input type="radio" name="difficulty" value="1" onChange={(e) => setDifficulty(e.target.value)}/> Medium
+                        <input type="radio" name="difficulty" value="medium" onChange={(e) => setDifficulty(e.target.value)}/> Medium
                     </label>
                 
                     <label className="add-edit-label">
-                        <input type="radio" name="difficulty" value="2" onChange={(e) => setDifficulty(e.target.value)}/> Hard
+                        <input type="radio" name="difficulty" value="hard" onChange={(e) => setDifficulty(e.target.value)}/> Hard
                     </label>
 
 

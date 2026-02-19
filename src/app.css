@@ -40,7 +40,6 @@ main {
 li {
     padding: 0.5em;
     margin:0.3em;
-    background-color: lightgreen;
     border-radius: 0.4em;
     border: solid thin black;
     font-size: 1em;
@@ -86,6 +85,18 @@ label {
 
 .assignments-section {
     flex: 1;
+}
+
+.assignment_easy {
+    background-color: lightgreen;
+}
+
+.assignment_medium {
+    background-color: lightyellow;
+}
+
+.assignment_hard {
+    background-color: lightsalmon;
 }
 
 #classes-section {
