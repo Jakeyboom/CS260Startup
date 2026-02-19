@@ -27,9 +27,9 @@ export function Prioritizer() {
                     <span id="due-date" className="due-date"> Due 1/1/2000</span>
                 </li> */}
 
-                {currentUserClasses.map((c) => c.assignments.map((a) => <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} value={c.className + " $$$ASSSIGNMENT$$$ " + a.name}>
-                    <NavLink to="/edit_assignment">{a.name}</NavLink>
-                    <NavLink to="/edit_class">{c.className}</NavLink>
+                {currentUserClasses.map((c) => c.assignments.map((a) => <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name}>
+                    <NavLink to={"/edit_assignment/" + c.className + "/" + a.name}>{a.name}</NavLink>
+                    <NavLink to={"/edit_class/" + c.className}>{c.className}</NavLink>
                     <span id="due-date" className="due-date"> Due {a.dueDate}</span>
                 </li>))}
         </ol>
