@@ -2,11 +2,17 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from 'react-router-dom';
 import {isLoggedIn} from '../login-service.js';
+import { getCurrentUserClasses } from '../class-service.js';
 
 export function Prioritizer() {
+ 
+
     if(!isLoggedIn()) {
         return <main> <h2>Please log in to view the prioritizer. </h2> </main>
     }
+
+    const currentUserClasses = getCurrentUserClasses();
+
     return(
             <main> 
         
@@ -15,80 +21,17 @@ export function Prioritizer() {
             <div className="assignments-section" id="prioritizer-section">
             <label for="prioritizer"><i>Prioritizer:</i></label>
             <ol id="prioritizer" className="classes">
-                <li>                    
+                {/* <li>                    
                     <NavLink to="/edit_assignment">Assignment 1</NavLink>
                     <NavLink to="/edit_class">Math</NavLink>
                     <span id="due-date" className="due-date"> Due 1/1/2000</span>
-                </li>
+                </li> */}
 
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 1</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/1/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 2</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/3/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 3</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/5/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 4</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/7/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 5</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/9/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 2</NavLink>
-                    <NavLink to="/edit_class">Math</NavLink>
-                    <span className="due-date"> Due 1/9/2000</span>
-                </li>
-
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 1</NavLink>
-                    <NavLink to="/edit_class">Math</NavLink>
-                    <span className="due-date"> Due 1/1/2000</span>
-                </li>
-
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 1</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/1/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 2</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/3/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 3</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/5/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 4</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/7/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 5</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                    <span className="due-date"> Due 1/9/2000</span>
-                </li>
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 2</NavLink>
-                    <NavLink to="/edit_class">Math</NavLink>
-                    <span className="due-date"> Due 1/9/2000</span>
-                </li>
-
+                {currentUserClasses.map((c) => c.assignments.map((a) => <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} value={c.className + " $$$ASSSIGNMENT$$$ " + a.name}>
+                    <NavLink to="/edit_assignment">{a.name}</NavLink>
+                    <NavLink to="/edit_class">{c.className}</NavLink>
+                    <span id="due-date" className="due-date"> Due {a.dueDate}</span>
+                </li>))}
         </ol>
         </div>
 
@@ -144,4 +87,5 @@ export function Prioritizer() {
     </main>
 
     )
+    
 }
