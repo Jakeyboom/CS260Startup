@@ -4,11 +4,14 @@ import '../../CSS/add-and-edit.css';
 import { useNavigate } from 'react-router-dom';
 import { createAssignment } from '../assignment-service.js';
 import { isLoggedIn } from '../login-service.js';
+import { getCurrentUserClasses } from '../class-service.js'; 
 
 export function AddAssignment() {
     if(!isLoggedIn()) {
         return <main> <h2>Please log in to add assignments. </h2> </main>
     }
+
+    const currentUserClasses = getCurrentUserClasses();
     
     const [assignmentName, setAssignmentName] = React.useState("");
     const [className, setClassName] = React.useState("");
@@ -41,10 +44,8 @@ export function AddAssignment() {
             <div>
                 <label className="add-edit-label" for="class-select">Select Class:</label>
                 <select id="class-select" name="classSelect" required onChange={(e) => setClassName(e.target.value)}>
-
-                    <option value="math">Math</option>
-                    <option value="history">History</option>
-                    <option value="geography">Geography</option>
+                    
+                    {currentUserClasses.map((c) => <option key = {c.className} value = {c.className}>{c.className}</option>)}
                 </select>
 
             </div>
