@@ -38,31 +38,18 @@ export function Prioritizer() {
          <div className="assignments-section">
             <label for="due-today"><i>Due Today:</i></label>
             <ol id="due-today" className="classes">
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 1</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                </li>
-                                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 2</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                </li>
-                                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 1</NavLink>
-                    <NavLink to="/edit_class">Math</NavLink>
-                </li>
-
-                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 1</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                </li>
-                                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 2</NavLink>
-                    <NavLink to="/edit_class">Geography</NavLink>
-                </li>
-                                <li>                    
-                    <NavLink to="/edit_assignment">Assignment 1</NavLink>
-                    <NavLink to="/edit_class">Math</NavLink>
-                </li>
+                {currentUserClasses.map((c) => c.assignments.map((a) => {
+                    debugger;
+                    //This might be better to store globally.
+                    const today = new Date().toLocaleDateString('en-CA').split('T')[0];
+                    if(a.dueDate === today) {
+                        return <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
+                            <NavLink to={"/edit_assignmet/" + c.className + "/" + a.name}>{a.name}</NavLink>
+                            <NavLink to={"/edit_class/" + c.className}>{c.className}</NavLink>
+                            <span id="due-date" className="due-date"> Due {a.dueDate}</span>
+                        </li>
+                    }
+                }))}
 
             </ol>
          </div>

@@ -18,7 +18,7 @@ export function EditClass() {
     return(
 
          <main className="main-add-edit">
-            <h2 className="assignment-or-class-title">Selected Class: Math</h2>
+            <h2 className="assignment-or-class-title">Selected Class: Math</h2> 
  
         <form action="main.html" method="get" className="add-and-edit-form">
 

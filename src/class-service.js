@@ -44,6 +44,16 @@ export function editClass(className, newClassName, newDifficulty) {
     console.log("Attempting to edit clase: " + className + ", new name: " + newClassName + ", new difficulty: " + newDifficulty);
 }
 
-export function deleteClass(className) {
+export function deleteClass(classNameToDelete) {
     console.log("Attempting to delete class: " + className);
+    oldClasses = getCurrentUserClasses();
+
+    if(oldClasses.some((c) => c.className === classNameToDelete)) {
+        newClasses = oldClasses.filter((c) => c.className !== classNameToDelete);
+        localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(newClasses));
+        console.log("Class deleted successfully.");
+        return true;
+    } else {
+        return false;
+    }
 }

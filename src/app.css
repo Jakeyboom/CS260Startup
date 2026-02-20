@@ -41,6 +41,7 @@ li {
     padding: 0.5em;
     margin:0.3em;
     border-radius: 0.4em;
+    background-color: lightblue;
     border: solid thin black;
     font-size: 1em;
     color: black;
@@ -92,7 +93,7 @@ label {
 }
 
 .assignment_medium {
-    background-color: lightyellow;
+    background-color: yellow;
 }
 
 .assignment_hard {
@@ -119,6 +120,8 @@ label {
     flex-direction: row;
     justify-content: center;
     margin:1em;
+    max-height: 3.5em;
+    NEED TO FIX THIS
 }
 
 .footer-button {
