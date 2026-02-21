@@ -40,20 +40,34 @@ export function pushClassToCurrentUser(classObject) {
 
 //These functions will be implemented for editing and deleting classes.  For now, they will just be placeholders.
 
-export function editClass(className, newClassName, newDifficulty) {
-    console.log("Attempting to edit clase: " + className + ", new name: " + newClassName + ", new difficulty: " + newDifficulty);
+export function handleEditClass(oldClassName, newClassName, newDifficulty) {
+    console.log("Attempting to edit clase: " + oldClassName + ", new name: " + newClassName + ", new difficulty: " + newDifficulty);
+    debugger;
+
+    let userClasses = getCurrentUserClasses();
+
+    for(let c of userClasses) {
+        if(c.className === oldClassName) {
+            c.className = newClassName;
+            c.difficulty = newDifficulty
+            localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(userClasses))
+            return true;
+        }
+    }
+    return false;
 }
 
-export function deleteClass(classNameToDelete) {
-    console.log("Attempting to delete class: " + className);
-    oldClasses = getCurrentUserClasses();
-
+export function handleDeleteClass(classNameToDelete) {
+    console.log("Attempting to delete class: " + classNameToDelete);
+    const oldClasses = getCurrentUserClasses();
+    debugger;
     if(oldClasses.some((c) => c.className === classNameToDelete)) {
-        newClasses = oldClasses.filter((c) => c.className !== classNameToDelete);
+        let newClasses = oldClasses.filter((c) => c.className !== classNameToDelete);
         localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(newClasses));
         console.log("Class deleted successfully.");
         return true;
     } else {
+        console.log("Class not found.  Cannot delete class.")
         return false;
     }
 }
