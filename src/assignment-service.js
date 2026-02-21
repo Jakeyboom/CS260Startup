@@ -74,7 +74,34 @@ export function handleEditAssignment(currentAssignmentName, currentClassName, ne
     return false;
 }
 
-export function handleDeleteAssignment(assignmentName, className) {
-    console.log('Attempting to delete assignment: ' + assignmentName + ', class: ' + className);
-    return true;
+export function handleDeleteAssignment(currentAssignmentName, currentClassName) {
+    debugger;
+    console.log('Attempting to delete assignment: ' + currentAssignmentName + ', class: ' + currentClassName);
+    let currentClasses = getCurrentUserClasses();
+    if(currentAssignmentName === "" || currentClassName === "") {
+        console.log("All fields are required. Cannot delete assignment.");
+        return false;
+    } 
+
+    if(!currentClasses.some((c) => c.className === currentClassName)) {
+        console.log("Could not find class. Cannot delete assignment.");
+        return false;
+    }
+
+    for (let c of currentClasses) {
+        if(c.className === currentClassName) {
+            if(!c.assignments.some((a) => a.name === currentAssignmentName)) {
+                console.log("could not find assignment. Cannot delete assignment.");
+                return false;
+            } else {
+                c.assignments = c.assignments.filter((a) => a.name !== currentAssignmentName);
+                localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(currentClasses));
+                console.log("Found and deleted assignment successfully.");
+                return true;
+            }
+        }
+    }
+
+    console.log("Something went wrong.  Could not delete assignment.");
+    return false;
 }

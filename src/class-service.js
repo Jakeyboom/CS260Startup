@@ -42,8 +42,6 @@ export function pushClassToCurrentUser(classObject) {
 
 export function handleEditClass(oldClassName, newClassName, newDifficulty) {
     console.log("Attempting to edit clase: " + oldClassName + ", new name: " + newClassName + ", new difficulty: " + newDifficulty);
-    debugger;
-
     let userClasses = getCurrentUserClasses();
 
     for(let c of userClasses) {

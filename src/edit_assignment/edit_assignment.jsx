@@ -25,16 +25,18 @@ export function EditAssignment() {
     const saveChanges = (event) => {
         event.preventDefault();
         console.log("Save Changes requested in edit_assignment.jsx" + `\nProposed Changes: AssignmentName: ${newAssignmentName} \n ClassName: ${newClassName} \n DueDate: ${newDueDate} \n Difficulty: ${newDifficulty}`);
-        if(handleEditAssignment()) {
+        if(handleEditAssignment(currentAssignmentName, currentClassName, newAssignmentName, newClassName, newDueDate, newDifficulty)) {
             navigate("/prioritizer")
         }
-
     };
 
 
     const deleteAssignment = () => {
-        console.log("Delete Assignment requested"); 
-        navigate("/prioritizer")};
+        console.log("Delete Assignment requested");
+        if(handleDeleteAssignment(currentAssignmentName, currentClassName)) {
+            navigate("/prioritizer");
+        }
+    };
 
     const cancelChanges = () => {navigate("/prioritizer")};
     return(
