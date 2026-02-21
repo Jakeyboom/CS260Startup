@@ -37,10 +37,12 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
     return true;
 }
 
-export function editAssignment(assignmentId, assignmentName, className, dueDate) {
+export function handleEditAssignment(assignmentId, assignmentName, className, dueDate) {
     console.log('Attempting to edit assignment: ' + assignmentId + ', new name: ' + assignmentName + ', new class: ' + className + ', new due date: ' + dueDate);
+    return true;
 }
 
-export function deleteAssignment(assignmentName, className) {
+export function handleDeleteAssignment(assignmentName, className) {
     console.log('Attempting to delete assignment: ' + assignmentName + ', class: ' + className);
+    return true;
 }
