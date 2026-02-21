@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../CSS/add-and-edit.css';
+import { getCurrentUserClasses } from '../class-service.js';
 import { isLoggedIn } from '../login-service.js';
 import { handleEditAssignment, handleDeleteAssignment } from '../assignment-service.js';
 
@@ -18,12 +19,16 @@ export function EditAssignment() {
     const [newDueDate, setNewDueDate] = React.useState("");
     const [newDifficulty, setNewDifficulty] = React.useState("");
     const { currentClassName, currentAssignmentName } = useParams();
+    const currentUserClasses = getCurrentUserClasses();
     console.log("Current edit class parameters: " + currentClassName + ", " + currentAssignmentName);
 
     const saveChanges = (event) => {
         event.preventDefault();
-        console.log("Save Changes requested in edit_assignment.jsx"); 
-        navigate("/prioritizer")
+        console.log("Save Changes requested in edit_assignment.jsx" + `\nProposed Changes: AssignmentName: ${newAssignmentName} \n ClassName: ${newClassName} \n DueDate: ${newDueDate} \n Difficulty: ${newDifficulty}`);
+        if(handleEditAssignment()) {
+            navigate("/prioritizer")
+        }
+
     };
 
 
@@ -35,36 +40,35 @@ export function EditAssignment() {
     return(
     <main className="main-add-edit">
 
-        <h2 className="assignment-or-class-title">Selected Assignment: Assignment 3</h2>
+        <h2 className="assignment-or-class-title">Selected Assignment: {currentAssignmentName}</h2>
 
         <form action="main.html" method="get" className="add-and-edit-form" onSubmit={saveChanges}>
 
             
 
             <label className="add-edit-label" for="change-assignment-name">Change Assignment Name</label>
-            <input type="text" id="change-assignment-name" name="changeAssignmentName" placeholder="Assignment name here" required />
+            <input type="text" id="change-assignment-name" name="changeAssignmentName" onChange={(e) => setNewAssignmentName(e.target.value)} placeholder="Assignment name here" required />
             
 
 
             <div>
                 <label className="add-edit-label" for="class-change">Change Class:</label>
-                <select id="class-change" name="classChange" required>
-
-                    <option disabled selected>----</option>
-                    <option value="math">Math</option>
-                    <option value="history">History</option>
-                    <option value="geography">Geography</option>
+                <select id="class-select" name="classSelect" required onChange={(e) => setNewClassName(e.target.value)}>
+                    
+                    <option value="" disabled selected>-------</option>
+                    {currentUserClasses.map((c) => <option key={c.className} value={c.className}>{c.className}</option>)}
                 </select>
+
 
             </div>
 
 
             <label className="add-edit-label" for="change-due-date">Change Due Date:</label>
-            <input type="date" id="change-due-date" name="changeDueDate" required />
+            <input type="date" id="change-due-date" name="changeDueDate" onChange = {(e) => setNewDueDate(e.target.value)} required />
 
 
             <div>
-                <fieldset>
+                <fieldset onChange= {(e) => setNewDifficulty(e.target.value)}>
                     <legend>Difficulty</legend>
 
                     <label className="add-edit-label">

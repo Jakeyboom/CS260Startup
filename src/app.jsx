@@ -38,7 +38,7 @@ export default function App() {
           <Route path='/day' element={<DayView />} />
           <Route path='/add_assignment' element={<AddAssignment />} />
           <Route path='/add_class' element={<AddClass />} />
-          <Route path='/edit_assignment/:currentAssignmentName/:currentClassName' element={<EditAssignment />} />
+          <Route path='/edit_assignment/:currentClassName/:currentAssignmentName' element={<EditAssignment />} />
           <Route path='/edit_class/:currentClassName' element={<EditClass />} />
           <Route path='/day' element={<DayView />} />
           <Route path='/*' element={<NotFound />} />

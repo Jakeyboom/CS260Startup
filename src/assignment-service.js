@@ -37,9 +37,41 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
     return true;
 }
 
-export function handleEditAssignment(assignmentId, assignmentName, className, dueDate) {
-    console.log('Attempting to edit assignment: ' + assignmentId + ', new name: ' + assignmentName + ', new class: ' + className + ', new due date: ' + dueDate);
-    return true;
+export function handleEditAssignment(currentAssignmentName, currentClassName, newAssignmentName, newClassName, newDueDate, newDifficulty) {
+    console.log(`Attempting to edit assignment${currentClassName}: ` + currentAssignmentName + ', new name: ' + newAssignmentName + ', new class: ' + newClassName + ', new due date: ' + newDueDate + ', new difficulty: ' + newDifficulty);
+
+    if(currentAssignmentName === "" || currentClassName === "" || newAssignmentName === "" || newClassName === "" || newDueDate === "" || newDifficulty === "") {
+        console.log("All fields are required. Cannot edit assignment.");
+        return false;
+    }
+    let currentClasses = getCurrentUserClasses();
+
+    if(!currentClasses.some((c) => c.className === currentClassName)) {
+        console.log("Could not find class. Cannot edit assignment.");
+        return false;
+    }
+
+    for (let c of currentClasses) {
+        if(!c.assignments.some((a) => a.name === currentAssignmentName)) {
+            continue;
+        }
+
+        for(let assignment of c.assignments) {
+            if(assignment.name === currentAssignmentName) {
+                assignment.name = newAssignmentName;
+                assignment.dueDate = newDueDate;
+                assignment.difficulty = newDifficulty;
+
+                localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(currentClasses));
+
+                console.log("Found and edited assignment successfully.");
+                return true;
+            }
+        }
+    }
+    
+    console.log(`Could not find the assignment specified: ${currentAssignmentName} in class ${currentClassName}. Cannot edit assignment.`);
+    return false;
 }
 
 export function handleDeleteAssignment(assignmentName, className) {
