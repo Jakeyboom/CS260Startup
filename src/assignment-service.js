@@ -10,7 +10,7 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
         return false;
     }
 
-    if(className === "" || assignmentName === "" || dueDate === "" || difficulty === "") {
+    if(!confirmStringIsValid(className) || !confirmStringIsValid(assignmentName) || !confirmStringIsValid(dueDate) || !confirmStringIsValid(difficulty)) {
         console.log("All fields are required. Cannot create assignment.");
         return false;
     }
@@ -40,7 +40,7 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
 export function handleEditAssignment(currentAssignmentName, currentClassName, newAssignmentName, newClassName, newDueDate, newDifficulty) {
     console.log(`Attempting to edit assignment${currentClassName}: ` + currentAssignmentName + ', new name: ' + newAssignmentName + ', new class: ' + newClassName + ', new due date: ' + newDueDate + ', new difficulty: ' + newDifficulty);
 
-    if(currentAssignmentName === "" || currentClassName === "" || newAssignmentName === "" || newClassName === "" || newDueDate === "" || newDifficulty === "") {
+    if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName) || !confirmStringIsValid(newAssignmentName) || !confirmStringIsValid(newClassName) || !confirmStringIsValid(newDueDate) || !confirmStringIsValid(newDifficulty)) {
         console.log("All fields are required. Cannot edit assignment.");
         return false;
     }
@@ -78,7 +78,7 @@ export function handleDeleteAssignment(currentAssignmentName, currentClassName) 
     debugger;
     console.log('Attempting to delete assignment: ' + currentAssignmentName + ', class: ' + currentClassName);
     let currentClasses = getCurrentUserClasses();
-    if(currentAssignmentName === "" || currentClassName === "") {
+    if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName)) {
         console.log("All fields are required. Cannot delete assignment.");
         return false;
     } 
@@ -104,4 +104,28 @@ export function handleDeleteAssignment(currentAssignmentName, currentClassName) 
 
     console.log("Something went wrong.  Could not delete assignment.");
     return false;
+}
+
+function confirmStringIsValid(inputString) {
+    if(inputString.length === 0) {
+        return false;
+    }
+
+    const inputStringCharacters = inputString.split('');
+    //Here, we will check if the string contains only whitespace characters; if it is only whitespace characters, we will return false.
+    let hasNonWhitespaceCharacter = false;
+    for (let character of inputStringCharacters) {
+        if (character.trim() === '') {
+            continue;
+        } else {
+            hasNonWhitespaceCharacter = true;
+            break;
+        }
+    }
+
+    if(!hasNonWhitespaceCharacter) {
+        return false;
+    }
+
+    return true;
 }
