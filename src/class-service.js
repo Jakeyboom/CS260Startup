@@ -68,6 +68,7 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty) {
 }
 
 export function handleDeleteClass(classNameToDelete) {
+    debugger;
     if(!confirmStringIsValid(classNameToDelete)) {
         console.log("Class name is required. Cannot delete class.");
         return false;

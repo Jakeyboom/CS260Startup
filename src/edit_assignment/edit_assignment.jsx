@@ -44,7 +44,7 @@ export function EditAssignment() {
     return(
     <main className="main-add-edit">
 
-        <h2 className="assignment-or-class-title">Selected Assignment: {currentAssignmentName}</h2>
+        <h2 className="assignment-or-class-title">Selected Assignment: {currentAssignmentName} in Class: {currentClassName}</h2>
 
         <form action="main.html" method="get" className="add-and-edit-form" onSubmit={saveChanges}>
 
