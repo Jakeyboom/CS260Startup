@@ -106,7 +106,7 @@ export function handleDeleteAssignment(currentAssignmentName, currentClassName) 
     return false;
 }
 
-function confirmStringIsValid(inputString) {
+export function confirmStringIsValid(inputString) {
     if(inputString.length === 0) {
         return false;
     }
