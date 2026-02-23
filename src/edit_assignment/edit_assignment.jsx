@@ -18,8 +18,10 @@ export function EditAssignment() {
     const [newAssignmentName, setNewAssignmentName] = React.useState("");
     const [newDueDate, setNewDueDate] = React.useState("");
     const [newDifficulty, setNewDifficulty] = React.useState("");
-    const { currentClassName, currentAssignmentName } = useParams();
+    const { currentClassNameEncoded, currentAssignmentNameEncoded } = useParams();
     const currentUserClasses = getCurrentUserClasses();
+    const currentClassName = decodeURIComponent(currentClassNameEncoded);
+    const currentAssignmentName = decodeURIComponent(currentAssignmentNameEncoded);
     console.log("Current edit class parameters: " + currentClassName + ", " + currentAssignmentName);
 
     const saveChanges = (event) => {

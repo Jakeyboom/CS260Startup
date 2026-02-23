@@ -11,7 +11,8 @@ export function EditClass() {
     }
 
     const navigate = useNavigate();
-    const { currentClassName } = useParams();
+    const { currentClassNameEncoded } = useParams();
+    const currentClassName = decodeURIComponent(currentClassNameEncoded);
     const [newDifficulty, setNewDifficulty] = React.useState("");
     const [newClassName, setNewClassName] = React.useState("");
 

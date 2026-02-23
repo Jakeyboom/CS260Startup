@@ -28,8 +28,8 @@ export function Prioritizer() {
                 </li> */}
 
                 {currentUserClasses.map((c) => c.assignments.map((a) => <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
-                    <NavLink to={"/edit_assignment/" + c.className + "/" + a.name}>{a.name}</NavLink>
-                    <NavLink to={"/edit_class/" + c.className}>{c.className}</NavLink>
+                    <NavLink to={"/edit_assignment/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
+                    <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
                     <span id="due-date" className="due-date"> Due {a.dueDate}</span>
                 </li>))}
         </ol>
@@ -44,8 +44,8 @@ export function Prioritizer() {
                     const today = new Date().toLocaleDateString('en-CA').split('T')[0];
                     if(a.dueDate === today) {
                         return <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
-                            <NavLink to={"/edit_assignmet/" + c.className + "/" + a.name}>{a.name}</NavLink>
-                            <NavLink to={"/edit_class/" + c.className}>{c.className}</NavLink>
+                            <NavLink to={"/edit_assignmet/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
+                            <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
                             <span id="due-date" className="due-date"> Due {a.dueDate}</span>
                         </li>
                     }
