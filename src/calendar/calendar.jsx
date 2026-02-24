@@ -10,15 +10,17 @@ import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 
 const localizer = momentLocalizer(moment);
-const myEventsList = getCurrentUserClasses().flatMap((c) => c.assignments.map((a) => {
+
+export function Calendar() {
+
+  const myEventsList = getCurrentUserClasses().flatMap((c) => c.assignments.map((a) => {
         return {
           title: a.name + " - " + c.className,
-          start: new Date(a.dueDate),
-          end: new Date(a.dueDate)
+          start: new Date(a.dueDate + "T23:59:00"),
+          end: new Date(a.dueDate + "T23:59:00")
         }
       })) || [];
 
-export function Calendar() {
   debugger;
     const myCalendar = (props) => (
     <div>
@@ -27,6 +29,8 @@ export function Calendar() {
       events={myEventsList || []}
       startAccessor="start"
       endAccessor="end"
+      selectable="true"
+      defaultView="month"
       views={['month']}
       style={{ height: "60vh", width: "80vw", flex: 1
        }}
