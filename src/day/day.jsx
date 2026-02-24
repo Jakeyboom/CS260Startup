@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { getCurrentUserClasses } from '../class-service.js';
 import { isLoggedIn } from '../login-service.js';
 
@@ -10,7 +10,8 @@ export function DayView() {
         return <main> <h2>Please log in to view specific days. </h2> </main>
     }
 
-    const [dateToView, setDateToView] = React.useState("");
+    const {selectedDay} = useParams();
+    const [dateToView, setDateToView] = React.useState(selectedDay || "");
     const currentUserClasses = getCurrentUserClasses();
     const seeDay = (event) => {
         event.preventDefault();
