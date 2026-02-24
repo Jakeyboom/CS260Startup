@@ -16,6 +16,12 @@ body {
     margin: 1em;
 }
 
+#calendar {
+    flex: 1;
+    width: 80vw;
+    height: 80vh;
+}
+
 #calendar-buttons-container {
     display: flex;
     flex-direction: column;

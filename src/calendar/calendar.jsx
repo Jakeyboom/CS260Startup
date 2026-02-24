@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink } from 'react-router-dom';
+import { getCurrentUserClasses } from '../class-service.js';
 import '../../CSS/calendar.css';
 import '../../public/calendar.jpeg';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -9,17 +10,26 @@ import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 
 const localizer = momentLocalizer(moment);
-const myEventsList = [];
+const myEventsList = getCurrentUserClasses().flatMap((c) => c.assignments.map((a) => {
+        return {
+          title: a.name + " - " + c.className,
+          start: new Date(a.dueDate),
+          end: new Date(a.dueDate)
+        }
+      })) || [];
 
 export function Calendar() {
+  debugger;
     const myCalendar = (props) => (
-        <div>
-    <BigCalendar
+    <div>
+    <BigCalendar id="calendar"
       localizer={localizer}
       events={myEventsList || []}
       startAccessor="start"
       endAccessor="end"
-      style={{ height: 500 }}
+      views={['month']}
+      style={{ height: "60vh", width: "80vw", flex: 1
+       }}
     />
   </div>
     )
@@ -45,7 +55,6 @@ export function Calendar() {
 
 
 
-      <img src="calendar.jpeg" alt="Example Calendar" id="calendar-placeholder" />
     </main>
 
     )
