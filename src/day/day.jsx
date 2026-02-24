@@ -40,12 +40,15 @@ export function DayView() {
         <ul className="classes" id="assignments-due-today">
             {/* Here, I will list all the assignments that are due on the selected day. */}
             {
-            currentUserClasses.map((c) => c.assignments.map((a) => {
-                if(a.dueDate === dateToView) {
-                    return <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
-                        <NavLink to={"/edit_assignment/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
-                        <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
-                    </li>
+                currentUserClasses.some((c) => c.assignments.some((a) => a.dueDate !== dateToView)) ? <li>No Assignments Due on this Day!</li> :
+            
+
+                currentUserClasses.map((c) => c.assignments.map((a) => {
+                    if(a.dueDate === dateToView) {
+                        return <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
+                            <NavLink to={"/edit_assignment/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
+                            <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
+                        </li>
                 }
             }))}
         </ul>                
