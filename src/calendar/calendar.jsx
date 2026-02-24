@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { getCurrentUserClasses } from '../class-service.js';
 import '../../CSS/calendar.css';
 import '../../public/calendar.jpeg';
@@ -12,7 +12,7 @@ import moment from 'moment';
 const localizer = momentLocalizer(moment);
 
 export function Calendar() {
-
+  const navigate = useNavigate();
   const myEventsList = getCurrentUserClasses().flatMap((c) => c.assignments.map((a) => {
         return {
           title: a.name + " - " + c.className,
@@ -21,21 +21,24 @@ export function Calendar() {
         }
       })) || [];
 
-  debugger;
     const myCalendar = (props) => (
     <div>
-    <BigCalendar id="calendar"
-      localizer={localizer}
-      events={myEventsList || []}
-      startAccessor="start"
-      endAccessor="end"
-      selectable="true"
-      defaultView="month"
-      views={['month']}
-      style={{ height: "60vh", width: "80vw", flex: 1
-       }}
-    />
-  </div>
+      <BigCalendar id="calendar"
+        localizer={localizer}
+        events={myEventsList || []}
+        startAccessor="start"
+        endAccessor="end"
+        selectable={true}
+        defaultView="month"
+        views={['month']}
+        style={{ height: "60vh", width: "80vw", flex: 1
+          }}
+        onSelectSlot= {(slotInfo) => {
+          debugger;
+          console.log("Selected slot: ", slotInfo);
+          navigate("/day/" + slotInfo.start.toISOString().split('T')[0])}}
+      />
+    </div>
     )
 
     
@@ -43,15 +46,15 @@ export function Calendar() {
 
     return(
     <main className="main-calendar"> 
-        <p>TODO: Implement calendar functionality using the Google Calendar API</p>
-        <p>For now, this page is a placeholder.  Please click on the button "Day View" to see what the day view would look like, as well as reference the image for basic design.</p>
+        <p>Please click on the button "Search" to search for assignments due on a specific day.</p>
+        <p>Optionally, you can click on a specific date in the calendar to view all assignments for that day.</p>
 
  
         
 
 
         <div id="calendar-buttons-container">
-            <NavLink to='/day' className="btn btn-primary btn">Day View</NavLink>
+            <NavLink to='/day' className="btn btn-primary btn">Search</NavLink>
             <NavLink to='/prioritizer' className="btn btn-primary btn">Return to Overview</NavLink>
         </div>
 

@@ -5,6 +5,7 @@ import { getCurrentUserClasses } from '../class-service.js';
 import { isLoggedIn } from '../login-service.js';
 
 export function DayView() {
+    debugger;
     if(!isLoggedIn()) {
         return <main> <h2>Please log in to view specific days. </h2> </main>
     }
@@ -14,6 +15,10 @@ export function DayView() {
     const seeDay = (event) => {
         event.preventDefault();
         // Logic for viewing the selected day
+    }
+
+    const checkIfAssignmentsDueOnDay = (day) => {
+
     }
 
     if(currentUserClasses.length === 0) {
@@ -39,10 +44,11 @@ export function DayView() {
         <label for="assignments-due-today">Assignments due on {dateToView}</label>
         <ul className="classes" id="assignments-due-today">
             {/* Here, I will list all the assignments that are due on the selected day. */}
+            {}
             {
-                currentUserClasses.some((c) => c.assignments.some((a) => a.dueDate !== dateToView)) ? <li>No Assignments Due on this Day!</li> :
-            
-
+               currentUserClasses.some((c) => c.assignments.some((a) => a.dueDate === dateToView)) ? 
+        
+  
                 currentUserClasses.map((c) => c.assignments.map((a) => {
                     if(a.dueDate === dateToView) {
                         return <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
@@ -50,7 +56,8 @@ export function DayView() {
                             <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
                         </li>
                 }
-            }))}
+            })) : <li>No assignments due on this day!</li>
+        }
         </ul>                
         
         <form action="main.html" method="get" id="return-button-form">
