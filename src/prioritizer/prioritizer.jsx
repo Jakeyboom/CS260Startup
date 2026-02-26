@@ -47,11 +47,6 @@ export function Prioritizer() {
             <div className="assignments-section" id="prioritizer-section">
             <label for="prioritizer"><i>Prioritizer:</i></label>
             <ol id="prioritizer" className="classes">
-                {/* <li>                    
-                    <NavLink to="/edit_assignment">Assignment 1</NavLink>
-                    <NavLink to="/edit_class">Math</NavLink>
-                    <span id="due-date" className="due-date"> Due 1/1/2000</span>
-                </li> */}
 
                 {currentUserClasses.length === 0 ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignmentsSortedByDueDate.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
                     <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
@@ -64,7 +59,10 @@ export function Prioritizer() {
          <div className="assignments-section">
             <label for="due-today"><i>Due Today:</i></label>
             <ol id="due-today" className="classes">
-                {currentUserClasses.map((c) => c.assignments.map((a) => {
+
+
+                {
+                currentUserClasses.some((c) => c.assignments.some((a) => a.dueDate === new Date().toLocaleDateString('en-CA').split('T')[0])) ? currentUserClasses.map((c) => c.assignments.map((a) => {
                     //This might be better to store globally.
                     const today = new Date().toLocaleDateString('en-CA').split('T')[0];
                     if(a.dueDate === today) {
@@ -74,7 +72,10 @@ export function Prioritizer() {
                             <span id="due-date" className="due-date"> Due {a.dueDate}</span>
                         </li>
                     }
-                }))}
+                })) : <li>No Assignments Due Today!  Enjoy your day</li>
+                
+                
+                }
 
             </ol>
          </div>
