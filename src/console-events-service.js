@@ -29,7 +29,7 @@ class ConsoleEventNotifier {
             let userClassName = "MATH 210";
             let userAssignmentName = "Section 1 HW";
             this.broadcastEvent(userName, randomEventType, userClassName, userAssignmentName);
-        }, 50);
+        }, 1000);
     }
 
 

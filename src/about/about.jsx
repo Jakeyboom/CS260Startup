@@ -22,8 +22,8 @@ export function About() {
         //Here, I will add code to display the event in a nice format on the about page.  This will likely involve creating a new React component to represent each console message, and then adding that component to the page whenever a new event is received.
         setConsoleMessages(prevMessages => {
             let newMessages = [message, ...prevMessages];
-            if(newMessages.length > 5) {
-                newMessages = newMessages.slice(1, 5);
+            if(newMessages.length > 4) {
+                newMessages = newMessages.slice(0, 4);
             }
             return newMessages;
         });
