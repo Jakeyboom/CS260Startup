@@ -3,9 +3,55 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/calendar.css'
 import { Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import { ConsoleMessage, ConsoleNotifier } from '../console-events-service.js';
 
 
 export function About() {
+
+    const [consoleMessages, setConsoleMessages] = React.useState([]);
+    React.useEffect(() => {
+        ConsoleNotifier.addHandler(handleConsoleMessage);
+
+        return () => {
+            ConsoleNotifier.removeHandler(handleConsoleMessage);
+        }
+    }, []);
+
+    function handleConsoleMessage(message) {
+        console.log("Received console event: ", message);
+        //Here, I will add code to display the event in a nice format on the about page.  This will likely involve creating a new React component to represent each console message, and then adding that component to the page whenever a new event is received.
+        setConsoleMessages(prevMessages => {
+            let newMessages = [message, ...prevMessages];
+            if(newMessages.length > 5) {
+                newMessages = newMessages.slice(1, 5);
+            }
+            return newMessages;
+        });
+    }
+
+    function createMessageArray() {
+        const messageArray = [];
+        for (const [i, message] of consoleMessages.entries()) {
+            let messageText = "unknown";
+            if(message.messageType === "ACCOUNT_CREATED") {
+                messageText = `${message.user} created an account!`;
+            } else if(message.messageType === "CLASS_CREATED") {
+                messageText = `${message.user} created a class, "${message.userClassName}"!`;
+            } else if(message.messageType === "ASSIGNMENT_CREATED") {
+                messageText = `${message.user} added assignment "${message.userAssignmentName}" to class "${message.userClassName}"!`;
+            }
+
+            messageArray.push(
+            <p key={i} className = "console-message">{messageText}</p>
+            );
+
+        }
+        return messageArray;
+    }
+
+    //Right here will simulate the websocket part of my server by creating a single event over & over again.
+
+
 
     return(
         <main className="main-calendar">
@@ -21,9 +67,7 @@ export function About() {
 
             <div id="console-div">
                 <p><b>Console Log:</b></p>
-                <p>example@google.com created an account!</p>
-                <p>example@google.com created a class, "MATH"</p>
-                <p>example@google.com added assignment "HW 1" to class "MATH"</p>
+                {createMessageArray()}
             </div>
 
             <NavLink to='/prioritizer' className="btn btn-secondary btn">Return to Overview</NavLink>
