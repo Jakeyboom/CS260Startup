@@ -63,10 +63,11 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty) {
         if(c.className === oldClassName) {
             c.className = newClassName;
             c.difficulty = newDifficulty
-            const sortedClasses = sortClassesByDifficulty(userClasses);
             for(let a of c.assignments) {
                 a.classNmae = newClassName;
             }
+
+            const sortedClasses = sortClassesByDifficulty(userClasses);
             localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(sortedClasses))
             return true;
         }

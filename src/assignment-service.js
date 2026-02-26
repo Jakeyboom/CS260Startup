@@ -64,10 +64,12 @@ export function handleEditAssignment(currentAssignmentName, currentClassName, ne
                 assignment.difficulty = newDifficulty;
                 assignment.className = newClassName;
 
+                sortAssignmentsByDueDate(c.assignments);
+
+
                 localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(currentClasses));
 
                 console.log("Found and edited assignment successfully.");
-                sortAssignmentsByDueDate(c.assignments);
                 return true;
             }
         }
