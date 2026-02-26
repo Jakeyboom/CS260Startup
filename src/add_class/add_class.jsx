@@ -12,6 +12,9 @@ export function AddClass() {
         return <main> <h2>Please log in to add classes. </h2> </main>
     }
 
+    const [className, setClassName] = React.useState("");
+    const [difficulty, setDifficulty] = React.useState("");
+
     const navigate = useNavigate();
 
     const saveChanges = (event) => {
@@ -20,7 +23,7 @@ export function AddClass() {
         console.log("Save Changes requested"); 
         //Right here will check if a class with the same name already exists for the user.
 
-        if(pushClassToCurrentUser({className: event.target.currentClassName.value, difficulty: event.target.difficulty.value, assignments: []})) {
+        if(pushClassToCurrentUser({className: className, difficulty: difficulty, assignments: []})) {
             navigate("/prioritizer")
         } else {
             console.log("Failed to create class. Please try again.");
@@ -36,10 +39,10 @@ export function AddClass() {
         <form action="main.html" method="get" className="add-and-edit-form" onSubmit= { saveChanges }>
 
             <label className="add-edit-label" for="class-name">Class Name:</label>
-            <input type="text" id="class-name" name="currentClassName" required placeholder="Class name here" />
+            <input type="text" id="class-name" name="currentClassName" onChange={(e) => setClassName(e.target.value)} required placeholder="Class name here" />
 
 
-            <fieldset>
+            <fieldset onChange={(event) => setDifficulty(event.target.value)}>
                 <legend>Difficulty</legend>
 
                 <label className="add-edit-label">

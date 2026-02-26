@@ -51,7 +51,7 @@ export function Prioritizer() {
                 {(currentUserClasses.length === 0 || allAssignmentsSortedByDueDate.length === 0) ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignmentsSortedByDueDate.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
                     <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
                     <NavLink to={"/edit_class/" + encodeURIComponent(a.className)}>{a.className}</NavLink>
-                    <span id="due-date" className="due-date"> Due {a.dueDate}</span>
+                    <NavLink to={`/day/${a.dueDate}`} id="due-date" className="due-date"> Due {a.dueDate}</NavLink>
                 </li>)}
         </ol>
         </div>
