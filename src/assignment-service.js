@@ -29,6 +29,7 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
     const classIndex = classes.findIndex((c) => c.className === className);
     const newAssignment = {name: assignmentName, dueDate: dueDate, difficulty: difficulty};
     classes[classIndex].assignments.push(newAssignment);
+    sortAssignmentsByDueDate(classes[classIndex].assignments);
 
     localStorage.setItem(`classes_${email}`, JSON.stringify(classes));
 
@@ -65,6 +66,7 @@ export function handleEditAssignment(currentAssignmentName, currentClassName, ne
                 localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(currentClasses));
 
                 console.log("Found and edited assignment successfully.");
+                sortAssignmentsByDueDate(c.assignments);
                 return true;
             }
         }
@@ -128,4 +130,8 @@ export function confirmStringIsValid(inputString) {
     }
 
     return true;
+}
+
+function sortAssignmentsByDueDate(assignments) {
+    return assignments.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
 }

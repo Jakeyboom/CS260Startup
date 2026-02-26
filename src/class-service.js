@@ -38,8 +38,11 @@ export function pushClassToCurrentUser(classObject) {
         return false;
     }
 
-    localStorage.setItem(`classes_${email}`, JSON.stringify([...oldClasses, classObject]));
+
+    const sortedClasses = sortClassesByDifficulty([...oldClasses, classObject]);
+    localStorage.setItem(`classes_${email}`, JSON.stringify(sortedClasses));
     console.log("Class pushed successfully.");
+
     return true;
 }
 
@@ -60,7 +63,8 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty) {
         if(c.className === oldClassName) {
             c.className = newClassName;
             c.difficulty = newDifficulty
-            localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(userClasses))
+            const sortedClasses = sortClassesByDifficulty(userClasses);
+            localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(sortedClasses))
             return true;
         }
     }
@@ -68,7 +72,6 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty) {
 }
 
 export function handleDeleteClass(classNameToDelete) {
-    debugger;
     if(!confirmStringIsValid(classNameToDelete)) {
         console.log("Class name is required. Cannot delete class.");
         return false;
@@ -86,4 +89,10 @@ export function handleDeleteClass(classNameToDelete) {
         console.log("Class not found.  Cannot delete class.")
         return false;
     }
+}
+
+function sortClassesByDifficulty(classes) {
+    console.log("Sorting classes by difficulty...");
+    const difficultyOrder = {"easy": 1, "medium": 2, "hard": 3};
+    return classes.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
 }
