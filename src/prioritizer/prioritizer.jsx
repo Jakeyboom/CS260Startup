@@ -5,6 +5,16 @@ import {isLoggedIn} from '../login-service.js';
 import { getCurrentUserClasses } from '../class-service.js';
 import { getAllAssignmentsSortedByDueDate } from '../assignment-service.js';
 
+//Here will be some canned inspirational quotes to mock an api call.
+
+const inspirationalQuotes = [
+    "When life gives you lemons, don’t make lemonade. Make life take the lemons back!",
+    "The best way to predict the future is to invent it.",
+    "Life is 10% what happens to us and 90% how we react to it.",
+    "The only way to do great work is to love what you do.",
+    "Success is not final, failure is not fatal: It is the courage to continue that counts."
+]
+
 export function Prioritizer() {
  
 
@@ -14,6 +24,20 @@ export function Prioritizer() {
 
     const currentUserClasses = getCurrentUserClasses();
     const allAssignmentsSortedByDueDate = getAllAssignmentsSortedByDueDate();
+    const [currentQuote, setCurrentQuote] = React.useState(inspirationalQuotes[0]);
+
+    function changeQuote() {
+        const newQuote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
+        setCurrentQuote(newQuote);
+    }
+
+    React.useEffect(() => {
+        const interval = setInterval(() => 
+        changeQuote(), 5000);
+
+        return () => clearInterval(interval);
+    })
+
 
     return(
             <main> 
@@ -69,7 +93,7 @@ export function Prioritizer() {
 
         
         <p id="inspirational-quote">
-            <b>INSPIRATIONAL QUOTE HERE:</b> <i>When life gives you lemons, don’t make lemonade. Make life take the lemons back!</i>
+            <i>{currentQuote}</i>
         </p>
 
     </main>
