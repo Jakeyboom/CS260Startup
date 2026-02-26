@@ -29,11 +29,11 @@ export function Prioritizer() {
                     <span id="due-date" className="due-date"> Due 1/1/2000</span>
                 </li> */}
 
-                {currentUserClasses.length === 0 ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignmentsSortedByDueDate.map((a) => <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
-                    <NavLink to={"/edit_assignment/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
-                    <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
+                {currentUserClasses.length === 0 ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignmentsSortedByDueDate.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
+                    <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
+                    <NavLink to={"/edit_class/" + encodeURIComponent(a.className)}>{a.className}</NavLink>
                     <span id="due-date" className="due-date"> Due {a.dueDate}</span>
-                </li>))}
+                </li>)}
         </ol>
         </div>
 

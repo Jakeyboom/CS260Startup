@@ -31,7 +31,7 @@ export function Calendar() {
         selectable={true}
         defaultView="month"
         views={['month']}
-        style={{ height: "60vh", width: "80vw", flex: 1
+        style={{ height: "60vh", width: "80vw", flex: 1, border: "solid", borderColor: "black", borderWidth: "thick", margin: "auto", borderRadius: "8px"
           }}
         onSelectSlot= {(slotInfo) => {
           debugger;

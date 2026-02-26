@@ -19,6 +19,8 @@ export function About() {
             </p>
             Have Fun!
 
+            <div id="console-div"></div>
+
             <NavLink to='/prioritizer' className="btn btn-secondary btn">Return to Overview</NavLink>
 
         </main>
