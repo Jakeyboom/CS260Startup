@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from 'react-router-dom';
 import {isLoggedIn} from '../login-service.js';
 import { getCurrentUserClasses } from '../class-service.js';
+import { getAllAssignmentsSortedByDueDate } from '../assignment-service.js';
 
 export function Prioritizer() {
  
@@ -12,6 +13,7 @@ export function Prioritizer() {
     }
 
     const currentUserClasses = getCurrentUserClasses();
+    const allAssignmentsSortedByDueDate = getAllAssignmentsSortedByDueDate();
 
     return(
             <main> 
@@ -27,7 +29,7 @@ export function Prioritizer() {
                     <span id="due-date" className="due-date"> Due 1/1/2000</span>
                 </li> */}
 
-                {currentUserClasses.length === 0 ? <li>No Assignments or Classes Found.  Please add some!</li> : currentUserClasses.map((c) => c.assignments.map((a) => <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
+                {currentUserClasses.length === 0 ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignmentsSortedByDueDate.map((a) => <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
                     <NavLink to={"/edit_assignment/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
                     <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
                     <span id="due-date" className="due-date"> Due {a.dueDate}</span>
