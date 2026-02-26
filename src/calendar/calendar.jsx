@@ -16,8 +16,8 @@ export function Calendar() {
   const myEventsList = getCurrentUserClasses().flatMap((c) => c.assignments.map((a) => {
         return {
           title: a.name + " - " + c.className,
-          start: new Date(a.dueDate + "T23:59:00"),
-          end: new Date(a.dueDate + "T23:59:00")
+          start: new Date(a.dueDate + "T10:00:00"),
+          end: new Date(a.dueDate + "T10:00:00")
         }
       })) || [];
 
@@ -36,7 +36,15 @@ export function Calendar() {
         onSelectSlot= {(slotInfo) => {
           debugger;
           console.log("Selected slot: ", slotInfo);
-          navigate("/day/" + slotInfo.start.toISOString().split('T')[0])}}
+          navigate("/day/" + slotInfo.start.toISOString().split('T')[0])}
+          
+        }
+
+        onSelectEvent= {(eventInfo) => {
+          console.log("Selected event: ", eventInfo);
+          const selectedDate = eventInfo.start.toISOString().split('T')[0];
+          navigate("/day/" + selectedDate);
+        }}
       />
     </div>
     )

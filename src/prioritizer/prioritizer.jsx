@@ -48,7 +48,7 @@ export function Prioritizer() {
             <label for="prioritizer"><i>Prioritizer:</i></label>
             <ol id="prioritizer" className="classes">
 
-                {currentUserClasses.length === 0 ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignmentsSortedByDueDate.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
+                {(currentUserClasses.length === 0 || allAssignmentsSortedByDueDate.length === 0) ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignmentsSortedByDueDate.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
                     <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
                     <NavLink to={"/edit_class/" + encodeURIComponent(a.className)}>{a.className}</NavLink>
                     <span id="due-date" className="due-date"> Due {a.dueDate}</span>
@@ -69,7 +69,7 @@ export function Prioritizer() {
                         return <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
                             <NavLink to={"/edit_assignmet/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
                             <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
-                            <span id="due-date" className="due-date"> Due {a.dueDate}</span>
+                            <NavLink to={`/day/${a.dueDate}`} id="due-date" className="due-date"> Due {a.dueDate}</NavLink>
                         </li>
                     }
                 })) : <li>No Assignments Due Today!  Enjoy your day</li>
