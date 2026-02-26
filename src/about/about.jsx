@@ -19,10 +19,18 @@ export function About() {
             </p>
             Have Fun!
 
-            <div id="console-div"></div>
+            <div id="console-div">
+                <p><b>Console Log:</b></p>
+                <p>example@google.com created an account!</p>
+                <p>example@google.com created a class, "MATH"</p>
+                <p>example@google.com added assignment "HW 1" to class "MATH"</p>
+            </div>
 
             <NavLink to='/prioritizer' className="btn btn-secondary btn">Return to Overview</NavLink>
 
         </main>
     )
+
+    //Step 1: Stub out an example event message (an object with different variables representing the event).
+    //Step 2: 
 }
