@@ -110,8 +110,10 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [X] **All functionality implemented or mocked out** - I did complete this part of the deliverable.
+    Mocked out all functionalilty--I spent a LONG time debugging to make sure that it actually worked as intended.
+- [X] **Hooks** - I did complete this part of the deliverable.
+    I used hooks throughout my code, more specifically mocking a console logging fake things happening in a kind of WebSocket situation with the server.
 
 ## 🚀 Service deliverable
 
