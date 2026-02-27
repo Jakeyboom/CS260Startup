@@ -1,5 +1,6 @@
 //Here, I will implement the login service that will allow a user to self authenticate.
 //Note that the temporary implementation will simply allow a user to login locally using a password, but in the future, this will be replaced with a more secure authentication method (some kind of hashing).
+import { confirmStringIsValid } from "./assignment-service";
 
 export function login(email, password) {
 
@@ -22,6 +23,11 @@ export function login(email, password) {
 }
 
 export function createAccount(email, password) {
+    //First, check to make sure that email and password aren't empty; if they are, return false and log an error.
+    if(!confirmStringIsValid(email) || !confirmStringIsValid(password)) {
+        console.log("Email and password cannot be empty. Cannot create account.");
+        return false;
+    }
     console.log('Creating account with email:' + email + ', password: ' + password);
     const users = JSON.parse(localStorage.getItem("users")) || [];
     //Right here, I will check if the email is already in use; if not, I will create the account and push it to local storage.
