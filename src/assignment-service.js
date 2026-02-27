@@ -27,6 +27,11 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
     }
 
     const classIndex = classes.findIndex((c) => c.className === className);
+    if(classes[classIndex].assignments.some((a) => a.name === assignmentName)) {
+        console.log("An assignment with the same name already exists in this class. Cannot create duplicate assignment.");
+        return false;
+    }
+
     const newAssignment = {name: assignmentName, dueDate: dueDate, difficulty: difficulty, className: className};
     classes[classIndex].assignments.push(newAssignment);
     sortAssignmentsByDueDate(classes[classIndex].assignments);
@@ -39,6 +44,7 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
 }
 
 export function handleEditAssignment(currentAssignmentName, currentClassName, newAssignmentName, newClassName, newDueDate, newDifficulty) {
+    debugger;
     console.log(`Attempting to edit assignment${currentClassName}: ` + currentAssignmentName + ', new name: ' + newAssignmentName + ', new class: ' + newClassName + ', new due date: ' + newDueDate + ', new difficulty: ' + newDifficulty);
 
     if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName) || !confirmStringIsValid(newAssignmentName) || !confirmStringIsValid(newClassName) || !confirmStringIsValid(newDueDate) || !confirmStringIsValid(newDifficulty)) {
