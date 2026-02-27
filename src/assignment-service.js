@@ -58,19 +58,44 @@ export function handleEditAssignment(currentAssignmentName, currentClassName, ne
         }
 
         for(let assignment of c.assignments) {
+
+            //Maybe rewrite this part in the future to be more efficient and less confusing.
             if(assignment.name === currentAssignmentName) {
-                assignment.name = newAssignmentName;
-                assignment.dueDate = newDueDate;
-                assignment.difficulty = newDifficulty;
-                assignment.className = newClassName;
+                if(currentClassName !== newClassName) {
+                    //Since I know that the new class name is valid (since it is selected from a dropdown of the user's current classes), I can safely assume that the new class exists, so I don't need to check for that again here.
+                    //Now, I need to check if the new assignment name already exists in the new class; if it does, then I cannot edit the assignment to have the new name (since that would create a duplicate assignment in the new class), so I will return false.
+                    const newClass = currentClasses.find((c) => c.className === newClassName);
+                    if(newClass.assignments.some((a) => a.name === newAssignmentName)) {
+                        console.log("An assignment with the new name already exists in the new class. Cannot edit assignment.");
+                        return false;
+                    } else {
+                        //Here, since I just checked that the new assignment name does not already exist in the new class, I can safely assume that it is valid to move the assignment to the new class, so I will do that here.
+                        //It might just be easier to create a new assignmneent in the new class with the new information, and then delete the old assignment from the old class, rather than trying to edit the existing assignment and move it to the new class, since that would be less confusing and less error-prone.
+                        const created = createAssignment(newAssignmentName, newClassName, newDueDate, newDifficulty);
+                        if(created) {
 
-                sortAssignmentsByDueDate(c.assignments);
+                            return handleDeleteAssignment(currentAssignmentName, currentClassName);
+                        }
+
+                        return false;
+                    }
+                } else {
+                    //If the class name is not changing, then we just update the assignment's properties.
+                    assignment.name = newAssignmentName;
+                    assignment.dueDate = newDueDate;
+                    assignment.difficulty = newDifficulty;
+                    
+                    sortAssignmentsByDueDate(c.assignments);
+
+                    localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(currentClasses));
+
+                    console.log("Found and edited assignment successfully.");
+                    return true;
+
+                }
 
 
-                localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(currentClasses));
 
-                console.log("Found and edited assignment successfully.");
-                return true;
             }
         }
     }
