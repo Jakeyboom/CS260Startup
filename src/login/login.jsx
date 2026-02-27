@@ -31,7 +31,6 @@ export  function Login() {
     };
 
 
-    const handleForgotPassword = (event) => {console.log("Forgot Password requrested"); navigate("/prioritizer")};
 
 
     return(
@@ -57,7 +56,6 @@ export  function Login() {
           <div id="login-buttons">
             <button type="button" className="btn btn-primary btn" onClick={handleLogin}>Login</button>
             <button type="submit" className="btn btn-primary btn">Create Account</button>
-            <button type="button" className="btn btn-primary btn" onClick={handleForgotPassword}>Forgot Password</button>
 
           </div>
         </form>

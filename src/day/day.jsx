@@ -18,10 +18,7 @@ export function DayView() {
         // Logic for viewing the selected day
     }
 
-    const checkIfAssignmentsDueOnDay = (day) => {
-
-    }
-
+    
     if(currentUserClasses.length === 0) {
         return <main> <h2>Please add some classes and assignments to view specific days. </h2> 
                 <form action="main.html" method="get" id="return-button-form">
@@ -37,11 +34,17 @@ export function DayView() {
 
     return(
     <main> 
-        <form onSubmit={seeDay}>
+        
+        
+        <div id="search-div">
             <label for="select-day">Select a Day To View:</label>
-            <input type="date" id="select-day" name="selectDay" onChange = {(e) => setDateToView(e.target.value)}></input>
-            <button type="submit" className="btn btn-primary btn">View Day</button>
-        </form>
+
+            <form id="day-search-form" onSubmit={seeDay}>
+                <input type="date" id="select-day" name="selectDay" onChange = {(e) => setDateToView(e.target.value)}></input>
+                <button type="submit" className="btn btn-primary btn">View Day</button>
+            </form>
+        </div>
+
         <label for="assignments-due-today">Assignments due on {dateToView}</label>
         <ul className="classes" id="assignments-due-today">
             {/* Here, I will list all the assignments that are due on the selected day. */}

@@ -113,6 +113,14 @@ label {
 
 }
 
+#footer-buttons-container button {
+    max-width: 2em;
+    justify-content: flex-end;
+    min-width: 1em;
+    margin: 0.5em;
+    max-height: auto;
+}
+
 
 #main-buttons {
     flex:0.5;
@@ -121,7 +129,6 @@ label {
     justify-content: center;
     margin:1em;
     max-height: 3.5em;
-    NEED TO FIX THIS
 }
 
 .footer-button {
@@ -137,6 +144,37 @@ label {
     text-align: center;
     font-size: 1.2em;
 }
+
+#search-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+}
+
+#day-search-form {
+    padding-bottom: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#day-search-form input {
+    max-width: 15em;
+    justify-content: flex-end;
+    min-width: 10em;
+    margin: 0.5em;
+    max-height: auto;
+}
+
+#day-search-form button {
+    align-self: flex-center;
+    width: auto;
+}
+
+
 
 
 
