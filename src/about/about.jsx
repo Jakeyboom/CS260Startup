@@ -39,6 +39,10 @@ export function About() {
                 messageText = `${message.user} created a class, "${message.userClassName}"!`;
             } else if(message.messageType === "ASSIGNMENT_CREATED") {
                 messageText = `${message.user} added assignment "${message.userAssignmentName}" to class "${message.userClassName}"!`;
+            } else if (message.messageType === "ASSIGNMENT_EDITED") {
+                messageText = `${message.user} edited assignment "${message.userAssignmentName}" in class "${message.userClassName}"!`;
+            } else if (message.messageType === "CLASS_EDITED") {
+                messageText = `${message.user} edited class "${message.userClassName}"!`;
             }
 
             messageArray.push(
