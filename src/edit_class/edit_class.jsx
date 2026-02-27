@@ -19,7 +19,7 @@ export function EditClass() {
     const saveChanges = (event) => {
         console.log("Save Changes requested");
         event.preventDefault(); 
-        debugger;
+        
         if(handleEditClass(currentClassName, newClassName, newDifficulty)) {
             navigate("/prioritizer");
         } else {

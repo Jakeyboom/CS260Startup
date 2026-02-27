@@ -5,7 +5,6 @@ import { getCurrentUserClasses } from '../class-service.js';
 import { isLoggedIn } from '../login-service.js';
 
 export function DayView() {
-    debugger;
     if(!isLoggedIn()) {
         return <main> <h2>Please log in to view specific days. </h2> </main>
     }
@@ -48,7 +47,6 @@ export function DayView() {
         <label for="assignments-due-today">Assignments due on {dateToView}</label>
         <ul className="classes" id="assignments-due-today">
             {/* Here, I will list all the assignments that are due on the selected day. */}
-            {}
             {
                currentUserClasses.some((c) => c.assignments.some((a) => a.dueDate === dateToView)) ? 
         

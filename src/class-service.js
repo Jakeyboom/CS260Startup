@@ -83,7 +83,6 @@ export function handleDeleteClass(classNameToDelete) {
 
     console.log("Attempting to delete class: " + classNameToDelete);
     const oldClasses = getCurrentUserClasses();
-    debugger;
     if(oldClasses.some((c) => c.className === classNameToDelete)) {
         let newClasses = oldClasses.filter((c) => c.className !== classNameToDelete);
         localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(newClasses));

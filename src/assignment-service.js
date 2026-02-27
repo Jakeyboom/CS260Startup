@@ -3,7 +3,6 @@ import { getCurrentUserClasses } from "./class-service.js";
 import { getCurrentUser, isLoggedIn } from "./login-service.js";
 
 export function createAssignment(assignmentName, className, dueDate, difficulty) {
-    debugger
     console.log('Attempting to create assignment: ' + assignmentName + ', class: ' + className + ', due date: ' + dueDate +', difficulty: ' + difficulty);
     if(!isLoggedIn()) {
         console.log("No user is currently logged in. Cannot create assignment.");
@@ -44,7 +43,6 @@ export function createAssignment(assignmentName, className, dueDate, difficulty)
 }
 
 export function handleEditAssignment(currentAssignmentName, currentClassName, newAssignmentName, newClassName, newDueDate, newDifficulty) {
-    debugger;
     console.log(`Attempting to edit assignment${currentClassName}: ` + currentAssignmentName + ', new name: ' + newAssignmentName + ', new class: ' + newClassName + ', new due date: ' + newDueDate + ', new difficulty: ' + newDifficulty);
 
     if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName) || !confirmStringIsValid(newAssignmentName) || !confirmStringIsValid(newClassName) || !confirmStringIsValid(newDueDate) || !confirmStringIsValid(newDifficulty)) {
@@ -111,7 +109,6 @@ export function handleEditAssignment(currentAssignmentName, currentClassName, ne
 }
 
 export function handleDeleteAssignment(currentAssignmentName, currentClassName) {
-    debugger;
     console.log('Attempting to delete assignment: ' + currentAssignmentName + ', class: ' + currentClassName);
     let currentClasses = getCurrentUserClasses();
     if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName)) {

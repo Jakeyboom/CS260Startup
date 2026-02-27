@@ -33,7 +33,6 @@ export function Calendar() {
         style={{ height: "60vh", width: "80vw", flex: 1, border: "solid", borderColor: "black", borderWidth: "thick", margin: "auto", borderRadius: "8px"
           }}
         onSelectSlot= {(slotInfo) => {
-          debugger;
           console.log("Selected slot: ", slotInfo);
           navigate("/day/" + slotInfo.start.toISOString().split('T')[0])}
           

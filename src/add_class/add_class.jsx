@@ -18,7 +18,6 @@ export function AddClass() {
     const navigate = useNavigate();
 
     const saveChanges = (event) => {
-        debugger;
         event.preventDefault();
         console.log("Save Changes requested"); 
         //Right here will check if a class with the same name already exists for the user.
