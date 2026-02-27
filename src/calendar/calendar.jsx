@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { getCurrentUserClasses } from '../class-service.js';
 import '../../CSS/calendar.css';
-import '../../public/calendar.jpeg';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar';

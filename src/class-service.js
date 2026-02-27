@@ -64,7 +64,7 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty) {
             c.className = newClassName;
             c.difficulty = newDifficulty
             for(let a of c.assignments) {
-                a.classNmae = newClassName;
+                a.className = newClassName;
             }
 
             const sortedClasses = sortClassesByDifficulty(userClasses);
