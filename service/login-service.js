@@ -2,23 +2,24 @@
 //Note that the temporary implementation will simply allow a user to login locally using a password, but in the future, this will be replaced with a more secure authentication method (some kind of hashing).
 import { confirmStringIsValid } from "./assignment-service.js";
 import express from "express";
+import cookieParser from "cookie-parser";
+import { v4 as uuidv4 } from "uuid";
 
 const app = express();
 app.use(express.json());
-
+app.use(cookieParser());
 
 const users = [];
 
 
-export function login(email, password) {
+export function login(email, password, res) {
 
     //for now, this will just push the email and password to local storage and do a log.
     console.log('Attempting to log in with email:' + email + ', password: ' + password);
-
-    const users = JSON.parse(localStorage.getItem("users")) || [];
     if(users.some((user) => user.email === email && user.password === password)) {
+        const currentUser = users.find((user) => user.email === email);
+        generateAndAttachAuthToken(currentUser, res);
         console.log("User authenticated successfully.");
-        localStorage.setItem("currentUser", JSON.stringify({email}))
 
         return true;
     } else {
@@ -30,21 +31,19 @@ export function login(email, password) {
     
 }
 
-export function createAccount(email, password) {
+export function createAccount(email, password, res) {
     //First, check to make sure that email and password aren't empty; if they are, return false and log an error.
     if(!confirmStringIsValid(email) || !confirmStringIsValid(password)) {
         console.log("Email and password cannot be empty. Cannot create account.");
         return false;
     }
     console.log('Creating account with email:' + email + ', password: ' + password);
-    const users = JSON.parse(localStorage.getItem("users")) || [];
     //Right here, I will check if the email is already in use; if not, I will create the account and push it to local storage.
 
     if(!users.some((user) => user.email === email)) {
-        localStorage.setItem("users", JSON.stringify([...users, {email, password}]));
-        localStorage.setItem(`classes_${email}`, JSON.stringify([]));
+        users.push({email, password, authToken: null});
         console.log("Account created successfully.");
-        return login(email, password);
+        return login(email, password, res);
     } else {
         console.log("Email is already in use.");
         return false;
@@ -70,23 +69,20 @@ export function isLoggedIn() {
     return getCurrentUser() !== null;
 }
 
-export function getCurrentUserObject() {
-    const email = getCurrentUser();
-    
-    if(!email) {
-        console.log("No user is currently logged in. Cannot retrieve user object");
-        return null;
-    }
+export function getCurrentUserObject(authToken) {
 
-    const users = JSON.parse(localStorage.getItem("users)") || []);
-    const userObject = users.find((user) => user.email === email);
-
-    if(!userObject) {
-        console.log("User has not made an account (somehow). Please make an account and try again.");
-        return null;
-    }
 
     return userObject;
+}
+
+function generateAndAttachAuthToken(user, res) {
+    const authToken = uuidv4();
+    user.authToken = authToken;
+    res.cookie('authToken', user.authToken, {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+    });
 }
 
 
@@ -133,8 +129,26 @@ app.post("/api/auth", async (req, res) => {
         res.status(400).send("Email and password cannot be empty. Cannot create account.");
     }
 
-    users.push({email: req.body.email, password: req.body.password});
+    if(createAccount(req.body.email, req.body.password, res)) {
+        res.status(200).send({email: req.body.email});
+    } else {
+        res.status(400).send("Account creation failed. Email may already be in use.");
+    }
 
     console.log("Received request to create account with email");
-    res.send({email: req.body.email});
 })
+
+app.put("/api/auth", async (req, res) => {
+    res.status(500).send("Not implemented yet.");
+})
+
+app.delete("/api/auth", async (req, res) => {
+    res.status(500).send("Not implemented yet.");
+})
+
+
+/**
+ * How do I want to store a user?
+ *  Better implementation would be to store the user object as having an email, password, and auth token.
+ *  If a user is unauthenticated, the authtoken will be null; if authenticated, it will be a uuid string.
+ */
