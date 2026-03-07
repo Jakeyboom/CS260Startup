@@ -70,7 +70,7 @@ export function isLoggedIn() {
 }
 
 export function getCurrentUserObject(authToken) {
-
+    const userObject = users.find((user) => user.authToken === authToken);
 
     return userObject;
 }
@@ -79,8 +79,8 @@ function generateAndAttachAuthToken(user, res) {
     const authToken = uuidv4();
     user.authToken = authToken;
     res.cookie('authToken', user.authToken, {
-        secure: true,
-        httpOnly: true,
+        // secure: true,
+        // httpOnly: true,
         sameSite: 'strict',
     });
 }
@@ -154,7 +154,12 @@ app.put("/api/auth", async (req, res) => {
 })
 
 app.delete("/api/auth", async (req, res) => {
-    res.status(500).send("Not implemented yet.");
+    const currentUser = getCurrentUserObject(req.cookies['authToken']);
+    if(currentUser) {
+        currentUser.authToken = null;
+    }
+    res.clearCookie("authToken");
+    res.status(200).send("User logged out successfully.");
 })
 
 
