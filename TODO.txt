@@ -32,3 +32,26 @@ Here is a list of things to do for the next part of the projects.
     {
       "email":"marta@id.com"
     }
+
+    DELETE (deletes current auth cookie. Always returns 200)
+        DELETE /api/auth HTTP/2
+        Content-Type: applicaiton/json
+        {
+            Cooki: auth=tokenHere
+        }
+
+        HTTP/2 200 OK
+        Content-Type: application/json.
+        {
+        }
+
+    GETME (returns the authenticated user witth the cookie token.  If invalid, error 401)
+
+    Get /api/user HTTP/2
+    Cookie: auth=tokenHere
+
+    HTTP/2 200 OK
+    Content-Type: application/json
+    {
+        "email" : "example@example.com"
+    }
