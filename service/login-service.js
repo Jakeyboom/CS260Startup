@@ -135,11 +135,22 @@ app.post("/api/auth", async (req, res) => {
         res.status(400).send("Account creation failed. Email may already be in use.");
     }
 
-    console.log("Received request to create account with email");
 })
 
 app.put("/api/auth", async (req, res) => {
-    res.status(500).send("Not implemented yet.");
+    if(!req.body) {
+        console.log("No request body provided. Cannot log in.");
+        res.status(400).send("No request body provided. Cannot log in.");
+    } else if(!req.body.email || !req.body.password) {
+        console.log("Email and password are required. Cannot log in.");
+        res.status(400).send("Email and password are required. Cannot log in.");
+    }
+
+    if(login(req.body.email, req.body.password, res)) {
+        res.status(200).send({email: req.body.email});
+    } else {
+        res.status(400).send("Login failed. Invalid email or password.");
+    }
 })
 
 app.delete("/api/auth", async (req, res) => {
