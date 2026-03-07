@@ -6,6 +6,10 @@ import express from "express";
 const app = express();
 app.use(express.json());
 
+
+const users = [];
+
+
 export function login(email, password) {
 
     //for now, this will just push the email and password to local storage and do a log.
@@ -95,3 +99,42 @@ app.listen(port, function () {
 
 
 //Here, I will start to reimplement the login, logout, and account creation as endpoints.
+
+
+/**
+ * POST /api/auth HTTP/2
+       Content-Type: application/json
+       {
+        "email":"example@example.com",
+        "password":"password"
+       }
+
+       (Response)
+       HTTP/2 200 OK
+       Content-Type: application/json
+       Set-Cookie: auth=tokenHere
+
+       {
+        "email":"example@example.com"
+       }
+ */
+
+//Here, lets implement the create account endpoint listening on /api/auth as a POST request.
+
+app.post("/api/auth", async (req, res) => {
+    if(!req.body) {
+        console.log("No request body provided. Cannot create account.");
+        res.status(400).send("No request body provided. Cannot create account.");
+    } else if(!req.body.email || !req.body.password) {
+        console.log("Email and password are required. Cannot create account.");
+        res.status(400).send("Email and password are required. Cannot create account.");
+    } else if (!confirmStringIsValid(req.body.email) || !confirmStringIsValid(req.body.password)) {
+        console.log("Email and password cannot be empty. Cannot create account.");
+        res.status(400).send("Email and password cannot be empty. Cannot create account.");
+    }
+
+    users.push({email: req.body.email, password: req.body.password});
+
+    console.log("Received request to create account with email");
+    res.send({email: req.body.email});
+})
