@@ -1,10 +1,6 @@
 //Here, I will implement the login service that will allow a user to self authenticate.
 //Note that the temporary implementation will simply allow a user to login locally using a password, but in the future, this will be replaced with a more secure authentication method (some kind of hashing).
 import { confirmStringIsValid } from "./assignment-service.js";
-import express from "express";
-
-const app = express();
-app.use(express.json());
 
 export function login(email, password) {
 
@@ -86,11 +82,6 @@ export function getCurrentUserObject() {
 }
 
 
-
-const port = 4000;
-app.listen(port, function () {
-    console.log("Login service is running on port " + port);
-});
 
 
 
