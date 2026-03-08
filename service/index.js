@@ -31,7 +31,8 @@ function isAuthenticated(req, res, next) {
         const user = getCurrentUser(authToken);
         if(!user) {
             console.log("Invalid auth token. User is not authenticated.");
-            res.status(401).send("Invalid auth token. User is not authenticated.");
+            res.clearCookie("authToken");
+            res.status(401).send("Invalid auth token. User is not authenticated.  Unauthenticated authToken cleared.");
         } else {
             req.user = user;
             next();
