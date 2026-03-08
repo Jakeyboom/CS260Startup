@@ -2,12 +2,9 @@
 //Note that the temporary implementation will simply allow a user to login locally using a password, but in the future, this will be replaced with a more secure authentication method (some kind of hashing).
 import { confirmStringIsValid } from "./assignment-service.js";
 import express from "express";
-import cookieParser from "cookie-parser";
 import { v4 as uuidv4 } from "uuid";
 
-const app = express();
-app.use(express.json());
-app.use(cookieParser());
+const router = express.Router();
 
 const users = [];
 
@@ -87,10 +84,7 @@ function generateAndAttachAuthToken(user, res) {
 
 
 
-const port = 4000;
-app.listen(port, function () {
-    console.log("Login service is running on port " + port);
-});
+
 
 
 
@@ -98,7 +92,7 @@ app.listen(port, function () {
 
 
 /**
- * POST /api/auth HTTP/2
+ * POST / HTTP/2
        Content-Type: application/json
        {
         "email":"example@example.com",
@@ -108,16 +102,16 @@ app.listen(port, function () {
        (Response)
        HTTP/2 200 OK
        Content-Type: application/json
-       Set-Cookie: auth=tokenHere
+       Set-Cook=tokenHere
 
        {
         "email":"example@example.com"
        }
  */
 
-//Here, lets implement the create account endpoint listening on /api/auth as a POST request.
+//Here, lets implement the create account endpoint listening on / as a POST request.
 
-app.post("/api/auth", async (req, res) => {
+router.post("/", async (req, res) => {
     if(!req.body) {
         console.log("No request body provided. Cannot create account.");
         res.status(400).send("No request body provided. Cannot create account.");
@@ -137,7 +131,7 @@ app.post("/api/auth", async (req, res) => {
 
 })
 
-app.put("/api/auth", async (req, res) => {
+router.put("/", async (req, res) => {
     if(!req.body) {
         console.log("No request body provided. Cannot log in.");
         res.status(400).send("No request body provided. Cannot log in.");
@@ -153,7 +147,7 @@ app.put("/api/auth", async (req, res) => {
     }
 })
 
-app.delete("/api/auth", async (req, res) => {
+router.delete("/", async (req, res) => {
     const currentUser = getCurrentUserObject(req.cookies['authToken']);
     if(currentUser) {
         currentUser.authToken = null;
@@ -163,8 +157,10 @@ app.delete("/api/auth", async (req, res) => {
 })
 
 
+export { router as loginRouter };
+
 /**
  * How do I want to store a user?
- *  Better implementation would be to store the user object as having an email, password, and auth token.
+ *  Better implementation would be to store the user object as having an email, password,  token.
  *  If a user is unauthenticated, the authtoken will be null; if authenticated, it will be a uuid string.
  */
