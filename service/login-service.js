@@ -49,21 +49,10 @@ export function createAccount(email, password, res) {
     //TODO: Implement account creation and verification here.
 }
 
-export function getCurrentUser() {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    console.log("Current user: " + (currentUser ? currentUser.email : "None"));
-    return currentUser ? currentUser.email : null;
-}
 
-//logs out the current user by removing the current user from local storage.
-export function logout() {
-    localStorage.removeItem("currentUser");
-    console.log("User logged out successfully.");
-}
-
-//Checks if a user is currently logged in by checking if there is a current user in local storage.
-export function isLoggedIn() {
-    return getCurrentUser() !== null;
+export function getCurrentUser(authToken) {
+    return users.find((user) => user.authToken === authToken);
+   
 }
 
 export function getCurrentUserObject(authToken) {
@@ -102,7 +91,7 @@ function generateAndAttachAuthToken(user, res) {
        (Response)
        HTTP/2 200 OK
        Content-Type: application/json
-       Set-Cook=tokenHere
+       Set-Cookie=tokenHere
 
        {
         "email":"example@example.com"
@@ -164,3 +153,8 @@ export { router as loginRouter };
  *  Better implementation would be to store the user object as having an email, password,  token.
  *  If a user is unauthenticated, the authtoken will be null; if authenticated, it will be a uuid string.
  */
+
+//DELETE ME
+export function isLoggedIn() {
+    return true;
+}

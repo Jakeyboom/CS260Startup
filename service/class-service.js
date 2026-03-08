@@ -5,20 +5,21 @@ const router = express.Router();
 
 const classes = []; 
 
-//A class object will now be of the form: {className, difficulty}
+//A class object will now be of the form: {email, className, difficulty}
 //Here will implement the class service that will allow a user to create, read, update, and delete classes. For now, this will be a simple implementation that uses local storage to store the classes, but in the future, this will be replaced with a more robust implementation that uses a backend server and database.
 //An example of a class object will be: {className: "CS260", assignments [{id: 0, name: "Assignment 1", dueDate: "2024-01-01"}]};
 
 //Returns the array containing the classes of the current user.  If the user is not logged in or is logged in but has not made an account (somehow), this will return null.
-export function getCurrentUserClasses() {
-    const email = getCurrentUser();
+export function getCurrentUserClasses(authToken) {
+    const user = getCurrentUser(authToken);
+    const email = user ? user.email : null;
 
     if(!email) {
         console.log("No user is currently logged in. Cannot get classes.");
         return [];
     }
 
-    return JSON.parse(localStorage.getItem(`classes_${email}`)) || [];
+    return classes.filter((c) => c.email === email);
 }
 
 
@@ -106,9 +107,23 @@ function sortClassesByDifficulty(classes) {
     return classes.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
 }
 
+/**
+ * REQUEST: GET /api/classes/
+ * { (empty / no body)
+ * }
+ * Cookies: {authToken: (token)}
+ * Response: 200 OK
+ * {
+ *     classes: [...array of class objects...]
+ * }
+ */
+
 router.get("/", (req, res) => {
     console.log("Received request to get classes for current user.");
-    res.status(500).send("Not implemented yet.");
+    const authToken = req.cookies["authToken"];
+    const userClasses = getCurrentUserClasses(authToken);
+
+    res.status(200).send({classes: userClasses});
 })
 
 router.post("/", (req, res) => {
