@@ -25,29 +25,28 @@ export function getCurrentUserClasses(authToken) {
 
 //This command pushed a class to a current user's classes.
 
-export function pushClassToCurrentUser(classObject) {
-    const email = getCurrentUser();
+export function pushClassToCurrentUser(classObject, email) {
+
 
     if(!email) {
         console.log("No user is currently logged in. Cannot push class.");
         return false;
     }
 
-    const oldClasses = JSON.parse(localStorage.getItem(`classes_${email}`)) || [];
 
     if(!confirmStringIsValid(classObject.className) || !confirmStringIsValid(classObject.difficulty)) {
         console.log("All fields are required. Cannot push class.");
         return false;
     }
 
-    if(oldClasses.some((c) => c.className === classObject.className)) {
+    if(classes.some((c) => c.className === classObject.className && c.email === email)) {
         console.log("Class already exists in user's classes. Cannot push duplicate class.");
         return false;
     }
 
+    classes.push(classObject);
 
-    const sortedClasses = sortClassesByDifficulty([...oldClasses, classObject]);
-    localStorage.setItem(`classes_${email}`, JSON.stringify(sortedClasses));
+    sortClassesByDifficulty(classes);
     console.log("Class pushed successfully.");
 
     return true;
@@ -82,17 +81,21 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty) {
     return false;
 }
 
-export function handleDeleteClass(classNameToDelete) {
+export function handleDeleteClass(classNameToDelete, email) {
     if(!confirmStringIsValid(classNameToDelete)) {
         console.log("Class name is required. Cannot delete class.");
+        return false;
+    } else if (!email) {
+        console.log("No user is currently logged in. Cannot delete class.");
         return false;
     }
 
     console.log("Attempting to delete class: " + classNameToDelete);
-    const oldClasses = getCurrentUserClasses();
-    if(oldClasses.some((c) => c.className === classNameToDelete)) {
-        let newClasses = oldClasses.filter((c) => c.className !== classNameToDelete);
-        localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(newClasses));
+    if(classes.some((c) => c.className === classNameToDelete && c.email === email)) {
+        const kept = classes.filter((c) => !(c.className === classNameToDelete && c.email === email));
+        classes.length = 0;
+        classes.push(...kept);
+        
         console.log("Class deleted successfully.");
         return true;
     } else {
@@ -126,9 +129,45 @@ router.get("/", (req, res) => {
     res.status(200).send({classes: userClasses});
 })
 
+/***
+ * Request for POST:
+ * POST /api/classes/
+ * {    
+ *     className: (string),
+ *     difficulty: (string)
+ * }
+ * Cookies: {authToken: (token)}
+ * 
+ * Response: 200 OK
+ * {
+ *    message: "Class pushed successfully.",
+ *    className: (string)
+ * }
+ */
+
 router.post("/", (req, res) => {
     console.log("Received request to push class to current user.");
-    res.status(500).send("Not implemented yet.");
+    if(!req.body) {
+        console.log("No request body provided. Cannot push class.");
+        res.status(400).send("No request body provided. Cannot push class.");
+    } else if(!req.body.className || !req.body.difficulty) {
+        console.log("Class name and difficulty are required. Cannot push class.");
+        res.status(400).send("Class name and difficulty are required. Cannot push class.");
+    }
+
+    const currentUser = getCurrentUser(req.cookies["authToken"]);
+    if(!currentUser) {
+        console.log("User is not authenticated. Cannot push class.");
+        res.status(401).send("User is not authenticated. Cannot push class.");
+    }
+    const newClassObject = {email: currentUser.email, className: req.body.className, difficulty: req.body.difficulty};
+
+    if(pushClassToCurrentUser(newClassObject, currentUser.email)) {
+        res.status(200).send({message: "Class pushed successfully.", className: req.body.className});
+    } else {
+        res.status(400).send("Failed to push class. Class may already exist or fields may be invalid.");
+    }
+
 });
 
 router.put("/", (req, res) => {
@@ -136,9 +175,39 @@ router.put("/", (req, res) => {
     res.status(500).send("Not implemented yet.");
 });
 
+/**
+ * Request for DELETE:
+ * DELETE /api/classes/
+ * {
+ *     className: (string)
+ * }
+ * Cookies: {authToken: (token)}
+ * 
+ * Response: 200 OK
+ * {
+ *     message: "Class deleted successfully.",
+ *     className: (string)
+ * }
+ */
+
 router.delete("/", (req, res) => {
     console.log("Received request to delete class for current user.");
-    res.status(500).send("Not implemented yet.");
+
+    if(!req.body) {
+        console.log("No request body provided. Cannot delete class.");
+        res.status(400).send("No request body provided. Cannot delete class.");
+    }
+    else if (!req.body.className) {
+        console.log("Class name is required. Cannot delete class.");
+        res.status(400).send("Class name is required. Cannot delete class.");
+    }
+
+    if(handleDeleteClass(req.body.className, req.user.email)) {
+        res.status(200).send({message: "Class deleted successfully.", className: req.body.className});
+    } else {
+        res.status(400).send("Failed to delete class. Class may not exist.");
+    }
+
 });
 
 export {router as classRouter};
