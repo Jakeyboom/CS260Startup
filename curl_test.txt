@@ -1,0 +1,41 @@
+BASE="http://localhost:4000"
+COOKIE="cookies.txt"
+EMAIL="test1@example.com"
+PASS="pass123"
+
+# 1) Sign up (also logs in and sets authToken cookie)
+curl -i -c "$COOKIE" -X POST "$BASE/api/auth" \
+  -H "Content-Type: application/json" \
+  -d "{\"email\":\"$EMAIL\",\"password\":\"$PASS\"}"
+
+# 2) Add separate classes
+curl -i -b "$COOKIE" -X POST "$BASE/api/classes" \
+  -H "Content-Type: application/json" \
+  -d '{"className":"CS260","difficulty":"hard"}'
+
+curl -i -b "$COOKIE" -X POST "$BASE/api/classes" \
+  -H "Content-Type: application/json" \
+  -d '{"className":"MATH101","difficulty":"easy"}'
+
+curl -i -b "$COOKIE" -X POST "$BASE/api/classes" \
+  -H "Content-Type: application/json" \
+  -d '{"className":"PHYS201","difficulty":"medium"}'
+
+# 3) Verify list
+curl -i -b "$COOKIE" "$BASE/api/classes"
+
+# 4) Edit a class
+curl -i -b "$COOKIE" -X PUT "$BASE/api/classes" \
+  -H "Content-Type: application/json" \
+  -d '{"oldClassName":"PHYS201","newClassName":"PHYS202","newDifficulty":"hard"}'
+
+# 5) Verify edit
+curl -i -b "$COOKIE" "$BASE/api/classes"
+
+# 6) Delete a class
+curl -i -b "$COOKIE" -X DELETE "$BASE/api/classes" \
+  -H "Content-Type: application/json" \
+  -d '{"className":"MATH101"}'
+
+# 7) Verify delete
+curl -i -b "$COOKIE" "$BASE/api/classes"
