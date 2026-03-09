@@ -55,30 +55,46 @@ export function pushClassToCurrentUser(classObject, email) {
 
 //These functions will be implemented for editing and deleting classes.  For now, they will just be placeholders.
 
-export function handleEditClass(oldClassName, newClassName, newDifficulty) {
-    console.log("Attempting to edit clase: " + oldClassName + ", new name: " + newClassName + ", new difficulty: " + newDifficulty);
+export function handleEditClass(oldClassName, newClassName, newDifficulty, email) {
+    console.log("Attempting to edit clase: " + oldClassName + ", new name: " + newClassName + ", new difficulty: " + newDifficulty + ", authToken: ");
 
     if(!confirmStringIsValid(newClassName) || !confirmStringIsValid(newDifficulty) || !confirmStringIsValid(oldClassName)) {
         console.log("All fields are required. Cannot edit class.");
         return false;
     }
 
-    let userClasses = getCurrentUserClasses();
-
-    for(let c of userClasses) {
-        if(c.className === oldClassName) {
-            c.className = newClassName;
-            c.difficulty = newDifficulty
-            for(let a of c.assignments) {
-                a.className = newClassName;
-            }
-
-            const sortedClasses = sortClassesByDifficulty(userClasses);
-            localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(sortedClasses))
-            return true;
-        }
+    if(!classes.some((c) => c.className === oldClassName && c.email === email)) {
+        console.log("Class to edit does not exist.  Cannot edit class.");
+        return false;   
     }
-    return false;
+
+    if(classes.some((c) => c.className === newClassName && c.email === email) && newClassName !== oldClassName) {
+        console.log("Class with new name already exists. Cannot edit class to have duplicate name.");
+        return false;
+    }
+
+    const classToEdit = classes.find((c) => c.className === oldClassName && c.email === email);
+    classToEdit.className = newClassName;
+    classToEdit.difficulty = newDifficulty;
+
+    sortClassesByDifficulty(classes);
+    return true;
+    //TODO: Implement adding assignments; once we have the assignment implemented, implement editing the class name for all assignments with the same class name.
+    
+    // for(let c of userClasses) {
+    //     if(c.className === oldClassName) {
+    //         c.className = newClassName;
+    //         c.difficulty = newDifficulty
+    //         for(let a of c.assignments) {
+    //             a.className = newClassName;
+    //         }
+
+    //         const sortedClasses = sortClassesByDifficulty(userClasses);
+    //         localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(sortedClasses))
+    //         return true;
+    //     }
+    // }
+    // return false;
 }
 
 export function handleDeleteClass(classNameToDelete, email) {
@@ -127,6 +143,7 @@ router.get("/", (req, res) => {
     const userClasses = getCurrentUserClasses(authToken);
 
     res.status(200).send({classes: userClasses});
+    return;
 })
 
 /***
@@ -150,29 +167,60 @@ router.post("/", (req, res) => {
     if(!req.body) {
         console.log("No request body provided. Cannot push class.");
         res.status(400).send("No request body provided. Cannot push class.");
+        return;
     } else if(!req.body.className || !req.body.difficulty) {
         console.log("Class name and difficulty are required. Cannot push class.");
         res.status(400).send("Class name and difficulty are required. Cannot push class.");
+        return;
     }
 
     const currentUser = getCurrentUser(req.cookies["authToken"]);
     if(!currentUser) {
         console.log("User is not authenticated. Cannot push class.");
         res.status(401).send("User is not authenticated. Cannot push class.");
+        return;
     }
     const newClassObject = {email: currentUser.email, className: req.body.className, difficulty: req.body.difficulty};
 
     if(pushClassToCurrentUser(newClassObject, currentUser.email)) {
         res.status(200).send({message: "Class pushed successfully.", className: req.body.className});
+        return;
     } else {
         res.status(400).send("Failed to push class. Class may already exist or fields may be invalid.");
+        return;
     }
 
 });
 
 router.put("/", (req, res) => {
     console.log("Received request to edit class for current user.");
-    res.status(500).send("Not implemented yet.");
+    if(! req.body) {
+        console.log("No request body provided. Cannot edit class.");
+        res.status(400).send("No request body provided. Cannot edit class.");
+        return
+    } else if (!req.body.oldClassName || !req.body.newClassName || !req.body.newDifficulty) {
+        console.log("Old class name, new class name, and new difficulty are required. Cannot edit class.");
+        res.status(400).send("Old class name, new class name, and new difficulty are required. Cannot edit class.");
+        return
+    }
+
+    const currentUserEmail = req.user ? req.user.email : null;
+
+    if(!currentUserEmail) {
+        console.log("User is not authenticated. Cannot edit class.");
+        res.status(401).send("User is not authenticated. Cannot edit class.");
+        return
+    }
+
+    //TODO: Implement editing all asignments with the same class name to have the new class name.
+
+    if(handleEditClass(req.body.oldClassName, req.body.newClassName, req.body.newDifficulty, currentUserEmail)) {
+        res.status(200).send({message: "Class edited successfully.", className: req.body.newClassName});
+        return
+    } else {
+        res.status(400).send("Failed to edit class. Class may not exist or fields may be invalid.");
+        return
+    }
 });
 
 /**
@@ -196,16 +244,20 @@ router.delete("/", (req, res) => {
     if(!req.body) {
         console.log("No request body provided. Cannot delete class.");
         res.status(400).send("No request body provided. Cannot delete class.");
+        return
     }
     else if (!req.body.className) {
         console.log("Class name is required. Cannot delete class.");
         res.status(400).send("Class name is required. Cannot delete class.");
+        return
     }
 
     if(handleDeleteClass(req.body.className, req.user.email)) {
         res.status(200).send({message: "Class deleted successfully.", className: req.body.className});
+        return
     } else {
         res.status(400).send("Failed to delete class. Class may not exist.");
+        return
     }
 
 });
