@@ -33,6 +33,9 @@ function editAssignment(oldAssignmentName, oldClassName, newAssignmentName, newC
     } else if(!verifyClassExists(newClassName, email)) {
         console.log("New class does not exist. Cannot edit assignment.");
         return false;
+    } else if(assignments.find((a) => a.assignmentName === newAssignmentName && a.className === newClassName && a.email === email && !(a.assignmentName === oldAssignmentName && a.className === oldClassName))) {
+        console.log("An assignment with this name already exists.  Cannot edit assignment.");
+        return false;
     }
 
     const assignmentToEdit = assignments.find((a) => a.assignmentName === oldAssignmentName && a.className === oldClassName && a.email === email);
@@ -112,12 +115,21 @@ export function getUserAssignments(email) {
 //      return sortAssignmentsByDueDate(userAssignments);
 // }
 
-export function handleDeleteAllAssignmentsFromClass(className) {
-    console.log("Attempting to delete all classes from class " + className)
-}
-
-export function renameClassForAllAssignments(oldClassName, newClassName) {
+export function renameClassForAllAssignments(oldClassName, newClassName, email) {
     console.log("Attempting to rename class " + oldClassName + " to " + newClassName)
+    if(!confirmStringIsValid(oldClassName) || !confirmStringIsValid(newClassName) || !confirmStringIsValid(email)) {
+        console.log("Invalid class names provided.");
+        return false;
+    }
+
+    for(let assignment of assignments) {
+        if(assignment.className === oldClassName && assignment.email === email) {
+            assignment.className = newClassName;
+            console.log("Renamed class for assignment: " + assignment.assignmentName);
+        }
+    }
+
+    return true;
 }
 
 /**

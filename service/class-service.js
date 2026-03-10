@@ -1,5 +1,7 @@
 import { getCurrentUser } from "./login-service.js";
 import { confirmStringIsValid } from "./assignment-service.js";
+import { deleteAssignmentsFromClass } from "./assignment-service.js";
+import { renameClassForAllAssignments } from "./assignment-service.js";
 import express from "express";
 const router = express.Router();
 
@@ -74,10 +76,12 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty, email
     }
 
     const classToEdit = classes.find((c) => c.className === oldClassName && c.email === email);
+    
     classToEdit.className = newClassName;
     classToEdit.difficulty = newDifficulty;
 
     sortClassesByDifficulty(classes);
+    renameClassForAllAssignments(oldClassName, newClassName, email);
     return true;
     //TODO: Implement adding assignments; once we have the assignment implemented, implement editing the class name for all assignments with the same class name.
     
@@ -108,10 +112,10 @@ export function handleDeleteClass(classNameToDelete, email) {
 
     console.log("Attempting to delete class: " + classNameToDelete);
     if(classes.some((c) => c.className === classNameToDelete && c.email === email)) {
+        deleteAssignmentsFromClass(classNameToDelete, email);
         const kept = classes.filter((c) => !(c.className === classNameToDelete && c.email === email));
         classes.length = 0;
         classes.push(...kept);
-        
         console.log("Class deleted successfully.");
         return true;
     } else {
