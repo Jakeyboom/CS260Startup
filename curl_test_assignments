@@ -8,5 +8,27 @@ curl -i -c "$COOKIE" -X POST "$BASE/api/auth" \
   -H "Content-Type: application/json" \
   -d "{\"email\":\"$EMAIL\",\"password\":\"$PASS\"}"
 
-# 2) GET assignments (expected empty array for now)
-curl -i -b "$COOKIE" "$BASE/api/assignments"
+# 2) Create a class for this user (expected: 200)
+curl -i -b "$COOKIE" -X POST "$BASE/api/classes" \
+  -H "Content-Type: application/json" \
+  -d '{"className":"CS260","difficulty":"hard"}'
+
+# 3) Create a valid assignment in CS260 (expected: 200)
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"Lab 1","className":"CS260","dueDate":"2026-03-31","difficulty":"medium"}'
+
+# 4) Try creating an assignment with missing fields (expected: 400)
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"Lab Missing Fields","className":"CS260"}'
+
+# 5) Try creating a duplicate assignment (expected: 400)
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"Lab 1","className":"CS260","dueDate":"2026-03-31","difficulty":"medium"}'
+
+# 6) Try creating assignment with an invalid class (expected: 400)
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"No Class Assignment","className":"NOT_A_REAL_CLASS","dueDate":"2026-04-10","difficulty":"easy"}'

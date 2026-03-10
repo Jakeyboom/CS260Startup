@@ -126,6 +126,14 @@ function sortClassesByDifficulty(classes) {
     return classes.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
 }
 
+export function verifyClassExists(className, email) {
+    if(!confirmStringIsValid(className) || !confirmStringIsValid(email)) {
+        console.log("Invalid class name or email.");
+        return false;
+    }
+    return classes.some((c) => c.className === className && c.email === email);
+}
+
 /**
  * REQUEST: GET /api/classes/
  * { (empty / no body)
