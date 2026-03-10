@@ -1,6 +1,11 @@
 //Here will implement the assignment service that will allow a user to create, read, update, and delete assignments. For now, this will be a simple implementation that uses local storage to store the assignments, but in the future, this will be replaced with a more robust implementation that uses a backend server and database.
 import { getCurrentUserClasses } from "./class-service.js";
 import { getCurrentUser, isLoggedIn } from "./login-service.js";
+import express from "express";
+
+const router = express.Router();
+
+const assignments = [];
 
 export function createAssignment(assignmentName, className, dueDate, difficulty) {
     console.log('Attempting to create assignment: ' + assignmentName + ', class: ' + className + ', due date: ' + dueDate +', difficulty: ' + difficulty);
@@ -173,3 +178,37 @@ export function getAllAssignmentsSortedByDueDate() {
 
      return sortAssignmentsByDueDate(allAssignments);
 }
+
+export function handleDeleteAllAssignmentsFromClass(className) {
+    console.log("Attempting to delete all classes from class " + className)
+}
+
+export function renameClassForAllAssignments(oldClassName, newClassName) {
+    console.log("Attempting to rename class " + oldClassName + " to " + newClassName)
+}
+
+/**
+ * 
+ */
+
+router.get("/", async (req, res) => {
+    console.log("Received GET request to get all assignments for current user.");
+    res.status(500).send("Not implemented yet.");
+});
+
+router.post("/", async (req, res) => {
+    console.log("Received POST request to create a new assignment for current user.");
+    res.status(500).send("Not implemented yet.");
+});
+
+router.put("/", async (req, res) => {
+    console.log("Received PUT request to edit an assignment for current user.");
+    res.status(500).send("Not implemented yet.");
+});
+
+router.delete("/", async (req, res) => {
+    console.log9("Received DELETE request to delete an assignment for current user.")
+    res.status(500).send("Not implemented yet.");
+});
+
+export { router as assignmentRouter };
