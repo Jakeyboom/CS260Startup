@@ -1,6 +1,6 @@
 //Here will implement the assignment service that will allow a user to create, read, update, and delete assignments. For now, this will be a simple implementation that uses local storage to store the assignments, but in the future, this will be replaced with a more robust implementation that uses a backend server and database.
 import { getCurrentUserClasses } from "./class-service.js";
-import { getCurrentUser, isLoggedIn } from "./login-service.js";
+import { getCurrentUser } from "./login-service.js";
 import { verifyClassExists } from "./class-service.js";
 import express from "express";
 
@@ -34,39 +34,25 @@ export function deleteAssignmentsFromClass(className) {
 }
 
 
-export function handleDeleteAssignment(currentAssignmentName, currentClassName) {
-    console.log('Attempting to delete assignment: ' + currentAssignmentName + ', class: ' + currentClassName);
-    let currentClasses = getCurrentUserClasses();
-    if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName)) {
+export function deleteAssignment(currentAssignmentName, currentClassName, email) {
+    console.log('Attempting to delete assignment: ' + currentAssignmentName + ', class: ' + currentClassName + ", email: " + email);
+    if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName || !email)) {
         console.log("All fields are required. Cannot delete assignment.");
         return false;
     } 
 
-    if(!currentClasses.some((c) => c.className === currentClassName)) {
-        console.log("Could not find class. Cannot delete assignment.");
-        return false;
-    }
+    const assignmentsKept = assignments.filter((a) => !(a.assignmentName === currentAssignmentName && a.className === currentClassName && a.email === email))
+    assignments.length = 0;
+    assignments.push(...assignmentsKept);
+    return true;
 
-    for (let c of currentClasses) {
-        if(c.className === currentClassName) {
-            if(!c.assignments.some((a) => a.name === currentAssignmentName)) {
-                console.log("could not find assignment. Cannot delete assignment.");
-                return false;
-            } else {
-                c.assignments = c.assignments.filter((a) => a.name !== currentAssignmentName);
-                localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(currentClasses));
-                console.log("Found and deleted assignment successfully.");
-                return true;
-            }
-        }
-    }
 
-    console.log("Something went wrong.  Could not delete assignment.");
-    return false;
 }
 
 export function confirmStringIsValid(inputString) {
-    if(inputString.length === 0) {
+    if(inputString === null || inputString === undefined) {
+        return false;
+    } else if(inputString.length === 0) {
         return false;
     }
 
@@ -173,8 +159,15 @@ router.put("/", async (req, res) => {
 });
 
 router.delete("/", async (req, res) => {
-    console.log("Received DELETE request to delete an assignment for current user.")
-    res.status(500).send("Not implemented yet.");
+    console.log("Received DELETE request to delete an assignment for current user.");
+    if(!req.body) {
+        console.log("No request body provided. Cannot delete assignment.");
+        res.status(400).send("No request body provided. Cannot delete assignment.");
+        return;
+    }
+
+    if(deleteAssignment(req.body.assignmentName, req.body.className, req.user.email)) {
+        console.log("Assign")
 });
 
 export { router as assignmentRouter };
