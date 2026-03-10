@@ -1,7 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './login.css';
-import { login, createAccount } from '../login-service';
 import { useNavigate } from 'react-router-dom';
 
 export  function Login() {
@@ -12,23 +11,33 @@ export  function Login() {
 
     const handleLogin = (event) => {
       event.preventDefault();
-      if(login(email, password)) {
-        navigate("/prioritizer");
-      } else {
-        //TODO: Implement error handling here.
-      };
+      console.log("Login requested");
+      createAuth("PUT");
     };
 
     //Here will be the Create Account handler
     const handleCreateAccount = (event) => {
       event.preventDefault();
       console.log("Create Account requested"); 
-      if(createAccount(email, password)) {
+      createAuth("POST");
+        //TODO: Implement error handling here.
+    };
+
+    async function createAuth(method) {
+      const response = await fetch('/api/auth', {
+        method: method,
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email: email, password: password})
+      });
+      if(response.ok) {
+        const data =       await response.json();
+        console.log("Authentication successful. Response data: ", data);
         navigate("/prioritizer");
       } else {
-        //TODO: Implement error handling here.
+        alert('Authentication failed')
       }
-    };
+
+    }
 
 
 

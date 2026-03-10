@@ -65,8 +65,8 @@ function generateAndAttachAuthToken(user, res) {
     const authToken = uuidv4();
     user.authToken = authToken;
     res.cookie('authToken', user.authToken, {
-        // secure: true,
-        // httpOnly: true,
+        secure: true,
+        httpOnly: true,
         sameSite: 'strict',
     });
 }
