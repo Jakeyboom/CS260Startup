@@ -1,0 +1,12 @@
+BASE="http://localhost:4000"
+COOKIE="cookies_assignments.txt"
+EMAIL="assignments_test1@example.com"
+PASS="pass123"
+
+# 1) Create account (also logs in and sets authToken cookie)
+curl -i -c "$COOKIE" -X POST "$BASE/api/auth" \
+  -H "Content-Type: application/json" \
+  -d "{\"email\":\"$EMAIL\",\"password\":\"$PASS\"}"
+
+# 2) GET assignments (expected empty array for now)
+curl -i -b "$COOKIE" "$BASE/api/assignments"

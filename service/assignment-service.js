@@ -5,7 +5,7 @@ import express from "express";
 
 const router = express.Router();
 
-const assignments = [];
+const assignments = []; //[{assignmentName, className, dueDate, difficulty, email}, ...]
 
 export function createAssignment(assignmentName, className, dueDate, difficulty) {
     console.log('Attempting to create assignment: ' + assignmentName + ', class: ' + className + ', due date: ' + dueDate +', difficulty: ' + difficulty);
@@ -168,16 +168,19 @@ export function confirmStringIsValid(inputString) {
     return true;
 }
 
-function sortAssignmentsByDueDate(assignments) {
-    return assignments.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+export function getUserAssignments(email) {
+    return assignments.filter((a) => a.email === email);
 }
 
-export function getAllAssignmentsSortedByDueDate() {
-    const classes = getCurrentUserClasses();
-    const allAssignments = classes.flatMap((c) => c.assignments);
+// function sortAssignmentsByDueDate(assignments) {
+//     return assignments.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+// }
 
-     return sortAssignmentsByDueDate(allAssignments);
-}
+// export function getAllAssignmentsSortedByDueDate(email) {
+//     const userAssignments = assignments.filter((a) => a.email === email)
+
+//      return sortAssignmentsByDueDate(userAssignments);
+// }
 
 export function handleDeleteAllAssignmentsFromClass(className) {
     console.log("Attempting to delete all classes from class " + className)
@@ -188,12 +191,31 @@ export function renameClassForAllAssignments(oldClassName, newClassName) {
 }
 
 /**
+ * GET /api/assignments/ - Get all assignments for the current user, sorted by due date
+ * {
+ * }
  * 
+ * RESPONSE:
+ * {
+ *  assignments: [{assignmentName, className, dueDate, difficulty}, ...]
+ * }
  */
 
 router.get("/", async (req, res) => {
+    const user = req.user;
+    const email = user.email;
+    if(!email) {
+        console.log("No user is currently logged in. Cannot get assignments.");
+        res.status(401).send("No user is currently logged in. Cannot get assignments.");
+        return;
+    }
+
     console.log("Received GET request to get all assignments for current user.");
-    res.status(500).send("Not implemented yet.");
+    //MAYBE SEE IF I NEED TO AUTHENTICATE THE COOKIE AGAIN; AS I ALWAYS DO THROUGH APP, IT SHOULD BE AUTHENTICATED.
+    const userAssignments = getUserAssignments(email);
+    res.status(200).send({assignments: userAssignments});
+    
+    return;
 });
 
 router.post("/", async (req, res) => {
