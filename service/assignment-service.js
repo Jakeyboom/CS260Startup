@@ -25,18 +25,32 @@ function createAssignment(assignmentToCreate) {
 
 }
 
-function editAssignment() {
+function editAssignment(oldAssignmentName, oldClassName, newAssignmentName, newClassName, newDueDate, newDifficulty, email) {
+    console.log('Attempting to edit assignment: ' + oldAssignmentName + ', class: ' + oldClassName + ", email: " + email);
+    if(!confirmStringIsValid(oldAssignmentName) || !confirmStringIsValid(oldClassName) || !confirmStringIsValid(newAssignmentName) || !confirmStringIsValid(newClassName) || !confirmStringIsValid(newDueDate) || !confirmStringIsValid(newDifficulty) || !confirmStringIsValid(email)) {
+        console.log("All fields are required. Cannot edit assignment.");
+        return false;
+    } else if(!verifyClassExists(newClassName, email)) {
+        console.log("New class does not exist. Cannot edit assignment.");
+        return false;
+    }
 
+    const assignmentToEdit = assignments.find((a) => a.assignmentName === oldAssignmentName && a.className === oldClassName && a.email === email);
+    if(!assignmentToEdit) {
+        console.log("Assignment to edit does not exist. Cannot edit assignment.");
+        return false;
+    } else {
+        assignmentToEdit.assignmentName = newAssignmentName;
+        assignmentToEdit.className = newClassName;
+        assignmentToEdit.dueDate = newDueDate;
+        assignmentToEdit.difficulty = newDifficulty;
+        return true;
+    }
 }
 
-export function deleteAssignmentsFromClass(className) {
-
-}
-
-
-export function deleteAssignment(currentAssignmentName, currentClassName, email) {
+function deleteAssignment(currentAssignmentName, currentClassName, email) {
     console.log('Attempting to delete assignment: ' + currentAssignmentName + ', class: ' + currentClassName + ", email: " + email);
-    if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName || !email)) {
+    if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName) || !confirmStringIsValid(email)) {
         console.log("All fields are required. Cannot delete assignment.");
         return false;
     } 
@@ -49,8 +63,17 @@ export function deleteAssignment(currentAssignmentName, currentClassName, email)
 
 }
 
+export function deleteAssignmentsFromClass(className, email) {
+    const newAssignments = assignments.filter((a) => !(a.className === className && a.email === email));
+    assignments.length = 0;
+    assignments.push(...newAssignments);
+}
+
+
+
+
 export function confirmStringIsValid(inputString) {
-    if(inputString === null || inputString === undefined) {
+    if(inputString == null) {
         return false;
     } else if(inputString.length === 0) {
         return false;
@@ -154,8 +177,23 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-    console.log("Received PUT request to edit an assignment for current user.");
-    res.status(500).send("Not implemented yet.");
+    if(!req.body) {
+        console.log("No request body provided. Cannot edit assignment.");
+        res.status(400).send("No request body provided. Cannot edit assignment.");
+        return;
+    } else if (!req.body.oldAssignmentName || !req.body.oldClassName || !req.body.newAssignmentName || !req.body.newClassName || !req.body.newDueDate || !req.body.newDifficulty) {
+        console.log("Missing parameters in request body.  Assignment cannot be edited.");
+        res.status(400).send("All fields required");
+        return;
+    } else if(editAssignment(req.body.oldAssignmentName, req.body.oldClassName, req.body.newAssignmentName, req.body.newClassName, req.body.newDueDate, req.body.newDifficulty, req.user.email)) {
+        console.log("Assignment edited successfully.");
+        res.status(200).send({message: "Assignment edited successfully.", newAssignment: {assignmentName: req.body.newAssignmentName, className: req.body.newClassName, dueDate: req.body.newDueDate, difficulty: req.body.newDifficulty}});
+        return;
+    } else {
+        console.log("Assignment could not be edited. Check server logs for more details.");
+        res.status(400).send("Assignment could not be edited. Check server logs for more details.");
+        return;
+    }
 });
 
 router.delete("/", async (req, res) => {
@@ -164,10 +202,21 @@ router.delete("/", async (req, res) => {
         console.log("No request body provided. Cannot delete assignment.");
         res.status(400).send("No request body provided. Cannot delete assignment.");
         return;
+    } else if(!req.body.assignmentName || !req.body.className || !req.user || !req.user.email) {
+        console.log("Missing parameters in request body.  Assignment cannot be deleted.");
+        res.status(400).send("All fields required");
+        return;
     }
 
     if(deleteAssignment(req.body.assignmentName, req.body.className, req.user.email)) {
-        console.log("Assign")
+        console.log("Assignment deleted successfully.");
+        res.status(200).send("Assignment deleted successfully.");
+        return;
+    } else {
+        console.log("Assignment could not be deleted. Check server logs for more details.");
+        res.status(400).send("Assignment could not be deleted. Check server logs for more details.");
+        return;
+    }
 });
 
 export { router as assignmentRouter };

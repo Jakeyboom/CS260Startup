@@ -1,34 +1,84 @@
 BASE="http://localhost:4000"
 COOKIE="cookies_assignments.txt"
-EMAIL="assignments_test1@example.com"
+EMAIL="assignments_test2@example.com"
 PASS="pass123"
 
-# 1) Create account (also logs in and sets authToken cookie)
+echo "=== 1) Create account / login ==="
 curl -i -c "$COOKIE" -X POST "$BASE/api/auth" \
   -H "Content-Type: application/json" \
   -d "{\"email\":\"$EMAIL\",\"password\":\"$PASS\"}"
 
-# 2) Create a class for this user (expected: 200)
+echo
+echo "=== 2) Create classes ==="
 curl -i -b "$COOKIE" -X POST "$BASE/api/classes" \
   -H "Content-Type: application/json" \
   -d '{"className":"CS260","difficulty":"hard"}'
 
-# 3) Create a valid assignment in CS260 (expected: 200)
-curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+curl -i -b "$COOKIE" -X POST "$BASE/api/classes" \
   -H "Content-Type: application/json" \
-  -d '{"assignmentName":"Lab 1","className":"CS260","dueDate":"2026-03-31","difficulty":"medium"}'
+  -d '{"className":"MATH101","difficulty":"easy"}'
 
-# 4) Try creating an assignment with missing fields (expected: 400)
-curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+curl -i -b "$COOKIE" -X POST "$BASE/api/classes" \
   -H "Content-Type: application/json" \
-  -d '{"assignmentName":"Lab Missing Fields","className":"CS260"}'
+  -d '{"className":"PHYS201","difficulty":"medium"}'
 
-# 5) Try creating a duplicate assignment (expected: 400)
-curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
-  -H "Content-Type: application/json" \
-  -d '{"assignmentName":"Lab 1","className":"CS260","dueDate":"2026-03-31","difficulty":"medium"}'
+echo
+echo "=== 3) Verify classes ==="
+curl -i -b "$COOKIE" "$BASE/api/classes"
 
-# 6) Try creating assignment with an invalid class (expected: 400)
+echo
+echo "=== 4) Add assignments to each class ==="
+# CS260 assignments
 curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
   -H "Content-Type: application/json" \
-  -d '{"assignmentName":"No Class Assignment","className":"NOT_A_REAL_CLASS","dueDate":"2026-04-10","difficulty":"easy"}'
+  -d '{"assignmentName":"CS260 Lab 1","className":"CS260","dueDate":"2026-03-31","difficulty":"medium"}'
+
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"CS260 Project","className":"CS260","dueDate":"2026-04-10","difficulty":"hard"}'
+
+# MATH101 assignments
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"MATH101 HW 1","className":"MATH101","dueDate":"2026-03-25","difficulty":"easy"}'
+
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"MATH101 Quiz Prep","className":"MATH101","dueDate":"2026-03-28","difficulty":"medium"}'
+
+# PHYS201 assignments
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"PHYS201 Problem Set 1","className":"PHYS201","dueDate":"2026-04-02","difficulty":"medium"}'
+
+curl -i -b "$COOKIE" -X POST "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"PHYS201 Lab Report","className":"PHYS201","dueDate":"2026-04-06","difficulty":"hard"}'
+
+echo
+echo "=== 5) Verify assignments before deletes ==="
+curl -i -b "$COOKIE" "$BASE/api/assignments"
+
+echo
+echo "=== 6) Delete a few specific assignments ==="
+curl -i -b "$COOKIE" -X DELETE "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"CS260 Lab 1","className":"CS260"}'
+
+curl -i -b "$COOKIE" -X DELETE "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"MATH101 Quiz Prep","className":"MATH101"}'
+
+curl -i -b "$COOKIE" -X DELETE "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"PHYS201 Lab Report","className":"PHYS201"}'
+
+echo
+echo "=== 7) Verify assignments after deletes ==="
+curl -i -b "$COOKIE" "$BASE/api/assignments"
+
+echo
+echo "=== 8) Optional negative test: delete non-existent assignment (should fail or no-op based on server logic) ==="
+curl -i -b "$COOKIE" -X DELETE "$BASE/api/assignments" \
+  -H "Content-Type: application/json" \
+  -d '{"assignmentName":"DOES_NOT_EXIST","className":"CS260"}'
