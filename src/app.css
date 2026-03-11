@@ -113,13 +113,7 @@ label {
 
 }
 
-#footer-buttons-container button {
-    max-width: 2em;
-    justify-content: flex-end;
-    min-width: 1em;
-    margin: 0.5em;
-    max-height: auto;
-}
+
 
 
 #main-buttons {

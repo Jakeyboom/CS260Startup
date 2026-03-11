@@ -1,8 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
-import { logout } from './login-service.js';
-import { isLoggedIn } from './login-service.js';
 
 //This is the main app component that is rendered in index.jsx.
 //Here, I will integrate the basic app componenets.
@@ -17,12 +15,37 @@ import { EditAssignment } from './edit_assignment/edit_assignment';
 import { AddClass } from './add_class/add_class';
 import { EditClass }  from './edit_class/edit_class';
 
-import {BrowserRouter, NavLink, Route, Routes} from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="app">
+      <AppContent />
+    </BrowserRouter>
+  
+  );
+}
+
+function AppContent() {
+
+  function logout(navigate) {
+  fetch('/api/auth', {
+    method: 'DELETE',
+    headers: {'Content-Type': 'application/json'},
+    credentials: 'include'
+  }).then(response => {
+    if(response.ok) {
+      console.log("Logout successful.");
+      navigate("/"); // Redirect to login page after successful logout
+    }
+  })
+}
+
+
+const navigate = useNavigate();
+
+  return(
+        <div className="app">
           <header> 
             <h1>
               Welcome to AmigoOrganizado!
@@ -50,7 +73,7 @@ export default function App() {
           <footer>
             <div id="footer-buttons-container">
 
-              <NavLink to="/" className="btn btn-secondary btn-lg footer-button" onClick = { logout } >Logout</NavLink>
+              <button className="btn btn-secondary btn-lg footer-button" onClick = { () => logout(navigate) } >Logout</button>
               <NavLink to="/about" className="btn btn-secondary btn-lg footer-button">About</NavLink>
 
 
@@ -62,12 +85,9 @@ export default function App() {
           </footer>
 
 
-      </div>
+      </div>)
 
-    
-    </BrowserRouter>
-  
-  );
+
 }
 
 function NotFound() {
