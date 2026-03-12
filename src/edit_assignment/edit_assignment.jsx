@@ -2,14 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../CSS/add-and-edit.css';
-import { getCurrentUserClasses } from '../class-service.js';
-import { isLoggedIn } from '../login-service.js';
-import { handleEditAssignment, handleDeleteAssignment } from '../assignment-service.js';
 
 export function EditAssignment() {
-    if(!isLoggedIn()) {
-        return <main> <h2>Please log in to edit assignments. </h2> </main>
-    }
+
 
 
 
@@ -19,24 +14,91 @@ export function EditAssignment() {
     const [newDueDate, setNewDueDate] = React.useState("");
     const [newDifficulty, setNewDifficulty] = React.useState("");
     const { currentClassNameEncoded, currentAssignmentNameEncoded } = useParams();
-    const currentUserClasses = getCurrentUserClasses();
+    const [currentUserClasses, setCurrentUserClasses] = React.useState([]);
     const currentClassName = decodeURIComponent(currentClassNameEncoded);
     const currentAssignmentName = decodeURIComponent(currentAssignmentNameEncoded);
     console.log("Current edit class parameters: " + currentClassName + ", " + currentAssignmentName);
 
-    const saveChanges = (event) => {
-        event.preventDefault();
-        console.log("Save Changes requested in edit_assignment.jsx" + `\nProposed Changes: AssignmentName: ${newAssignmentName} \n ClassName: ${newClassName} \n DueDate: ${newDueDate} \n Difficulty: ${newDifficulty}`);
-        if(handleEditAssignment(currentAssignmentName, currentClassName, newAssignmentName, newClassName, newDueDate, newDifficulty)) {
-            navigate("/prioritizer")
+
+    React.useEffect(() => {
+        async function loadClasses() {
+    
+            try {
+                const response = await(fetch('/api/classes', {
+                    method: 'GET',
+                    credentials: 'include'
+                }));
+    
+                if(!response.ok) {
+                    throw new Error ("Error fetching classes data: " + response.statusText);
+                }
+    
+                const classesBody = await response.json();
+                const classes = classesBody.classes;
+                setCurrentUserClasses(classes);
+            } catch(error) {
+                console.error("Error fetching classes data: ", error);
+            }
+    
+    
         }
+    
+        loadClasses();
+    }, [])
+    
+
+    const saveChanges = async (event) => {
+        event.preventDefault();
+        console.log("Save Changes requested");
+        if(!newAssignmentName || !newClassName || !newDueDate || !newDifficulty || !currentClassName || !currentAssignmentName) {
+            alert("Please fill out all fields before saving.");
+            return;
+        }
+
+        try {
+            const newAssignment = {oldAssignmentName: currentAssignmentName, oldClassName: currentClassName, newAssignmentName: newAssignmentName, newClassName: newClassName, newDueDate: newDueDate, newDifficulty: newDifficulty};
+            const response = await fetch('/api/assignments', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(newAssignment)
+            });
+
+            if(!response.ok) {
+                throw new Error("Failed to edit assignment. Server responded with status: " + response.status);
+            }
+
+            navigate("/prioritizer");
+        } catch(error) {
+            console.error("Error editing assignment: ", error);
+            alert("An error occurred while saving the assignment. \n Error: " + error.message);
+            return;
+        }
+
+
     };
 
 
-    const deleteAssignment = () => {
+    const deleteAssignment = async () => {
         console.log("Delete Assignment requested");
-        if(handleDeleteAssignment(currentAssignmentName, currentClassName)) {
-            navigate("/prioritizer");
+        try {
+            if(currentClassName === null || currentClassName === undefined || currentAssignmentName === null || currentAssignmentName === undefined) {
+                throw new Error("Invalid class name");
+            }
+
+            const assignmentBody = {assignmentName: currentAssignmentName, className: currentClassName};
+            const response = await fetch('/api/assignments', {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify(assignmentBody)
+            });
+        } catch(error) {
+            console.error("Error deleting assignment: ", error);
+            alert("An error occurred while deleting the assignment. \n Error: " + error.message);
+            return;
         }
     };
 
