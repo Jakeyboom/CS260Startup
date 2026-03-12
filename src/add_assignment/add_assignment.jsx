@@ -3,15 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 import { useNavigate } from 'react-router-dom';
 import { createAssignment } from '../assignment-service.js';
-import { isLoggedIn } from '../login-service.js';
-import { getCurrentUserClasses } from '../class-service.js'; 
 
 export function AddAssignment() {
-    if(!isLoggedIn()) {
-        return <main> <h2>Please log in to add assignments. </h2> </main>
-    }
 
-    const currentUserClasses = getCurrentUserClasses();
+
+    const [currentUserClasses, setCurrentUserClasses] = React.useState([]);
     
     const [assignmentName, setAssignmentName] = React.useState("");
     const [userClassName, setClassName] = React.useState("");
@@ -20,11 +16,59 @@ export function AddAssignment() {
 
     const navigate = useNavigate();
 
-    const saveChanges = () => {
-        if(createAssignment(assignmentName, userClassName, dueDate, difficulty)) {
+    React.useEffect(() => {
+        async function loadClasses() {
+
+            try {
+                const response = await(fetch('/api/classes', {
+                    method: 'GET',
+                    credentials: 'include'
+                }));
+
+                if(!response.ok) {
+                    throw new Error ("Error fetching classes data: " + response.statusText);
+                }
+
+                const classesBody = await response.json();
+                const classes = classesBody.classes;
+                setCurrentUserClasses(classes);
+            } catch(error) {
+                console.error("Error fetching classes data: ", error);
+            }
+
+
+        }
+
+        loadClasses();
+    }, [])
+
+    const saveChanges = async (event) =>{
+        event.preventDefault();
+        if(!assignmentName || !userClassName || !dueDate || !difficulty) {
+            alert("Please fill out all fields before saving.");
+            return;
+        }
+
+        try {
+            const assignment = {assignmentName: assignmentName, className: userClassName, dueDate: dueDate, difficulty: difficulty};
+            response = await fetch('/api/assignments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(assignment)
+            });
+
+            if(!response.ok) {
+                throw new Error("Failed to save assignment. Server responded with status: " + response.status);
+            }
+
             navigate("/prioritizer");
-        } else {
-            console.log("Failed to create assignment. Please try again.");
+        } catch(error) {
+            console.error("Error saving assignment: ", error);
+            alert("An error occurred while saving the assignment. \n Error: " + error.message);
+            return;
         }
     };
     const cancelChanges = () => {navigate("/prioritizer")};
