@@ -2,31 +2,43 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
-import { isLoggedIn, getCurrentUser } from '../login-service.js';
-import { pushClassToCurrentUser } from '../class-service.js';
 
 export function AddClass() {
     //Theoretically, This should be almost done.  Save changes has been implemented, and the function to push checks to see if there is a duplicate class.  Cancel is cancel.
 
-    if(!isLoggedIn()) {
-        return <main> <h2>Please log in to add classes. </h2> </main>
-    }
+
 
     const [className, setClassName] = React.useState("");
     const [difficulty, setDifficulty] = React.useState("");
 
     const navigate = useNavigate();
 
-    const saveChanges = (event) => {
+    const saveChanges = async (event) => {
         event.preventDefault();
-        console.log("Save Changes requested"); 
+        console.log("Save Changes requested");
+        try {
+            const classBody = {className: className, difficulty: difficulty}
+            const response = await fetch('/api/classes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(classBody)
+            });
+
+            if(!response.ok) {
+                throw new Error("Failed to save changes. Server responded with status: " + response.status);
+            }
+
+            navigate("/prioritizer")
+
+        } catch(error) {
+            console.log("Error saving changes: ", error);
+            alert("An error occured while saving changes \n Error: " + error.message);
+        }
         //Right here will check if a class with the same name already exists for the user.
 
-        if(pushClassToCurrentUser({className: className, difficulty: difficulty, assignments: []})) {
-            navigate("/prioritizer")
-        } else {
-            console.log("Failed to create class. Please try again.");
-        };
+      
     }
     const cancelChanges = () => {navigate("/prioritizer")};
 

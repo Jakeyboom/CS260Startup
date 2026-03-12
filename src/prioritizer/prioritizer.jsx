@@ -1,8 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from 'react-router-dom';
-import {isLoggedIn} from '../login-service.js';
-
 //Here will be some canned inspirational quotes to mock an api call.
 
 const inspirationalQuotes = [
@@ -41,7 +39,6 @@ export function Prioritizer() {
         async function loadClasses() {
             const response = await fetch('/api/classes', {
                 method: 'GET',
-                headers: {'Content-Type': 'application/json'},
                 credentials: 'include'
             })
 
@@ -63,7 +60,6 @@ export function Prioritizer() {
         async function loadAssignments() {
             const response = await fetch('/api/assignments', {
                 method: 'GET',
-                headers: {'Content-Type': 'application/json'},
                 credentials: 'include'
             });
 
@@ -110,7 +106,7 @@ export function Prioritizer() {
                     if(a.dueDate === today) {
                         return <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.assignmentName} className={"assignment_" + a.difficulty}>
                             <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.assignmentName)}>{a.assignmentName}</NavLink>
-                            <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
+                            <NavLink to={"/edit_class/" + encodeURIComponent(a.className)}>{a.className}</NavLink>
                             <NavLink to={`/day/${a.dueDate}`} id="due-date" className="due-date"> Due {a.dueDate}</NavLink>
                         </li>
                     }
