@@ -2,13 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import {isLoggedIn} from '../login-service.js';
-import {handleEditClass, handleDeleteClass } from '../class-service.js';
 
 export function EditClass() {
-    if(!isLoggedIn()) {
-        return <main> <h2>Please log in to edit classes. </h2> </main>
-    }
+
 
     const navigate = useNavigate();
     const { currentClassNameEncoded } = useParams();
@@ -16,24 +12,64 @@ export function EditClass() {
     const [newDifficulty, setNewDifficulty] = React.useState("");
     const [newClassName, setNewClassName] = React.useState("");
 
-    const saveChanges = (event) => {
-        console.log("Save Changes requested");
+    const saveChanges = async (event) => {
         event.preventDefault(); 
-        
-        if(handleEditClass(currentClassName, newClassName, newDifficulty)) {
+
+        try {
+            if(currentClassName === null || currentClassName === undefined) {
+                throw new Error("Invalid class name.");
+            }
+
+            const classBody = {oldClassName: currentClassName, newClassName: newClassName, newDifficulty: newDifficulty}
+            const response = await fetch('/api/classes', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(classBody)
+            });
+
+            if(!response.ok) {
+                throw new Error("Failed to save changes. Server responded with status: " + response.status);
+            }
+            
             navigate("/prioritizer");
-        } else {
-            console.log("Failed to edit class. Please try again.");
+
+        } catch(error) {
+            console.error("Error occurred while saving changes: ", error);
+            alert("An error occurred while saving changes. Please try again.");
+            return;
         }
+        console.log("Save Changes requested");
+        
     };
 
 
-    const deleteClass = () => {
-        console.log("Delete Class requested");
-        if(handleDeleteClass(currentClassName)) {
-            console.log("Class deleted successfully.")
+    const deleteClass = async () => {
+        try {
+            if(currentClassName === null || currentClassName === undefined) {
+                throw new Error("Invalid class name.");
+            }
+            const classBody = {className: currentClassName};
+            const response = await fetch('/api/classes', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(classBody)
+            });
+
+            if(!response.ok) {
+                throw new Error(response.status);
+            }
+
             navigate("/prioritizer");
+        } catch(error) {
+            console.error("Error occured while delete.  Error: ", error);
+            alert("An error occurred while deleting the class. Server reported: ", error);
+            return;
         }
+        console.log("Delete Class requested");
     };
 
 

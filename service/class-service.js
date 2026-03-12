@@ -20,8 +20,10 @@ export function getCurrentUserClasses(authToken) {
         console.log("No user is currently logged in. Cannot get classes.");
         return [];
     }
+    const userClasses = classes.filter((c) => c.email === email);
+    console.log("Classes for user " + email + ": ", userClasses);
 
-    return classes.filter((c) => c.email === email);
+    return userClasses;
 }
 
 
@@ -83,22 +85,7 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty, email
     sortClassesByDifficulty(classes);
     renameClassForAllAssignments(oldClassName, newClassName, email);
     return true;
-    //TODO: Implement adding assignments; once we have the assignment implemented, implement editing the class name for all assignments with the same class name.
-    
-    // for(let c of userClasses) {
-    //     if(c.className === oldClassName) {
-    //         c.className = newClassName;
-    //         c.difficulty = newDifficulty
-    //         for(let a of c.assignments) {
-    //             a.className = newClassName;
-    //         }
 
-    //         const sortedClasses = sortClassesByDifficulty(userClasses);
-    //         localStorage.setItem(`classes_${getCurrentUser()}`, JSON.stringify(sortedClasses))
-    //         return true;
-    //     }
-    // }
-    // return false;
 }
 
 export function handleDeleteClass(classNameToDelete, email) {
