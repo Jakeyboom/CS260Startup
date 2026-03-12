@@ -2,9 +2,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from 'react-router-dom';
 import {isLoggedIn} from '../login-service.js';
-import { getuserClasses
- } from '../class-service.js';
-import { getallAssignments } from '../assignment-service.js';
 
 //Here will be some canned inspirational quotes to mock an api call.
 
@@ -19,16 +16,14 @@ const inspirationalQuotes = [
 export function Prioritizer() {
  
 
-    if(!isLoggedIn()) {
-        return <main> <h2>Please log in to view the prioritizer. </h2> </main>
-    }
+   
 
-    const userClasses = getuserClasses();
-    const allAssignments = getallAssignments();
+    const [userClasses, setUserClasses] = React.useState([]);
+    const [allAssignments, setAllAssignments] = React.useState([]);
     const [currentQuote, setCurrentQuote] = React.useState(inspirationalQuotes[0]);
 
     function changeQuote() {
-        const newQuote = inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)];
+        const newQuote = "\"" + inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)] + "\"";
         setCurrentQuote(newQuote);
     }
 
@@ -37,13 +32,52 @@ export function Prioritizer() {
         changeQuote(), 5000);
 
         return () => clearInterval(interval);
-    })
+    }, []);
 
     React.useEffect(() => {
         //Here, I will make the fetch request to the backend to 
-        console.log("Loading data for prioritizer. Current user classes: ", userClasses);
-    })
+        //get the user classes and assignments.
 
+        async function loadClasses() {
+            const response = await fetch('/api/classes', {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include'
+            })
+
+            if(response.ok) {
+                const data = await response.json();
+                console.log(" Classes data received: ", data);
+                setUserClasses(data.classes);
+            } else {
+                console.error("Error fetching classes data");
+            }
+        }
+
+        loadClasses();
+    }, []);
+
+    React.useEffect(() => {
+        //Here, I will make the fetch requests for the user assignments.
+
+        async function loadAssignments() {
+            const response = await fetch('/api/assignments', {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include'
+            });
+
+            if(response.ok) {
+                const data = await response.json();
+                console.log("Assignments data received: ", data);
+                setAllAssignments(data.assignments);
+            } else {
+                console.error("Error fetching assignments data");
+            }
+        }
+
+        loadAssignments();
+    }, []);
 
     return(
             <main> 
@@ -55,8 +89,8 @@ export function Prioritizer() {
             <ol id="prioritizer" className="classes">
 
                 {(userClasses
-            .length === 0 || allAssignments.length === 0) ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignments.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
-                    <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
+            .length === 0 || allAssignments.length === 0) ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignments.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.assignmentName} className={"assignment_" + a.difficulty}>
+                    <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.assignmentName)}>{a.assignmentName}</NavLink>
                     <NavLink to={"/edit_class/" + encodeURIComponent(a.className)}>{a.className}</NavLink>
                     <NavLink to={`/day/${a.dueDate}`} id="due-date" className="due-date"> Due {a.dueDate}</NavLink>
                 </li>)}
@@ -69,19 +103,18 @@ export function Prioritizer() {
 
 
                 {
-                userClasses
-        .some((c) => c.assignments.some((a) => a.dueDate === new Date().toLocaleDateString('en-CA').split('T')[0])) ? userClasses
-        .map((c) => c.assignments.map((a) => {
+                
+        allAssignments.some((a) => a.dueDate === new Date().toLocaleDateString('en-CA').split('T')[0]) ? allAssignments.map((a) => {
                     //This might be better to store globally.
                     const today = new Date().toLocaleDateString('en-CA').split('T')[0];
                     if(a.dueDate === today) {
-                        return <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
-                            <NavLink to={"/edit_assignment/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
+                        return <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.assignmentName} className={"assignment_" + a.difficulty}>
+                            <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.assignmentName)}>{a.assignmentName}</NavLink>
                             <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
                             <NavLink to={`/day/${a.dueDate}`} id="due-date" className="due-date"> Due {a.dueDate}</NavLink>
                         </li>
                     }
-                })) : <li>No Assignments Due Today!  Enjoy your day</li>
+                }) : <li>No Assignments Due Today!  Enjoy your day</li>
                 
                 
                 }
