@@ -2,8 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from 'react-router-dom';
 import {isLoggedIn} from '../login-service.js';
-import { getCurrentUserClasses } from '../class-service.js';
-import { getAllAssignmentsSortedByDueDate } from '../assignment-service.js';
+import { getuserClasses
+ } from '../class-service.js';
+import { getallAssignments } from '../assignment-service.js';
 
 //Here will be some canned inspirational quotes to mock an api call.
 
@@ -22,8 +23,8 @@ export function Prioritizer() {
         return <main> <h2>Please log in to view the prioritizer. </h2> </main>
     }
 
-    const currentUserClasses = getCurrentUserClasses();
-    const allAssignmentsSortedByDueDate = getAllAssignmentsSortedByDueDate();
+    const userClasses = getuserClasses();
+    const allAssignments = getallAssignments();
     const [currentQuote, setCurrentQuote] = React.useState(inspirationalQuotes[0]);
 
     function changeQuote() {
@@ -38,6 +39,11 @@ export function Prioritizer() {
         return () => clearInterval(interval);
     })
 
+    React.useEffect(() => {
+        //Here, I will make the fetch request to the backend to 
+        console.log("Loading data for prioritizer. Current user classes: ", userClasses);
+    })
+
 
     return(
             <main> 
@@ -48,7 +54,8 @@ export function Prioritizer() {
             <label for="prioritizer"><i>Prioritizer:</i></label>
             <ol id="prioritizer" className="classes">
 
-                {(currentUserClasses.length === 0 || allAssignmentsSortedByDueDate.length === 0) ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignmentsSortedByDueDate.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
+                {(userClasses
+            .length === 0 || allAssignments.length === 0) ? <li>No Assignments or Classes Found.  Please add some!</li> : allAssignments.map((a) => <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
                     <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
                     <NavLink to={"/edit_class/" + encodeURIComponent(a.className)}>{a.className}</NavLink>
                     <NavLink to={`/day/${a.dueDate}`} id="due-date" className="due-date"> Due {a.dueDate}</NavLink>
@@ -62,7 +69,9 @@ export function Prioritizer() {
 
 
                 {
-                currentUserClasses.some((c) => c.assignments.some((a) => a.dueDate === new Date().toLocaleDateString('en-CA').split('T')[0])) ? currentUserClasses.map((c) => c.assignments.map((a) => {
+                userClasses
+        .some((c) => c.assignments.some((a) => a.dueDate === new Date().toLocaleDateString('en-CA').split('T')[0])) ? userClasses
+        .map((c) => c.assignments.map((a) => {
                     //This might be better to store globally.
                     const today = new Date().toLocaleDateString('en-CA').split('T')[0];
                     if(a.dueDate === today) {
