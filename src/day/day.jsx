@@ -2,23 +2,50 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useParams } from 'react-router-dom';
 import { getCurrentUserClasses } from '../class-service.js';
-import { isLoggedIn } from '../login-service.js';
 
 export function DayView() {
-    if(!isLoggedIn()) {
-        return <main> <h2>Please log in to view specific days. </h2> </main>
-    }
+
 
     const {selectedDay} = useParams();
     const [dateToView, setDateToView] = React.useState(selectedDay || "");
-    const currentUserClasses = getCurrentUserClasses();
+    const [currentUserAssignments, setCurrentUserAssignments] = React.useState([]);
+
+    React.useEffect(() => {
+        //Logic for loading assignments
+        async function loadAssignments() {
+    
+            try {
+                const response = await(fetch('/api/assignments', {
+                    method: 'GET',
+                    credentials: 'include'
+                }));
+    
+                if(!response.ok) {
+                    throw new Error ("Error fetching assignments data: " + response.statusText);
+                }
+    
+                const assignmentBody = await response.json();
+                const assignments = assignmentBody.assignments;
+                setCurrentUserAssignments(assignments);
+            } catch(error) {
+                console.error("Error fetching assignments data: ", error);
+            }
+    
+    
+        }
+    
+        loadAssignments();
+
+
+    }, [])
+
     const seeDay = (event) => {
         event.preventDefault();
         // Logic for viewing the selected day
     }
 
     
-    if(currentUserClasses.length === 0) {
+    if(currentUserAssignments.length === 0) {
         return <main> <h2>Please add some classes and assignments to view specific days. </h2> 
                 <form action="main.html" method="get" id="return-button-form">
             <div id="main-buttons">
@@ -48,17 +75,17 @@ export function DayView() {
         <ul className="classes" id="assignments-due-today">
             {/* Here, I will list all the assignments that are due on the selected day. */}
             {
-               currentUserClasses.some((c) => c.assignments.some((a) => a.dueDate === dateToView)) ? 
+               currentUserAssignments.some((a) => a.dueDate === dateToView) ? 
         
   
-                currentUserClasses.map((c) => c.assignments.map((a) => {
+                currentUserAssignments.map((a) => {
                     if(a.dueDate === dateToView) {
-                        return <li key={c.className + " $$$ASSSIGNMENT$$$ " + a.name} className={"assignment_" + a.difficulty}>
-                            <NavLink to={"/edit_assignment/" + encodeURIComponent(c.className) + "/" + encodeURIComponent(a.name)}>{a.name}</NavLink>
-                            <NavLink to={"/edit_class/" + encodeURIComponent(c.className)}>{c.className}</NavLink>
+                        return <li key={a.className + " $$$ASSSIGNMENT$$$ " + a.assignmentName} className={"assignment_" + a.difficulty}>
+                            <NavLink to={"/edit_assignment/" + encodeURIComponent(a.className) + "/" + encodeURIComponent(a.assignmentName)}>{a.assignmentName}</NavLink>
+                            <NavLink to={"/edit_class/" + encodeURIComponent(a.className)}>{a.className}</NavLink>
                         </li>
                 }
-            })) : <li>No assignments due on this day!</li>
+            }) : <li>No assignments due on this day!</li>
         }
         </ul>                
         

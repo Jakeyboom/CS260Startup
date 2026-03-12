@@ -12,13 +12,45 @@ const localizer = momentLocalizer(moment);
 
 export function Calendar() {
   const navigate = useNavigate();
-  const myEventsList = getCurrentUserClasses().flatMap((c) => c.assignments.map((a) => {
+
+  const [currentUserAssignments, setCurrentUserAssignments] = React.useState([]);
+
+  React.useEffect(() => {
+        async function loadAssignments() {
+    
+            try {
+                const response = await(fetch('/api/assignments', {
+                    method: 'GET',
+                    credentials: 'include'
+                }));
+    
+                if(!response.ok) {
+                    throw new Error ("Error fetching assignments data: " + response.statusText);
+                }
+    
+                const assignmentBody = await response.json();
+                const assignments = assignmentBody.assignments;
+                setCurrentUserAssignments(assignments);
+            } catch(error) {
+                console.error("Error fetching assignments data: ", error);
+            }
+    
+    
+        }
+    
+        loadAssignments();
+    
+  }, [])
+
+
+
+  const myEventsList = currentUserAssignments.map((a) => {
         return {
-          title: a.name + " - " + c.className,
+          title: a.assignmentName + " - " + a.className,
           start: new Date(a.dueDate + "T10:00:00"),
           end: new Date(a.dueDate + "T10:00:00")
         }
-      })) || [];
+      }) || [];
 
     const myCalendar = (props) => (
     <div>
