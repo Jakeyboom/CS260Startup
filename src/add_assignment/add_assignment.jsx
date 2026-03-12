@@ -51,7 +51,7 @@ export function AddAssignment() {
 
         try {
             const assignment = {assignmentName: assignmentName, className: userClassName, dueDate: dueDate, difficulty: difficulty};
-            response = await fetch('/api/assignments', {
+            const response = await fetch('/api/assignments', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
