@@ -2,15 +2,27 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import { confirmSession } from '../app';
 
 export function EditClass() {
 
+    
+
 
     const navigate = useNavigate();
+
+
     const { currentClassNameEncoded } = useParams();
     const currentClassName = decodeURIComponent(currentClassNameEncoded);
     const [newDifficulty, setNewDifficulty] = React.useState("");
     const [newClassName, setNewClassName] = React.useState("");
+
+    React.useEffect(() => {
+        if(!confirmSession()) {
+            alert("You must be logged in to view this page.");
+            navigate("/");
+        }
+    }, [navigate]);
 
     const saveChanges = async (event) => {
         event.preventDefault(); 

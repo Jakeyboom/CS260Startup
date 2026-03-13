@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../CSS/add-and-edit.css';
+import { confirmSession } from '../app';
 
 export function EditAssignment() {
 
@@ -19,8 +20,18 @@ export function EditAssignment() {
     const currentAssignmentName = decodeURIComponent(currentAssignmentNameEncoded);
     console.log("Current edit class parameters: " + currentClassName + ", " + currentAssignmentName);
 
+    React.useEffect(() => {
+    }, [navigate]);
+
 
     React.useEffect(() => {
+        if(!confirmSession()) {
+            alert("You must be logged in to view this page.");
+            navigate("/");
+            return;
+        }
+
+
         async function loadClasses() {
     
             try {
@@ -44,7 +55,7 @@ export function EditAssignment() {
         }
     
         loadClasses();
-    }, [])
+    }, [navigate])
     
 
     const saveChanges = async (event) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { getCurrentUserClasses } from '../class-service.js';
+import { confirmSession } from '../app';
 import '../../CSS/calendar.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
@@ -16,6 +16,12 @@ export function Calendar() {
   const [currentUserAssignments, setCurrentUserAssignments] = React.useState([]);
 
   React.useEffect(() => {
+
+        if(!confirmSession()) {
+            alert("You must be logged in to view this page.");
+            navigate("/");
+            return;
+        }
         async function loadAssignments() {
     
             try {
@@ -40,7 +46,7 @@ export function Calendar() {
     
         loadAssignments();
     
-  }, [])
+  }, [navigate])
 
 
 

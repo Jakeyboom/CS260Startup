@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { confirmSession } from '../app';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 
@@ -12,6 +13,14 @@ export function AddClass() {
     const [difficulty, setDifficulty] = React.useState("");
 
     const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if(!confirmSession()) {
+            alert("You must be logged in to view this page.");
+            navigate("/");
+            return;
+        }
+    }, [navigate])
 
     const saveChanges = async (event) => {
         event.preventDefault();

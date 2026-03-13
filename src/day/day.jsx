@@ -1,15 +1,22 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import { confirmSession } from '../app';
 
 export function DayView() {
 
-
+    const navigate = useNavigate();
     const {selectedDay} = useParams();
     const [dateToView, setDateToView] = React.useState(selectedDay || "");
     const [currentUserAssignments, setCurrentUserAssignments] = React.useState([]);
 
     React.useEffect(() => {
+
+        if(!confirmSession()) {
+            alert("You must be logged in to view this page.");
+            navigate("/");
+            return;
+        }
         //Logic for loading assignments
         async function loadAssignments() {
     
@@ -36,7 +43,7 @@ export function DayView() {
         loadAssignments();
 
 
-    }, [])
+    }, [navigate])
 
     const seeDay = (event) => {
         event.preventDefault();

@@ -2,8 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 import { useNavigate } from 'react-router-dom';
-import { createAssignment } from '../assignment-service.js';
-
+import { confirmSession } from '../app';
 export function AddAssignment() {
 
 
@@ -17,6 +16,11 @@ export function AddAssignment() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
+        if(!confirmSession()) {
+            alert("You must be logged in to view this page.");
+            navigate("/");
+            return;
+        }
         async function loadClasses() {
 
             try {
@@ -40,7 +44,7 @@ export function AddAssignment() {
         }
 
         loadClasses();
-    }, [])
+    }, [navigate])
 
     const saveChanges = async (event) =>{
         event.preventDefault();

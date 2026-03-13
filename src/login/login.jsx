@@ -31,6 +31,7 @@ export  function Login() {
       });
       if(response.ok) {
         const data =       await response.json();
+        localStorage.setItem('session', email);
         console.log("Authentication successful. Response data: ", data);
         navigate("/prioritizer");
       } else {

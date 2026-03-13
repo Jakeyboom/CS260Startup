@@ -36,8 +36,12 @@ function AppContent() {
   }).then(response => {
     if(response.ok) {
       console.log("Logout successful.");
-      navigate("/"); // Redirect to login page after successful logout
+    } else {
+      console.error("Unable to communicate with server.  Removing local session")
     }
+
+    localStorage.removeItem('session');
+    navigate('/');
   })
 }
 
@@ -92,4 +96,8 @@ const navigate = useNavigate();
 
 function NotFound() {
   return <main className="containter-fluid bg-secondary">404: Return to Sender. Address unknown</main>
+}
+
+export function confirmSession() {
+  return localStorage.getItem('session') !== null;
 }
