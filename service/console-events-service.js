@@ -1,5 +1,3 @@
-import { getCurrentUser } from './login-service.js';
-
 const ConsoleEvent = {
     ACCOUNT_CREATED: 'ACCOUNT_CREATED',
     CLASS_CREATED: 'CLASS_CREATED',
