@@ -4,13 +4,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { confirmSession } from '../app';
 //Here will be some canned inspirational quotes to mock an api call.
 
-const inspirationalQuotes = [
-    "When life gives you lemons, don’t make lemonade. Make life take the lemons back!",
-    "The best way to predict the future is to invent it.",
-    "Life is 10% what happens to us and 90% how we react to it.",
-    "The only way to do great work is to love what you do.",
-    "Success is not final, failure is not fatal: It is the courage to continue that counts."
-]
 
 export function Prioritizer() {
  
@@ -19,17 +12,49 @@ export function Prioritizer() {
     const navigate = useNavigate();
     const [userClasses, setUserClasses] = React.useState([]);
     const [allAssignments, setAllAssignments] = React.useState([]);
-    const [currentQuote, setCurrentQuote] = React.useState(inspirationalQuotes[0]);
+    const [currentQuote, setCurrentQuote] = React.useState("Loading inspirational quote...");
 
-    function changeQuote() {
-        const newQuote = "\"" + inspirationalQuotes[Math.floor(Math.random() * inspirationalQuotes.length)] + "\"";
+    function changeQuote(quotes) {
+        const newQuote = "\"" + quotes[Math.floor(Math.random() * quotes.length)].quote + "\"";
         setCurrentQuote(newQuote);
     }
 
     React.useEffect(() => {
-        const interval = setInterval(() => 
-        changeQuote(), 5000);
 
+        async function fetchQuotes() {
+            try {
+                    //CREDITS: QUOTESLATE API FROM GITHUB https://github.com/musheer360/QuoteSlate?tab=readme-ov-file#features
+                    //To respect the API rate limit, I will fetch 50 quotes at a time and store them in local storage. Then, I will randomly select one every couple of seconds.
+                
+                const response = await fetch('https://quoteslate.vercel.app/api/quotes/random?count=50');
+                if(response.ok) {
+                    const data = await response.json();
+                    console.log("Quote data received: ", data);
+                    localStorage.setItem("inspirationalQuotes", JSON.stringify(data));
+                } else {
+                    throw new Error(response.status);
+                }
+            } catch(error) {
+                console.error("Error fetching quote from API, using default quote. Error: ", error);
+                localStorage.setItem("inspirationalQuotes", JSON.stringify(["Unable to load quotes.  Stay motivated!"]));
+            }
+
+        }
+
+        //This is done to prevent too many API calls to the quote service to respect the rate limit.
+        if(!localStorage.getItem("inspirationalQuotes")) {
+            fetchQuotes();
+        }
+
+
+
+        const interval = setInterval(async () => {
+            let inspirationalQuotes = JSON.parse(localStorage.getItem("inspirationalQuotes"))
+            if(inspirationalQuotes) {
+                changeQuote(inspirationalQuotes);
+            }
+        }
+        , 20000);
         return () => clearInterval(interval);
     }, []);
 

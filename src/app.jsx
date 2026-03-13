@@ -41,6 +41,7 @@ function AppContent() {
     }
 
     localStorage.removeItem('session');
+    localStorage.removeItem('inspirationalQuotes');
     navigate('/');
   })
 }
