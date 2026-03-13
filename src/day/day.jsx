@@ -1,7 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useParams } from 'react-router-dom';
-import { getCurrentUserClasses } from '../class-service.js';
 
 export function DayView() {
 
