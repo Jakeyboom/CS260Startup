@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {NavLink} from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { confirmSession } from '../app';
 //Here will be some canned inspirational quotes to mock an api call.
 
 const inspirationalQuotes = [
@@ -15,7 +16,7 @@ export function Prioritizer() {
  
 
    
-
+    const navigate = useNavigate();
     const [userClasses, setUserClasses] = React.useState([]);
     const [allAssignments, setAllAssignments] = React.useState([]);
     const [currentQuote, setCurrentQuote] = React.useState(inspirationalQuotes[0]);
@@ -33,6 +34,11 @@ export function Prioritizer() {
     }, []);
 
     React.useEffect(() => {
+        if(!confirmSession()) {
+            alert("You must be logged in to view this page.");
+            navigate("/");
+            return;
+        }
         //Here, I will make the fetch request to the backend to 
         //get the user classes and assignments.
 
@@ -50,13 +56,6 @@ export function Prioritizer() {
                 console.error("Error fetching classes data");
             }
         }
-
-        loadClasses();
-    }, []);
-
-    React.useEffect(() => {
-        //Here, I will make the fetch requests for the user assignments.
-
         async function loadAssignments() {
             const response = await fetch('/api/assignments', {
                 method: 'GET',
@@ -73,7 +72,9 @@ export function Prioritizer() {
         }
 
         loadAssignments();
-    }, []);
+        loadClasses();
+    }, [navigate]);
+
 
     return(
             <main> 
