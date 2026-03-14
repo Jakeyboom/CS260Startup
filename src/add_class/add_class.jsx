@@ -40,14 +40,14 @@ export function AddClass() {
                     handleUnauthorized(navigate);
                     return;
                 }
-                throw new Error("Failed to save changes. Server responded with status: " + response.status);
+                throw new Error("Failed to save changes. All fields are required, and class name must be unique. Server responded with status: " + response.status);
             }
 
             navigate("/prioritizer")
 
         } catch(error) {
             console.log("Error saving changes: ", error);
-            alert("An error occured while saving changes \n Error: " + error.message);
+            alert(error.message);
         }
         //Right here will check if a class with the same name already exists for the user.
 

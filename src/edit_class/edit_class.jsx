@@ -52,8 +52,8 @@ export function EditClass() {
             navigate("/prioritizer");
 
         } catch(error) {
-            console.error("Error occurred while saving changes: ", error);
-            alert("An error occurred while saving changes. Please try again.");
+            console.error("Error occurred while saving changes: ", error.message);
+            alert("An error occurred while saving changes. Please try again. \n Error: " + error.message);
             return;
         }
         console.log("Save Changes requested");
@@ -85,8 +85,8 @@ export function EditClass() {
 
             navigate("/prioritizer");
         } catch(error) {
-            console.error("Error occured while delete.  Error: ", error);
-            alert("An error occurred while deleting the class. Server reported: ", error);
+            console.error("Error occurred while deleting class. \n Error: ", error.message);
+            alert("An error occurred while deleting the class. Server reported: " + error.message + "\n Please try again.");
             return;
         }
         console.log("Delete Class requested");

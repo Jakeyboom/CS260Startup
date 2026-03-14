@@ -43,7 +43,8 @@ export function AddAssignment() {
                 const classes = classesBody.classes;
                 setCurrentUserClasses(classes);
             } catch(error) {
-                console.error("Error fetching classes data: ", error);
+                console.error("Error fetching classes data: ", error.message);
+                alert("An error occurred while fetching classes data. \n Error: " + error.message);
             }
 
 
@@ -80,8 +81,8 @@ export function AddAssignment() {
 
             navigate("/prioritizer");
         } catch(error) {
-            console.error("Error saving assignment: ", error);
-            alert("An error occurred while saving the assignment. \n Error: " + error.message);
+            console.error("Error saving assignment: ", error.message);
+            alert(error.message);
             return;
         }
     };

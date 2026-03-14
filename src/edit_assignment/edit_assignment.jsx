@@ -53,6 +53,7 @@ export function EditAssignment() {
                 setCurrentUserClasses(classes);
             } catch(error) {
                 console.error("Error fetching classes data: ", error);
+                alert(error.message);
             }
     
     
@@ -92,7 +93,7 @@ export function EditAssignment() {
             navigate("/prioritizer");
         } catch(error) {
             console.error("Error editing assignment: ", error);
-            alert("An error occurred while saving the assignment. \n Error: " + error.message);
+            alert(error.message + "\n Please make sure that all fields are filled out correctly and that the assignment name is unique in its class");
             return;
         }
 
@@ -120,10 +121,10 @@ export function EditAssignment() {
                     handleUnauthorized(navigate);
                     return;
                 }
-                throw new Error("Failed to delete assignment. Server responded with status: " + response.status);
+                throw new Error(response.status);
             }
         } catch(error) {
-            console.error("Error deleting assignment: ", error);
+            console.error("Error deleting assignment: ", error.message);
             alert("An error occurred while deleting the assignment. \n Error: " + error.message);
             return;
         }
