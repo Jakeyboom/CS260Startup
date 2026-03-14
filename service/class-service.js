@@ -21,9 +21,10 @@ export function getCurrentUserClasses(authToken) {
         return [];
     }
     const userClasses = classes.filter((c) => c.email === email);
-    console.log("Classes for user " + email + ": ", userClasses);
+    const sortedUserClasses = sortClassesByDifficulty(userClasses);
+    console.log("Classes for user " + email + ": ", sortedUserClasses);
 
-    return userClasses;
+    return sortedUserClasses;
 }
 
 
@@ -50,7 +51,6 @@ export function pushClassToCurrentUser(classObject, email) {
 
     classes.push(classObject);
 
-    sortClassesByDifficulty(classes);
     console.log("Class pushed successfully.");
 
     return true;
@@ -82,7 +82,6 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty, email
     classToEdit.className = newClassName;
     classToEdit.difficulty = newDifficulty;
 
-    sortClassesByDifficulty(classes);
     renameClassForAllAssignments(oldClassName, newClassName, email);
     return true;
 
@@ -173,15 +172,9 @@ router.post("/", (req, res) => {
         return;
     }
 
-    const currentUser = getCurrentUser(req.cookies["authToken"]);
-    if(!currentUser) {
-        console.log("User is not authenticated. Cannot push class.");
-        res.status(401).send("User is not authenticated. Cannot push class.");
-        return;
-    }
-    const newClassObject = {email: currentUser.email, className: req.body.className, difficulty: req.body.difficulty};
+    const newClassObject = {email: req.user.email, className: req.body.className, difficulty: req.body.difficulty};
 
-    if(pushClassToCurrentUser(newClassObject, currentUser.email)) {
+    if(pushClassToCurrentUser(newClassObject, req.user.email)) {
         res.status(200).send({message: "Class pushed successfully.", className: req.body.className});
         return;
     } else {
