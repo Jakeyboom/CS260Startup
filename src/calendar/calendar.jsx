@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { confirmSession } from '../auth/session';
+import { confirmSession, handleUnauthorized} from '../auth/session';
 import '../../CSS/calendar.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
@@ -31,7 +31,11 @@ export function Calendar() {
                 }));
     
                 if(!response.ok) {
-                    throw new Error ("Error fetching assignments data: " + response.statusText);
+                  if(response.status === 401) {
+                    handleUnauthorized(navigate);
+                    return;
+                  }
+                  throw new Error ("Error fetching assignments data: " + response.statusText);
                 }
     
                 const assignmentBody = await response.json();

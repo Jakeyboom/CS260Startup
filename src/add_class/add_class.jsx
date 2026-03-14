@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { confirmSession } from '../auth/session';
+import { confirmSession, handleUnauthorized } from '../auth/session';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 
@@ -36,6 +36,10 @@ export function AddClass() {
             });
 
             if(!response.ok) {
+                if(response.status === 401) {
+                    handleUnauthorized(navigate);
+                    return;
+                }
                 throw new Error("Failed to save changes. Server responded with status: " + response.status);
             }
 

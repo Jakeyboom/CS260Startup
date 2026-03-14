@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../CSS/add-and-edit.css';
-import { confirmSession } from '../auth/session';
+import { confirmSession, handleUnauthorized } from '../auth/session';
 
 export function EditAssignment() {
 
@@ -41,6 +41,10 @@ export function EditAssignment() {
                 }));
     
                 if(!response.ok) {
+                    if(response.status === 401) {
+                        handleUnauthorized(navigate);
+                        return;
+                    }
                     throw new Error ("Error fetching classes data: " + response.statusText);
                 }
     
@@ -78,6 +82,10 @@ export function EditAssignment() {
             });
 
             if(!response.ok) {
+                if(response.status === 401) {
+                    handleUnauthorized(navigate);
+                    return;
+                }
                 throw new Error("Failed to edit assignment. Server responded with status: " + response.status);
             }
 
@@ -106,6 +114,14 @@ export function EditAssignment() {
                 credentials: 'include',
                 body: JSON.stringify(assignmentBody)
             });
+
+            if(!response.ok) {
+                if(response.status === 401) {
+                    handleUnauthorized(navigate);
+                    return;
+                }
+                throw new Error("Failed to delete assignment. Server responded with status: " + response.status);
+            }
         } catch(error) {
             console.error("Error deleting assignment: ", error);
             alert("An error occurred while deleting the assignment. \n Error: " + error.message);

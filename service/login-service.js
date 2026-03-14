@@ -155,6 +155,4 @@ export { router as loginRouter };
  */
 
 //DELETE ME
-export function isLoggedIn() {
-    return true;
-}
+

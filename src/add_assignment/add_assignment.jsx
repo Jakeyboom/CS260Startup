@@ -2,7 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 import { useNavigate } from 'react-router-dom';
-import { confirmSession } from '../auth/session';
+import { confirmSession, handleUnauthorized } from '../auth/session';
+
+
 export function AddAssignment() {
 
 
@@ -30,6 +32,10 @@ export function AddAssignment() {
                 }));
 
                 if(!response.ok) {
+                    if(response.status === 401) {
+                        handleUnauthorized(navigate);
+                        return;
+                    }
                     throw new Error ("Error fetching classes data: " + response.statusText);
                 }
 
@@ -65,6 +71,10 @@ export function AddAssignment() {
             });
 
             if(!response.ok) {
+                if(response.status === 401) {
+                    handleUnauthorized(navigate);
+                    return;
+                }
                 throw new Error("Failed to save assignment. Server responded with status: " + response.status);
             }
 
