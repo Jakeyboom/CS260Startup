@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { confirmSession } from '../app';
+import { confirmSession } from '../auth/session';
 //Here will be some canned inspirational quotes to mock an api call.
 
 

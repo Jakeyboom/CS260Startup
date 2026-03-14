@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { confirmSession } from '../app';
+import { confirmSession } from '../auth/session';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/add-and-edit.css';
 

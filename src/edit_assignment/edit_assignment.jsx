@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../CSS/add-and-edit.css';
-import { confirmSession } from '../app';
+import { confirmSession } from '../auth/session';
 
 export function EditAssignment() {
 

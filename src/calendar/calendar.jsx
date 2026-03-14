@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { confirmSession } from '../app';
+import { confirmSession } from '../auth/session';
 import '../../CSS/calendar.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 

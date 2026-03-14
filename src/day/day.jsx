@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
-import { confirmSession } from '../app';
+import { confirmSession } from '../auth/session';
 
 export function DayView() {
 

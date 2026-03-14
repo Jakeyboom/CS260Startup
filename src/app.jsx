@@ -98,7 +98,3 @@ const navigate = useNavigate();
 function NotFound() {
   return <main className="containter-fluid bg-secondary">404: Return to Sender. Address unknown</main>
 }
-
-export function confirmSession() {
-  return localStorage.getItem('session') !== null;
-}
