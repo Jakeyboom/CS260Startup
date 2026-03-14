@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { confirmSession } from '../auth/session';
+import { confirmSession, handleUnauthorized } from '../auth/session';
 //Here will be some canned inspirational quotes to mock an api call.
 
 
@@ -13,6 +13,7 @@ export function Prioritizer() {
     const [userClasses, setUserClasses] = React.useState([]);
     const [allAssignments, setAllAssignments] = React.useState([]);
     const [currentQuote, setCurrentQuote] = React.useState("Loading inspirational quote...");
+    const [authorized, setAuthorized] = React.useState(true);
 
     function changeQuote(quotes) {
         const newQuote = "\"" + quotes[Math.floor(Math.random() * quotes.length)].quote + "\"";
@@ -68,36 +69,60 @@ export function Prioritizer() {
         //get the user classes and assignments.
 
         async function loadClasses() {
-            const response = await fetch('/api/classes', {
-                method: 'GET',
-                credentials: 'include'
-            })
+            try{ 
+                const response = await fetch('/api/classes', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
 
-            if(response.ok) {
-                const data = await response.json();
-                console.log(" Classes data received: ", data);
-                setUserClasses(data.classes);
-            } else {
-                console.error("Error fetching classes data");
+                if(response.ok) {
+                    const data = await response.json();
+                    console.log(" Classes data received: ", data);
+                    setUserClasses(data.classes);
+                } else {
+                    if(response.status === 401) {
+                        handleUnauthorized(navigate);
+                        setAuthorized(false);
+                        return;
+                    }
+                    console.error("Error fetching classes data: ", response.statusText);
+                    throw new Error("Something went wrong while fetching classes data. Status: " + response.status);
+                }
+            } catch(error) {
+                console.error("Error fetching classes data: ", error);
             }
         }
-        async function loadAssignments() {
-            const response = await fetch('/api/assignments', {
-                method: 'GET',
-                credentials: 'include'
-            });
 
-            if(response.ok) {
+
+        async function loadAssignments() {
+
+            try {
+                const response = await(fetch('/api/assignments', {
+                    method: 'GET',
+                    credentials: 'include'
+                }));
+
+                if(!response.ok) {
+                    if(response.status === 401) {
+                        handleUnauthorized(navigate);
+                        return;
+                    }
+                    throw new Error ("Error fetching assignments data: " + response.statusText);
+
+                }
+
                 const data = await response.json();
                 console.log("Assignments data received: ", data);
                 setAllAssignments(data.assignments);
-            } else {
-                console.error("Error fetching assignments data");
+            } catch(error) {
+                console.error("Error fetching assignments data: ", error);
             }
         }
-
-        loadAssignments();
         loadClasses();
+        if(authorized) {
+            loadAssignments();
+        }
+
     }, [navigate]);
 
 
