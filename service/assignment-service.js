@@ -19,8 +19,6 @@ function createAssignment(assignmentToCreate) {
         return true;
     }
 
-    return false;
-
 }
 
 function editAssignment(oldAssignmentName, oldClassName, newAssignmentName, newClassName, newDueDate, newDifficulty, email) {
@@ -45,6 +43,7 @@ function editAssignment(oldAssignmentName, oldClassName, newAssignmentName, newC
         assignmentToEdit.className = newClassName;
         assignmentToEdit.dueDate = newDueDate;
         assignmentToEdit.difficulty = newDifficulty;
+
         return true;
     }
 }
@@ -100,12 +99,13 @@ export function confirmStringIsValid(inputString) {
 }
 
 export function getUserAssignments(email) {
-    return assignments.filter((a) => a.email === email);
+    const sortedAssignments = getSortedAssignments();
+    return sortedAssignments.filter((a) => a.email === email);
 }
 
-// function sortAssignmentsByDueDate(assignments) {
-//     return assignments.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-// }
+function getSortedAssignments() {
+    return [...assignments].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+}
 
 // export function getAllAssignmentsSortedByDueDate(email) {
 //     const userAssignments = assignments.filter((a) => a.email === email)
