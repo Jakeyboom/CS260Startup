@@ -2,6 +2,7 @@
 //Note that the temporary implementation will simply allow a user to login locally using a password, but in the future, this will be replaced with a more secure authentication method (some kind of hashing).
 import { confirmStringIsValid } from "./assignment-service.js";
 import express from "express";
+import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
@@ -9,38 +10,45 @@ const router = express.Router();
 const users = [];
 
 
-export function login(email, password, res) {
+export async function login(email, password, res) {
 
     //for now, this will just push the email and password to local storage and do a log.
-    console.log('Attempting to log in with email:' + email + ', password: ' + password);
-    if(users.some((user) => user.email === email && user.password === password)) {
-        const currentUser = users.find((user) => user.email === email);
-        generateAndAttachAuthToken(currentUser, res);
-        console.log("User authenticated successfully.");
+    console.log('Attempting to log in with email:' + email);
 
+    const userToAuthenticate = users.find((user) => user.email === email);
+    if(!userToAuthenticate) {
+        console.log("No account with that email exists. Cannot log in.");
+        return false;
+    }
+
+
+    const isMatch = await bcrypt.compare(password, userToAuthenticate.password);
+
+    if(isMatch) {
+        generateAndAttachAuthToken(userToAuthenticate, res);
+        console.log("User authenticated successfully.");
         return true;
     } else {
         console.log("Authentication failed. Invalid email or password.");
         return false;
     }
-
-    //TODO: Implement authentication here.
     
 }
 
-export function createAccount(email, password, res) {
+export async function createAccount(email, password, res) {
     //First, check to make sure that email and password aren't empty; if they are, return false and log an error.
     if(!confirmStringIsValid(email) || !confirmStringIsValid(password)) {
         console.log("Email and password cannot be empty. Cannot create account.");
         return false;
     }
-    console.log('Creating account with email:' + email + ', password: ' + password);
+    console.log('Creating account with email:' + email);
     //Right here, I will check if the email is already in use; if not, I will create the account and push it to local storage.
 
     if(!users.some((user) => user.email === email)) {
-        users.push({email, password, authToken: null});
+        const passwordHash = await bcrypt.hash(password, 10);
+        users.push({email, password: passwordHash, authToken: null});
         console.log("Account created successfully.");
-        return login(email, password, res);
+        return await login(email, password, res);
     } else {
         console.log("Email is already in use.");
         return false;
@@ -104,18 +112,23 @@ router.post("/", async (req, res) => {
     if(!req.body) {
         console.log("No request body provided. Cannot create account.");
         res.status(400).send("No request body provided. Cannot create account.");
+        return;
     } else if(!req.body.email || !req.body.password) {
         console.log("Email and password are required. Cannot create account.");
         res.status(400).send("Email and password are required. Cannot create account.");
+        return;
     } else if (!confirmStringIsValid(req.body.email) || !confirmStringIsValid(req.body.password)) {
         console.log("Email and password cannot be empty. Cannot create account.");
         res.status(400).send("Email and password cannot be empty. Cannot create account.");
+        return;
     }
 
-    if(createAccount(req.body.email, req.body.password, res)) {
+    if(await createAccount(req.body.email, req.body.password, res)) {
         res.status(200).send({email: req.body.email});
+        return;
     } else {
         res.status(400).send("Account creation failed. Email may already be in use.");
+        return;
     }
 
 })
@@ -124,15 +137,19 @@ router.put("/", async (req, res) => {
     if(!req.body) {
         console.log("No request body provided. Cannot log in.");
         res.status(400).send("No request body provided. Cannot log in.");
+        return;
     } else if(!req.body.email || !req.body.password) {
         console.log("Email and password are required. Cannot log in.");
         res.status(400).send("Email and password are required. Cannot log in.");
+        return;
     }
 
-    if(login(req.body.email, req.body.password, res)) {
+    if(await login(req.body.email, req.body.password, res)) {
         res.status(200).send({email: req.body.email});
+        return;
     } else {
         res.status(400).send("Login failed. Invalid email or password.");
+        return;
     }
 })
 
@@ -143,6 +160,7 @@ router.delete("/", async (req, res) => {
     }
     res.clearCookie("authToken");
     res.status(200).send("User logged out successfully.");
+    return;
 })
 
 
