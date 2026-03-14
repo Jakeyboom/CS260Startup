@@ -107,7 +107,7 @@ export function Prioritizer() {
 
         <section id="classes-section">
             <div className="assignments-section" id="prioritizer-section">
-            <label for="prioritizer"><i>Prioritizer:</i></label>
+            <label htmlFor="prioritizer"><i>Prioritizer:</i></label>
             <ol id="prioritizer" className="classes">
 
                 {(userClasses
@@ -120,7 +120,7 @@ export function Prioritizer() {
         </div>
 
          <div className="assignments-section">
-            <label for="due-today"><i>Due Today:</i></label>
+            <label htmlFor="due-today"><i>Due Today:</i></label>
             <ol id="due-today" className="classes">
 
 

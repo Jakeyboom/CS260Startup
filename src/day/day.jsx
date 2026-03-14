@@ -69,7 +69,7 @@ export function DayView() {
         
         
         <div id="search-div">
-            <label for="select-day">Select a Day To View:</label>
+            <label htmlFor="select-day">Select a Day To View:</label>
 
             <form id="day-search-form" onSubmit={seeDay}>
                 <input type="date" id="select-day" name="selectDay" onChange = {(e) => setDateToView(e.target.value)}></input>
@@ -77,7 +77,7 @@ export function DayView() {
             </form>
         </div>
 
-        <label for="assignments-due-today">Assignments due on {dateToView}</label>
+        <label htmlFor="assignments-due-today">Assignments due on {dateToView}</label>
         <ul className="classes" id="assignments-due-today">
             {/* Here, I will list all the assignments that are due on the selected day. */}
             {
