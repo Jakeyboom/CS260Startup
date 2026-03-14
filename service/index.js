@@ -14,11 +14,12 @@ import { getCurrentUser } from "./login-service.js";
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static('public'));
 app.use("/api/auth", loginRouter);
 app.use("/api/classes", isAuthenticated, classRouter);
 app.use("/api/assignments", isAuthenticated, assignmentRouter)
 
-const port = 4000;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.listen(port, function () {
     console.log("API services are running on port " + port);
 });
