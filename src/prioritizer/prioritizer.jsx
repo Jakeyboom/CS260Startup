@@ -32,12 +32,14 @@ export function Prioritizer() {
                     const data = await response.json();
                     console.log("Quote data received: ", data);
                     localStorage.setItem("inspirationalQuotes", JSON.stringify(data));
+                    setCurrentQuote("\"" + data[0].quote + "\"");
                 } else {
                     throw new Error(response.status);
                 }
             } catch(error) {
                 console.error("Error fetching quote from API, using default quote. Error: ", error);
                 localStorage.setItem("inspirationalQuotes", JSON.stringify(["Unable to load quotes.  Stay motivated!"]));
+                setCurrentQuote("\"Unable to load quotes.  Stay motivated!\"");
             }
 
         }
