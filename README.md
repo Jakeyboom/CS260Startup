@@ -119,12 +119,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [X] **Node.js/Express HTTP service** - I ported all of my code to separate the frontend from the backend.
+- [X] **Static middleware for frontend** - Implemented express to create static access to data from the server
+- [X] **Calls to third party endpoints** - Implemented a call to an online host of inspirational quotes //CREDITS: QUOTESLATE API FROM GITHUB https://github.com/musheer360/QuoteSlate?tab=readme-ov-file#features
+- [X] **Backend service endpoints** - Implemented backend service endpoints and routing
+- [X] **Frontend calls service endpoints** - Implemented fetch statements in the frontend to get and modify data in the backend
+- [X] **Supports registration, login, logout, and restricted endpoint** - Supports these features and user verification; no access is given in the app and it automatically redirects to login if a user is not authorized.
 
 ## 🚀 DB deliverable
 
