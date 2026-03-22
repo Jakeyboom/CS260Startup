@@ -4,11 +4,11 @@ import { confirmStringIsValid } from "./assignment-service.js";
 import express from "express";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
-import { database } from "./index.js";
-
+import { userCollection, confirmDatabaseConnection } from "./index.js";
 const router = express.Router();
 
 const users = [];
+
 
 
 export async function login(email, password, res) {
@@ -42,6 +42,12 @@ export async function login(email, password, res) {
 }
 
 export async function createAccount(email, password, res) {
+    if(!await confirmDatabaseConnection()) {
+        console.log("Cannot create account. No database connection.");
+        return false;
+    }
+
+
     //First, check to make sure that email and password aren't empty; if they are, return false and log an error.
     if(!confirmStringIsValid(email) || !confirmStringIsValid(password)) {
         console.log("Email and password cannot be empty. Cannot create account.");
@@ -50,9 +56,11 @@ export async function createAccount(email, password, res) {
     console.log('Creating account with email:' + email);
     //Right here, I will check if the email is already in use; if not, I will create the account and push it to local storage.
 
-    if(!users.some((user) => user.email === email)) {
+    const existingUser = await userCollection.findOne({email: email});
+
+    if(!existingUser) {
         const passwordHash = await bcrypt.hash(password, 10);
-        users.push({email, password: passwordHash, authToken: null});
+        await userCollection.insertOne({email, password: passwordHash, authToken: null});
         console.log("Account created successfully.");
         return await login(email, password, res);
     } else {
@@ -169,16 +177,6 @@ router.delete("/", async (req, res) => {
     return;
 })
 
-async function confirmDatabaseConnection() {
-    try {
-        await database.command({ping:1});
-        console.log("Successfully connected to the database.");
-        return true;
-    } catch(error) {
-        console.error("Failed to connect to the database. Error: ", error.message);
-        return false;
-    }
-}
 
 
 export { router as loginRouter };

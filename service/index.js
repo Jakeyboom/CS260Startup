@@ -15,6 +15,8 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db("rental");
 
+const userCollection = db.collection("users");
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -49,4 +51,15 @@ function isAuthenticated(req, res, next) {
     }
 };
 
-export { db as database };
+export async function confirmDatabaseConnection() {
+    try {
+        await db.command({ping:1});
+        console.log("Successfully connected to the database.");
+        return true;
+    } catch(error) {
+        console.error("Failed to connect to the database. Error: ", error.message);
+        return false;
+    }
+}
+
+export { userCollection };
