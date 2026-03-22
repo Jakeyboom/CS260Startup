@@ -1,15 +1,19 @@
 import "./login-service.js"
 import "./class-service.js"
 import "./assignment-service.js"
+import config from "./dbConfig.json" with { type: "json"};
 
+import { MongoClient } from "mongodb";
 import express from "express";
 import cookieParser from "cookie-parser";
-
-
 import { loginRouter } from "./login-service.js";
 import { classRouter } from "./class-service.js";
 import { assignmentRouter } from "./assignment-service.js";
 import { getCurrentUser } from "./login-service.js";
+
+const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
+const client = new MongoClient(url);
+const db = client.db("rental");
 
 const app = express();
 app.use(express.json());
@@ -18,6 +22,8 @@ app.use(express.static('public'));
 app.use("/api/auth", loginRouter);
 app.use("/api/classes", isAuthenticated, classRouter);
 app.use("/api/assignments", isAuthenticated, assignmentRouter)
+
+
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.listen(port, function () {
@@ -42,3 +48,5 @@ function isAuthenticated(req, res, next) {
         }
     }
 };
+
+export { db as database };

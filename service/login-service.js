@@ -4,6 +4,7 @@ import { confirmStringIsValid } from "./assignment-service.js";
 import express from "express";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
+import { database } from "./index.js";
 
 const router = express.Router();
 
@@ -11,6 +12,11 @@ const users = [];
 
 
 export async function login(email, password, res) {
+    if(!confirmDatabaseConnection()) {
+        console.log("Cannot perform login. No database connection.");
+        return false;
+    }
+
 
     //for now, this will just push the email and password to local storage and do a log.
     console.log('Attempting to log in with email:' + email);
@@ -162,6 +168,17 @@ router.delete("/", async (req, res) => {
     res.status(200).send("User logged out successfully.");
     return;
 })
+
+async function confirmDatabaseConnection() {
+    try {
+        await database.command({ping:1});
+        console.log("Successfully connected to the database.");
+        return true;
+    } catch(error) {
+        console.error("Failed to connect to the database. Error: ", error.message);
+        return false;
+    }
+}
 
 
 export { router as loginRouter };
