@@ -122,7 +122,10 @@ export function EditAssignment() {
                     return;
                 }
                 throw new Error(response.status);
+
             }
+
+            navigate("/prioritizer");
         } catch(error) {
             console.error("Error deleting assignment: ", error.message);
             alert("An error occurred while deleting the assignment. \n Error: " + error.message);
