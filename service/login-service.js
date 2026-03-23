@@ -186,9 +186,18 @@ router.put("/", async (req, res) => {
 })
 
 router.delete("/", async (req, res) => {
-    const currentUser = getCurrentUserObject(req.cookies['authToken']);
+    const currentUser = await userCollection.findOne({authToken: req.cookies["authToken"]});
     if(currentUser) {
-        currentUser.authToken = null;
+        const result = await userCollection.updateOne({email: currentUser.email}, {$set: {authToken: null}});
+        if(result.matchedCount === 1 && result.modifiedCount === 1) {
+            console.log("User logged out successfully.");
+        } else {
+            console.log("Failed to log out user. Database update failed.");
+            res.status(500).send("Failed to log out user. Database update failed.");
+            console.log("Database update failed. Deleting user session cookie anyway");
+            res.clearCookie("authToken");
+            return;
+        }
     }
     res.clearCookie("authToken");
     res.status(200).send("User logged out successfully.");
