@@ -21,7 +21,8 @@ export async function login(email, password, res) {
     //for now, this will just push the email and password to local storage and do a log.
     console.log('Attempting to log in with email:' + email);
 
-    const userToAuthenticate = users.find((user) => user.email === email);
+    const userToAuthenticate = await userCollection.findOne({email: email});
+
     if(!userToAuthenticate) {
         console.log("No account with that email exists. Cannot log in.");
         return false;
@@ -31,9 +32,10 @@ export async function login(email, password, res) {
     const isMatch = await bcrypt.compare(password, userToAuthenticate.password);
 
     if(isMatch) {
-        generateAndAttachAuthToken(userToAuthenticate, res);
-        console.log("User authenticated successfully.");
-        return true;
+        if(await generateAndAttachAuthToken(userToAuthenticate, res)) {
+            console.log("User authenticated successfully.");
+            return true;
+        }
     } else {
         console.log("Authentication failed. Invalid email or password.");
         return false;
@@ -83,14 +85,29 @@ export function getCurrentUserObject(authToken) {
     return userObject;
 }
 
-function generateAndAttachAuthToken(user, res) {
+async function generateAndAttachAuthToken(user, res) {
     const authToken = uuidv4();
     user.authToken = authToken;
-    res.cookie('authToken', user.authToken, {
-        secure: true,
-        httpOnly: true,
-        sameSite: 'strict',
-    });
+    const query = {email: user.email};
+    const update = {$set: {authToken: authToken}};
+
+    const result = await userCollection.updateOne(query, update);
+
+    if(result.matchedCount === 1 && result.modifiedCount === 1) {
+        console.log("Auth token generated and attached to user successfully.");
+        res.cookie('authToken', user.authToken, {
+            secure: true,
+            httpOnly: true,
+            sameSite: 'strict',
+    
+        });
+
+        return true;
+    } else {
+        return false;
+    }
+
+
 }
 
 
