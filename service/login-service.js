@@ -74,8 +74,9 @@ export async function createAccount(email, password, res) {
 }
 
 
-export function getCurrentUser(authToken) {
-    return users.find((user) => user.authToken === authToken);
+export async function getCurrentUser(authToken) {
+    const userToReturn = await userCollection.findOne({authToken: authToken});
+    return userToReturn;
    
 }
 

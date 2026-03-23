@@ -32,14 +32,14 @@ app.listen(port, function () {
     console.log("API services are running on port " + port);
 });
 
-function isAuthenticated(req, res, next) {
+async function isAuthenticated(req, res, next) {
     const authToken = req.cookies["authToken"];
     if(!authToken) {
         console.log("No auth token provided. User is not authenticated.");
         res.status(401).send("No auth token provided. User is not authenticated.");
     } else {
         //Here, We will check to make sure that the auth token is valid and corresponds to a user in our system.
-        const user = getCurrentUser(authToken);
+        const user = await getCurrentUser(authToken);
         if(!user) {
             console.log("Invalid auth token. User is not authenticated.");
             res.clearCookie("authToken");

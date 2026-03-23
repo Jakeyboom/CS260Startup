@@ -12,8 +12,8 @@ const classes = [];
 //An example of a class object will be: {className: "CS260", assignments [{id: 0, name: "Assignment 1", dueDate: "2024-01-01"}]};
 
 //Returns the array containing the classes of the current user.  If the user is not logged in or is logged in but has not made an account (somehow), this will return null.
-export function getCurrentUserClasses(authToken) {
-    const user = getCurrentUser(authToken);
+export async function getCurrentUserClasses(authToken) {
+    const user = await getCurrentUser(authToken);
     const email = user ? user.email : null;
 
     if(!email) {
@@ -135,10 +135,10 @@ export function verifyClassExists(className, email) {
  * }
  */
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
     console.log("Received request to get classes for current user.");
     const authToken = req.cookies["authToken"];
-    const userClasses = getCurrentUserClasses(authToken);
+    const userClasses = await getCurrentUserClasses(authToken);
 
     res.status(200).send({classes: userClasses});
     return;
