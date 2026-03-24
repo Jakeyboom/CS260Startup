@@ -1,6 +1,7 @@
 //Here will implement the assignment service that will allow a user to create, read, update, and delete assignments. For now, this will be a simple implementation that uses local storage to store the assignments, but in the future, this will be replaced with a more robust implementation that uses a backend server and database.
 import { verifyClassExists } from "./class-service.js";
 import express from "express";
+import { assignmentCollection, confirmDatabaseConnection } from "./index.js";
 
 const router = express.Router();
 
