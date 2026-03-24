@@ -101,12 +101,13 @@ export function confirmStringIsValid(inputString) {
 }
 
 export async function getUserAssignments(email) {
-    const sortedAssignments = getSortedAssignments();
-    return sortedAssignments.filter((a) => a.email === email);
+    const userAssignments = await assignmentCollection.find({email: email}).toArray();
+    const sortedAssignments = sortAssignments(userAssignments);
+    return sortedAssignments;
 }
 
-function getSortedAssignments() {
-    return [...assignments].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+function sortAssignments(userAssignments) {
+    return [...userAssignments].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
 }
 
 // export function getAllAssignmentsSortedByDueDate(email) {
@@ -162,7 +163,7 @@ router.get("/", async (req, res) => {
 
     console.log("Received GET request to get all assignments for current user.");
     //MAYBE SEE IF I NEED TO AUTHENTICATE THE COOKIE AGAIN; AS I ALWAYS DO THROUGH APP, IT SHOULD BE AUTHENTICATED.
-    const userAssignments = getUserAssignments(email);
+    const userAssignments = await getUserAssignments(email);
     res.status(200).send({assignments: userAssignments});
     
     return;
