@@ -52,7 +52,7 @@ export async function pushClassToCurrentUser(classObject, email) {
     }
 
     const result = await classCollection.insertOne(classObject);
-    if(result.insertedCount !== 1) {
+    if(!result.acknowledged) {
         console.log("Failed to insert class into database. Cannot push class.");
         return false
     }
@@ -143,7 +143,7 @@ export function verifyClassExists(className, email) {
  */
 
 router.get("/", async (req, res) => {
-        if(!confirmDatabaseConnection()) {
+        if(!(await confirmDatabaseConnection())) {
         res.status(500).send("Failed to connect to the database. Cannot get classes.");
         return;
     }
@@ -172,7 +172,7 @@ router.get("/", async (req, res) => {
  */
 
 router.post("/", async (req, res) => {
-        if(!confirmDatabaseConnection()) {
+        if(!(await confirmDatabaseConnection())) {
         res.status(500).send("Failed to connect to the database. Cannot add class.");
         return;
     }
@@ -200,7 +200,7 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-        if(!confirmDatabaseConnection()) {
+        if(!(await confirmDatabaseConnection())) {
         res.status(500).send("Failed to connect to the database. Cannot edit class.");
         return;
     }
@@ -251,7 +251,7 @@ router.put("/", async (req, res) => {
  */
 
 router.delete("/", async (req, res) => {
-    if(!confirmDatabaseConnection()) {
+    if(!(await confirmDatabaseConnection())) {
         res.status(500).send("Failed to connect to the database. Cannot delete class.");
         return;
     }
