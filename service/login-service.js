@@ -7,12 +7,9 @@ import { v4 as uuidv4 } from "uuid";
 import { userCollection, confirmDatabaseConnection } from "./index.js";
 const router = express.Router();
 
-const users = [];
-
-
 
 export async function login(email, password, res) {
-    if(!confirmDatabaseConnection()) {
+    if(!(await confirmDatabaseConnection())) {
         console.log("Cannot perform login. No database connection.");
         return false;
     }
@@ -78,12 +75,6 @@ export async function getCurrentUser(authToken) {
     const userToReturn = await userCollection.findOne({authToken: authToken});
     return userToReturn;
    
-}
-
-export function getCurrentUserObject(authToken) {
-    const userObject = users.find((user) => user.authToken === authToken);
-
-    return userObject;
 }
 
 async function generateAndAttachAuthToken(user, res) {

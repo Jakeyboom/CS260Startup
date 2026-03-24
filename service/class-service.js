@@ -114,10 +114,16 @@ export async function handleDeleteClass(classNameToDelete, email) {
     }
 
     console.log("Attempting to delete class: " + classNameToDelete);
-    if(classes.some((c) => c.className === classNameToDelete && c.email === email)) {
+    if(await classCollection.findOne({className: classNameToDelete, email: email})) {
         await deleteAssignmentsFromClass(classNameToDelete, email);
-        console.log("Class deleted successfully.");
-        return true;
+        const result = await classCollection.deleteOne({className: classNameToDelete, email: email});
+        if(result.deletedCount > 0) {
+            console.log("Class deleted successfully.");
+            return true;
+        }
+        console.log("Failed to delete class from database. Cannot delete class.");
+        return false;
+
     } else {
         console.log("Class not found.  Cannot delete class.")
         return false;
