@@ -17,6 +17,7 @@ const db = client.db("rental");
 
 const userCollection = db.collection("users");
 const classCollection = db.collection("classes");
+const assignmentCollection = db.collection("assignments");
 
 const app = express();
 app.use(express.json());
@@ -63,4 +64,4 @@ export async function confirmDatabaseConnection() {
     }
 }
 
-export { userCollection, classCollection };
+export { userCollection, classCollection, assignmentCollection };
