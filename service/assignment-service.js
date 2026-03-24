@@ -31,23 +31,29 @@ async function editAssignment(oldAssignmentName, oldClassName, newAssignmentName
     } else if(!(await verifyClassExists(newClassName, email))) {
         console.log("New class does not exist. Cannot edit assignment.");
         return false;
-    } else if(assignments.find((a) => a.assignmentName === newAssignmentName && a.className === newClassName && a.email === email && !(a.assignmentName === oldAssignmentName && a.className === oldClassName))) {
-        console.log("An assignment with this name already exists.  Cannot edit assignment.");
+    } else if(oldAssignmentName !== newAssignmentName || oldClassName !== newClassName) { //Checks if the assignment name or class name is being changed
+        console.log("Checking if assignment with new name and class already exists before editing assignment.");
+        const existingAssignment = await assignmentCollection.findOne({assignmentName: newAssignmentName, className: newClassName, email: email});
+        if(existingAssignment) {
+            console.log("An assignment with this name already exists in the database. Cannot edit assignment.");
+            return false;
+        }
+    } else if(!await assignmentCollection.findOne({assignmentName: oldAssignmentName, className: oldClassName, email: email})) {
+        console.log("Assignment to edit does not exist in the database. Cannot edit assignment.");
+        return false;
+    }
+    const query = {assignmentName: oldAssignmentName, className: oldClassName, email: email};
+    const update = {$set: {assignmentName: newAssignmentName, className: newClassName, dueDate: newDueDate, difficulty: newDifficulty}};
+
+    const result = await assignmentCollection.updateOne(query, update);
+    if(result.matchedCount === 0) {
+        console.log("No assignment was found with the provided information. Cannot edit assignment.");
         return false;
     }
 
-    const assignmentToEdit = assignments.find((a) => a.assignmentName === oldAssignmentName && a.className === oldClassName && a.email === email);
-    if(!assignmentToEdit) {
-        console.log("Assignment to edit does not exist. Cannot edit assignment.");
-        return false;
-    } else {
-        assignmentToEdit.assignmentName = newAssignmentName;
-        assignmentToEdit.className = newClassName;
-        assignmentToEdit.dueDate = newDueDate;
-        assignmentToEdit.difficulty = newDifficulty;
+    console.log("Assignment updated successfully in the database.");
+    return true;
 
-        return true;
-    }
 }
 
 async function deleteAssignment(currentAssignmentName, currentClassName, email) {
