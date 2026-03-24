@@ -10,14 +10,15 @@ const assignments = []; //[{assignmentName, className, dueDate, difficulty, emai
 async function createAssignment(assignmentToCreate) {
 
     if(!(await verifyClassExists(assignmentToCreate.className, assignmentToCreate.email))) {
+        
         console.log("Class does not exist. Cannot create assignment " + assignmentToCreate.assignmentName);
         return false;
-    } else if (assignments.some((a) => a.assignmentName === assignmentToCreate.assignmentName && a.email === assignmentToCreate.email && a.className === assignmentToCreate.className)) {
+    } else if (await assignmentCollection.findOne({className: assignmentToCreate.className, assignmentName: assignmentToCreate.assignmentName, email: assignmentToCreate.email})) {
         console.log("Assignment already exists. Cannot create assignment.");
         return false;
     } else {
-        assignments.push(assignmentToCreate);
-        return true;
+        const result = await assignmentCollection.insertOne(assignmentToCreate);
+        return result.acknowledged;
     }
 
 }
