@@ -88,7 +88,7 @@ export async function handleEditClass(oldClassName, newClassName, newDifficulty,
     classToEdit.className = newClassName;
     classToEdit.difficulty = newDifficulty;
 
-    renameClassForAllAssignments(oldClassName, newClassName, email);
+    await renameClassForAllAssignments(oldClassName, newClassName, email);
     return true;
 
 }
@@ -104,7 +104,7 @@ export async function handleDeleteClass(classNameToDelete, email) {
 
     console.log("Attempting to delete class: " + classNameToDelete);
     if(classes.some((c) => c.className === classNameToDelete && c.email === email)) {
-        deleteAssignmentsFromClass(classNameToDelete, email);
+        await deleteAssignmentsFromClass(classNameToDelete, email);
         const kept = classes.filter((c) => !(c.className === classNameToDelete && c.email === email));
         classes.length = 0;
         classes.push(...kept);
@@ -123,12 +123,12 @@ function sortClassesByDifficulty(classes) {
     return classes.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
 }
 
-export function verifyClassExists(className, email) {
+export async function verifyClassExists(className, email) {
     if(!confirmStringIsValid(className) || !confirmStringIsValid(email)) {
         console.log("Invalid class name or email.");
         return false;
     }
-    return classes.some((c) => c.className === className && c.email === email);
+    return await classCollection.findOne({className: className, email: email}) !== null;
 }
 
 /**

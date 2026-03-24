@@ -9,7 +9,7 @@ const assignments = []; //[{assignmentName, className, dueDate, difficulty, emai
 
 async function createAssignment(assignmentToCreate) {
 
-    if(!verifyClassExists(assignmentToCreate.className, assignmentToCreate.email)) {
+    if(!(await verifyClassExists(assignmentToCreate.className, assignmentToCreate.email))) {
         console.log("Class does not exist. Cannot create assignment " + assignmentToCreate.assignmentName);
         return false;
     } else if (assignments.some((a) => a.assignmentName === assignmentToCreate.assignmentName && a.email === assignmentToCreate.email && a.className === assignmentToCreate.className)) {
@@ -27,7 +27,7 @@ async function editAssignment(oldAssignmentName, oldClassName, newAssignmentName
     if(!confirmStringIsValid(oldAssignmentName) || !confirmStringIsValid(oldClassName) || !confirmStringIsValid(newAssignmentName) || !confirmStringIsValid(newClassName) || !confirmStringIsValid(newDueDate) || !confirmStringIsValid(newDifficulty) || !confirmStringIsValid(email)) {
         console.log("All fields are required. Cannot edit assignment.");
         return false;
-    } else if(!verifyClassExists(newClassName, email)) {
+    } else if(!(await verifyClassExists(newClassName, email))) {
         console.log("New class does not exist. Cannot edit assignment.");
         return false;
     } else if(assignments.find((a) => a.assignmentName === newAssignmentName && a.className === newClassName && a.email === email && !(a.assignmentName === oldAssignmentName && a.className === oldClassName))) {
@@ -121,11 +121,13 @@ export async function renameClassForAllAssignments(oldClassName, newClassName, e
         return false;
     }
 
-    for(let assignment of assignments) {
-        if(assignment.className === oldClassName && assignment.email === email) {
-            assignment.className = newClassName;
-            console.log("Renamed class for assignment: " + assignment.assignmentName);
-        }
+    const query = {className: oldClassName, email:email};
+    const update = {$set: {className: newClassName}};
+    const result = await assignmentCollection.updateMany(query, update);
+    if(result.modifiedCount > 0) {
+        console.log("Renamed class for " + result.modifiedCount + " assignments in the database.");
+    } else {
+        console.log("No assignments were updated in the database. Check if there are any assignments with class name " + oldClassName + " for user " + email);
     }
 
     return true;
