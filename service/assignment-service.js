@@ -7,7 +7,7 @@ const router = express.Router();
 
 const assignments = []; //[{assignmentName, className, dueDate, difficulty, email}, ...]
 
-function createAssignment(assignmentToCreate) {
+async function createAssignment(assignmentToCreate) {
 
     if(!verifyClassExists(assignmentToCreate.className, assignmentToCreate.email)) {
         console.log("Class does not exist. Cannot create assignment " + assignmentToCreate.assignmentName);
@@ -22,7 +22,7 @@ function createAssignment(assignmentToCreate) {
 
 }
 
-function editAssignment(oldAssignmentName, oldClassName, newAssignmentName, newClassName, newDueDate, newDifficulty, email) {
+async function editAssignment(oldAssignmentName, oldClassName, newAssignmentName, newClassName, newDueDate, newDifficulty, email) {
     console.log('Attempting to edit assignment: ' + oldAssignmentName + ', class: ' + oldClassName + ", email: " + email);
     if(!confirmStringIsValid(oldAssignmentName) || !confirmStringIsValid(oldClassName) || !confirmStringIsValid(newAssignmentName) || !confirmStringIsValid(newClassName) || !confirmStringIsValid(newDueDate) || !confirmStringIsValid(newDifficulty) || !confirmStringIsValid(email)) {
         console.log("All fields are required. Cannot edit assignment.");
@@ -49,7 +49,7 @@ function editAssignment(oldAssignmentName, oldClassName, newAssignmentName, newC
     }
 }
 
-function deleteAssignment(currentAssignmentName, currentClassName, email) {
+async function deleteAssignment(currentAssignmentName, currentClassName, email) {
     console.log('Attempting to delete assignment: ' + currentAssignmentName + ', class: ' + currentClassName + ", email: " + email);
     if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName) || !confirmStringIsValid(email)) {
         console.log("All fields are required. Cannot delete assignment.");
@@ -64,7 +64,7 @@ function deleteAssignment(currentAssignmentName, currentClassName, email) {
 
 }
 
-export function deleteAssignmentsFromClass(className, email) {
+export async function deleteAssignmentsFromClass(className, email) {
     const newAssignments = assignments.filter((a) => !(a.className === className && a.email === email));
     assignments.length = 0;
     assignments.push(...newAssignments);
@@ -99,7 +99,7 @@ export function confirmStringIsValid(inputString) {
     return true;
 }
 
-export function getUserAssignments(email) {
+export async function getUserAssignments(email) {
     const sortedAssignments = getSortedAssignments();
     return sortedAssignments.filter((a) => a.email === email);
 }
@@ -114,7 +114,7 @@ function getSortedAssignments() {
 //      return sortAssignmentsByDueDate(userAssignments);
 // }
 
-export function renameClassForAllAssignments(oldClassName, newClassName, email) {
+export async function renameClassForAllAssignments(oldClassName, newClassName, email) {
     console.log("Attempting to rename class " + oldClassName + " to " + newClassName)
     if(!confirmStringIsValid(oldClassName) || !confirmStringIsValid(newClassName) || !confirmStringIsValid(email)) {
         console.log("Invalid class names provided.");
@@ -143,6 +143,12 @@ export function renameClassForAllAssignments(oldClassName, newClassName, email) 
  */
 
 router.get("/", async (req, res) => {
+    if(!await confirmDatabaseConnection()) {
+        console.log("Cannot connect to database. Cannot get assignments.");
+        res.status(500).send("Cannot connect to database. Cannot get assignments.");
+        return;
+     }
+
     const user = req.user;
     const email = user.email;
     if(!email) {
@@ -160,6 +166,12 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+    if(!await confirmDatabaseConnection()) {
+        console.log("Cannot connect to database. Cannot create assignment.");
+        res.status(500).send("Cannot connect to database. Cannot create assignment.");
+        return;
+     }
+
     console.log("Received POST request to create a new assignment for current user.");
 
     if(!req.body) {
@@ -188,6 +200,14 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
+    if(!await confirmDatabaseConnection()) {
+        console.log("Cannot connect to database. Cannot edit assignment.");
+        res.status(500).send("Cannot connect to database. Cannot edit assignment.");
+        return;
+     }
+
+    console.log("Received PUT request to edit an assignment for current user.");
+
     if(!req.body) {
         console.log("No request body provided. Cannot edit assignment.");
         res.status(400).send("No request body provided. Cannot edit assignment.");
@@ -208,6 +228,11 @@ router.put("/", async (req, res) => {
 });
 
 router.delete("/", async (req, res) => {
+    if(!await confirmDatabaseConnection()) {
+        console.log("Cannot connect to database. Cannot delete assignment.");
+        res.status(500).send("Cannot connect to database. Cannot delete assignment.");
+        return;
+     }
     console.log("Received DELETE request to delete an assignment for current user.");
     if(!req.body) {
         console.log("No request body provided. Cannot delete assignment.");
