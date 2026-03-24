@@ -5,8 +5,6 @@ import { assignmentCollection, confirmDatabaseConnection } from "./index.js";
 
 const router = express.Router();
 
-const assignments = []; //[{assignmentName, className, dueDate, difficulty, email}, ...]
-
 async function createAssignment(assignmentToCreate) {
 
     if(!(await verifyClassExists(assignmentToCreate.className, assignmentToCreate.email))) {
