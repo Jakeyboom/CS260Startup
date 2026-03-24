@@ -4,6 +4,7 @@ import { deleteAssignmentsFromClass } from "./assignment-service.js";
 import { renameClassForAllAssignments } from "./assignment-service.js";
 import express from "express";
 const router = express.Router();
+import { classCollection, confirmDatabaseConnection } from "./index.js";
 
 const classes = []; 
 
@@ -30,8 +31,7 @@ export async function getCurrentUserClasses(authToken) {
 
 //This command pushed a class to a current user's classes.
 
-export function pushClassToCurrentUser(classObject, email) {
-
+export async function pushClassToCurrentUser(classObject, email) {
 
     if(!email) {
         console.log("No user is currently logged in. Cannot push class.");
@@ -44,7 +44,9 @@ export function pushClassToCurrentUser(classObject, email) {
         return false;
     }
 
-    if(classes.some((c) => c.className === classObject.className && c.email === email)) {
+    const classAlreadyExists = await classCollection.findOne({email: email, className: classObject.className})
+
+    if(classAlreadyExists) {
         console.log("Class already exists in user's classes. Cannot push duplicate class.");
         return false;
     }
@@ -59,7 +61,7 @@ export function pushClassToCurrentUser(classObject, email) {
 
 //These functions will be implemented for editing and deleting classes.  For now, they will just be placeholders.
 
-export function handleEditClass(oldClassName, newClassName, newDifficulty, email) {
+export async function handleEditClass(oldClassName, newClassName, newDifficulty, email) {
     console.log("Attempting to edit clase: " + oldClassName + ", new name: " + newClassName + ", new difficulty: " + newDifficulty + ", authToken: ");
 
     if(!confirmStringIsValid(newClassName) || !confirmStringIsValid(newDifficulty) || !confirmStringIsValid(oldClassName)) {
@@ -87,7 +89,7 @@ export function handleEditClass(oldClassName, newClassName, newDifficulty, email
 
 }
 
-export function handleDeleteClass(classNameToDelete, email) {
+export async function handleDeleteClass(classNameToDelete, email) {
     if(!confirmStringIsValid(classNameToDelete)) {
         console.log("Class name is required. Cannot delete class.");
         return false;
@@ -160,7 +162,7 @@ router.get("/", async (req, res) => {
  * }
  */
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     console.log("Received request to push class to current user.");
     if(!req.body) {
         console.log("No request body provided. Cannot push class.");
@@ -174,7 +176,7 @@ router.post("/", (req, res) => {
 
     const newClassObject = {email: req.user.email, className: req.body.className, difficulty: req.body.difficulty};
 
-    if(pushClassToCurrentUser(newClassObject, req.user.email)) {
+    if(await pushClassToCurrentUser(newClassObject, req.user.email)) {
         res.status(200).send({message: "Class pushed successfully.", className: req.body.className});
         return;
     } else {
@@ -184,7 +186,7 @@ router.post("/", (req, res) => {
 
 });
 
-router.put("/", (req, res) => {
+router.put("/", async (req, res) => {
     console.log("Received request to edit class for current user.");
     if(! req.body) {
         console.log("No request body provided. Cannot edit class.");
@@ -206,7 +208,7 @@ router.put("/", (req, res) => {
 
     //TODO: Implement editing all asignments with the same class name to have the new class name.
 
-    if(handleEditClass(req.body.oldClassName, req.body.newClassName, req.body.newDifficulty, currentUserEmail)) {
+    if(await handleEditClass(req.body.oldClassName, req.body.newClassName, req.body.newDifficulty, currentUserEmail)) {
         res.status(200).send({message: "Class edited successfully.", className: req.body.newClassName});
         return
     } else {
@@ -230,7 +232,7 @@ router.put("/", (req, res) => {
  * }
  */
 
-router.delete("/", (req, res) => {
+router.delete("/", async (req, res) => {
     console.log("Received request to delete class for current user.");
 
     if(!req.body) {
@@ -244,7 +246,7 @@ router.delete("/", (req, res) => {
         return
     }
 
-    if(handleDeleteClass(req.body.className, req.user.email)) {
+    if(await handleDeleteClass(req.body.className, req.user.email)) {
         res.status(200).send({message: "Class deleted successfully.", className: req.body.className});
         return
     } else {
