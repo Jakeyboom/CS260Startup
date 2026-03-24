@@ -73,20 +73,31 @@ export async function handleEditClass(oldClassName, newClassName, newDifficulty,
         return false;
     }
 
-    if(!classes.some((c) => c.className === oldClassName && c.email === email)) {
+    const classExists = await classCollection.findOne({className: oldClassName, email: email});
+
+    if(!classExists) {
         console.log("Class to edit does not exist.  Cannot edit class.");
         return false;   
     }
 
-    if(classes.some((c) => c.className === newClassName && c.email === email) && newClassName !== oldClassName) {
-        console.log("Class with new name already exists. Cannot edit class to have duplicate name.");
-        return false;
+
+    if(newClassName !== oldClassName) {
+        const newClassAlreadyExists = await classCollection.findOne({className: newClassName, email: email});
+        if(newClassAlreadyExists) {
+            console.log("Class with new name already exists. Cannot edit class to have duplicate name.");
+            return false;
+        }
     }
 
-    const classToEdit = classes.find((c) => c.className === oldClassName && c.email === email);
+    const query = {className: oldClassName, email: email};
+    const update = {$set: {className: newClassName, difficulty: newDifficulty}};
+    const result = await classCollection.updateOne(query, update);
+    if(result.matchedCount === 0 || result.modifiedCount === 0) {
+        console.log("No class was found with the provided information or the class was not edited. Cannot edit class.");
+        return false;
+    }
     
-    classToEdit.className = newClassName;
-    classToEdit.difficulty = newDifficulty;
+    
 
     await renameClassForAllAssignments(oldClassName, newClassName, email);
     return true;
