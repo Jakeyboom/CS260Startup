@@ -138,6 +138,10 @@ export function verifyClassExists(className, email) {
  */
 
 router.get("/", async (req, res) => {
+        if(!confirmDatabaseConnection()) {
+        res.status(500).send("Failed to connect to the database. Cannot get classes.");
+        return;
+    }
     console.log("Received request to get classes for current user.");
     const authToken = req.cookies["authToken"];
     const userClasses = await getCurrentUserClasses(authToken);
@@ -163,6 +167,10 @@ router.get("/", async (req, res) => {
  */
 
 router.post("/", async (req, res) => {
+        if(!confirmDatabaseConnection()) {
+        res.status(500).send("Failed to connect to the database. Cannot add class.");
+        return;
+    }
     console.log("Received request to push class to current user.");
     if(!req.body) {
         console.log("No request body provided. Cannot push class.");
@@ -187,6 +195,11 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
+        if(!confirmDatabaseConnection()) {
+        res.status(500).send("Failed to connect to the database. Cannot edit class.");
+        return;
+    }
+
     console.log("Received request to edit class for current user.");
     if(! req.body) {
         console.log("No request body provided. Cannot edit class.");
@@ -233,6 +246,10 @@ router.put("/", async (req, res) => {
  */
 
 router.delete("/", async (req, res) => {
+    if(!confirmDatabaseConnection()) {
+        res.status(500).send("Failed to connect to the database. Cannot delete class.");
+        return;
+    }
     console.log("Received request to delete class for current user.");
 
     if(!req.body) {
