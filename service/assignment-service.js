@@ -55,11 +55,14 @@ async function deleteAssignment(currentAssignmentName, currentClassName, email) 
     if(!confirmStringIsValid(currentAssignmentName) || !confirmStringIsValid(currentClassName) || !confirmStringIsValid(email)) {
         console.log("All fields are required. Cannot delete assignment.");
         return false;
-    } 
+    }
 
-    const assignmentsKept = assignments.filter((a) => !(a.assignmentName === currentAssignmentName && a.className === currentClassName && a.email === email))
-    assignments.length = 0;
-    assignments.push(...assignmentsKept);
+    const result = await assignmentCollection.deleteOne({assignmentName: currentAssignmentName, className: currentClassName, email: email});
+    if(result.deletedCount === 0) {
+        console.log("No assignment was deleted. Check if the assignment exists with the provided information.");
+        return false;
+    }
+
     return true;
 
 
