@@ -105,9 +105,6 @@ export async function handleDeleteClass(classNameToDelete, email) {
     console.log("Attempting to delete class: " + classNameToDelete);
     if(classes.some((c) => c.className === classNameToDelete && c.email === email)) {
         await deleteAssignmentsFromClass(classNameToDelete, email);
-        const kept = classes.filter((c) => !(c.className === classNameToDelete && c.email === email));
-        classes.length = 0;
-        classes.push(...kept);
         console.log("Class deleted successfully.");
         return true;
     } else {

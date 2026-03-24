@@ -69,9 +69,9 @@ async function deleteAssignment(currentAssignmentName, currentClassName, email) 
 }
 
 export async function deleteAssignmentsFromClass(className, email) {
-    const newAssignments = assignments.filter((a) => !(a.className === className && a.email === email));
-    assignments.length = 0;
-    assignments.push(...newAssignments);
+    const result = await assignmentCollection.deleteMany({className: className, email: email});
+    console.log("Deleted " + result.deletedCount + " assignments from class " + className);
+    return result.deletedCount > 0;
 }
 
 
@@ -195,7 +195,7 @@ router.post("/", async (req, res) => {
         return;
     }
 
-    if(createAssignment({assignmentName: req.body.assignmentName, className: req.body.className, dueDate: req.body.dueDate, difficulty: req.body.difficulty, email: req.user.email})) {
+    if(await createAssignment({assignmentName: req.body.assignmentName, className: req.body.className, dueDate: req.body.dueDate, difficulty: req.body.difficulty, email: req.user.email})) {
         console.log("Assignment created successfully.");
         res.status(200).send("Assignment created successfully.");
         return;
@@ -223,7 +223,7 @@ router.put("/", async (req, res) => {
         console.log("Missing parameters in request body.  Assignment cannot be edited.");
         res.status(400).send("All fields required");
         return;
-    } else if(editAssignment(req.body.oldAssignmentName, req.body.oldClassName, req.body.newAssignmentName, req.body.newClassName, req.body.newDueDate, req.body.newDifficulty, req.user.email)) {
+    } else if(await editAssignment(req.body.oldAssignmentName, req.body.oldClassName, req.body.newAssignmentName, req.body.newClassName, req.body.newDueDate, req.body.newDifficulty, req.user.email)) {
         console.log("Assignment edited successfully.");
         res.status(200).send({message: "Assignment edited successfully.", newAssignment: {assignmentName: req.body.newAssignmentName, className: req.body.newClassName, dueDate: req.body.newDueDate, difficulty: req.body.newDifficulty}});
         return;
@@ -251,7 +251,7 @@ router.delete("/", async (req, res) => {
         return;
     }
 
-    if(deleteAssignment(req.body.assignmentName, req.body.className, req.user.email)) {
+    if(await deleteAssignment(req.body.assignmentName, req.body.className, req.user.email)) {
         console.log("Assignment deleted successfully.");
         res.status(200).send("Assignment deleted successfully.");
         return;
