@@ -21,7 +21,7 @@ export async function getCurrentUserClasses(authToken) {
         console.log("No user is currently logged in. Cannot get classes.");
         return [];
     }
-    const userClasses = classes.filter((c) => c.email === email);
+    const userClasses = await classCollection.find({email: email}).toArray();
     const sortedUserClasses = sortClassesByDifficulty(userClasses);
     console.log("Classes for user " + email + ": ", sortedUserClasses);
 
@@ -51,7 +51,11 @@ export async function pushClassToCurrentUser(classObject, email) {
         return false;
     }
 
-    classes.push(classObject);
+    const result = await classCollection.insertOne(classObject);
+    if(result.insertedCount !== 1) {
+        console.log("Failed to insert class into database. Cannot push class.");
+        return false
+    }
 
     console.log("Class pushed successfully.");
 
@@ -115,6 +119,7 @@ export async function handleDeleteClass(classNameToDelete, email) {
 function sortClassesByDifficulty(classes) {
     console.log("Sorting classes by difficulty...");
     const difficultyOrder = {"easy": 1, "medium": 2, "hard": 3};
+
     return classes.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
 }
 
