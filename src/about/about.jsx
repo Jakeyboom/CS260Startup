@@ -8,6 +8,9 @@ import { ConsoleMessage, ConsoleNotifier } from '../../service/console-events-se
 
 export function About() {
 
+    const protocol = window.location.protocol === 'http:' ? 'ws:' : 'wss:';
+    this.socket = new Websocket(`${protocol}//${window.location.host}/ws`);
+
     const [consoleMessages, setConsoleMessages] = React.useState([]);
     React.useEffect(() => {
         ConsoleNotifier.addHandler(handleConsoleMessage);
