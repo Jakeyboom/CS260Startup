@@ -9,7 +9,48 @@ import { ConsoleMessage, ConsoleNotifier } from '../../service/console-events-se
 export function About() {
 
     const protocol = window.location.protocol === 'http:' ? 'ws:' : 'wss:';
-    this.socket = new Websocket(`${protocol}//${window.location.host}/ws`);
+    const socket = new WebSocket(`${protocol}//${window.location.host}/ws`);
+
+    React.useEffect(() => {
+        socket.onopen = () => {
+            console.log("WebSocket connection established.");
+        };
+
+        try {
+            socket.send(JSON.stringify({ type: "TEST_MESSAGE", content: "Hello, WebSocket!" }));
+
+        } catch (error) {
+            console.error("Failed to send WebSocket message. Error: ", error.message);
+
+        }
+
+        try {
+            socket.onmessage = (event) => {
+                console.log("Received WebSocket message: ", event.data);
+                try {
+                    const messageData = JSON.parse(event.data);
+                    //Here, I will add code to handle the message data and update the about page accordingly.  This will likely involve creating a new React component to represent each console message, and then adding that component to the page whenever a new event is received.
+                } catch(error) {
+                    console.error("Failed to parse WebSocket message data. Error: ", error.message);
+                }
+            }
+        } catch (error) {
+            console.error("Failed to set up WebSocket onmessage handler. Error: ", error.message);
+        }
+
+        socket.onclose = () => {
+            console.log("WebSocket connection closed.");
+        };
+    }, [])
+
+    socket.onmessage = (event) => {
+        console.log("Received WebSocket message: ", event.data);
+        try {
+            const messageData = JSON.parse(event.data);
+        } catch(error) {
+            console.error("Failed to parse WebSocket message data. Error: ", error.message);
+        }
+    }
 
     const [consoleMessages, setConsoleMessages] = React.useState([]);
     React.useEffect(() => {
