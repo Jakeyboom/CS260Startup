@@ -10,6 +10,7 @@ import { loginRouter } from "./login-service.js";
 import { classRouter } from "./class-service.js";
 import { assignmentRouter } from "./assignment-service.js";
 import { getCurrentUser } from "./login-service.js";
+import { WebSocketServer } from "ws";
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
@@ -30,9 +31,53 @@ app.use("/api/assignments", isAuthenticated, assignmentRouter)
 
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-app.listen(port, function () {
+
+const wss = new WebSocketServer({ port: 8080 });
+
+
+const server = app.listen(port, function () {
     console.log("API services are running on port " + port);
 });
+
+
+//Here, I will create a websocket object.
+const socketServer = new WebSocketServer({ server });
+
+//Here, I will setup the websocket server to listen for incoming connections and handle them appropriately.
+socketServer.on("connection", (ws) => {
+    console.log("New WebSocket connection established.");
+    ws.isAlive = true;
+
+    ws.on('message', (message) => {
+        console.log("Received WebSocket message: ", message);
+        //For right now, I will just log the message to the console to make sure that the websocket connection is working properly.
+    })
+
+    ws.on('close', () => {
+        console.log("WebSocket connection closed.");
+    });
+
+
+    //Right here, I will setup a heartbeat to make sure that the client is still connected and responsive.
+    const heartBeatInterval = setInterval(() => {
+        socketServer.clients.forEach((client) => {
+            if(!client.isAlive) {
+                console.log("WebSocket client is not responsive. Terminating connection.");
+                client.terminate();
+            }
+            client.isAlive = false;
+            client.ping();
+        })
+    }, 10000);
+
+    //Right here, if the client responds to the ping, we will set isAlive to true to indicate that the connection is still alive and responsive.
+    ws.on('pong', () => {
+        console.log("Received pong from client. WebSocket connection is alive.");
+        ws.isAlive = true;
+    });
+
+
+})
 
 async function isAuthenticated(req, res, next) {
     const authToken = req.cookies["authToken"];
