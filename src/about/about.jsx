@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../CSS/calendar.css'
 import { Nav } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { ConsoleMessage, ConsoleNotifier } from '../../service/console-events-service.js';
+import { ConsoleMessage, ConsoleNotifier } from './console-events-notifier.js';
 
 
 export function About() {
