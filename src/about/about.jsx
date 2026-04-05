@@ -21,8 +21,9 @@ export function About() {
             console.log("Received WebSocket message: ", event.data);
             try {
                 const messageData = JSON.parse(event.data);
-                if(messageData.type === "CONSOLE_EVENT") {
-
+                if(messageData.messageType === "CONSOLE_EVENT") {
+                    console.log("Received a console event message via WebSocket");
+                    ConsoleNotifier.addConsoleEvent(messageData.user, messageData.eventType, messageData.className, messageData.assignmentName);
                 } else {
                     throw new Error("Unknown message type received via WebSocket: " + messageData.type);
                 }

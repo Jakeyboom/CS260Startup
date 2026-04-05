@@ -4,7 +4,7 @@ import { deleteAssignmentsFromClass } from "./assignment-service.js";
 import { renameClassForAllAssignments } from "./assignment-service.js";
 import express from "express";
 const router = express.Router();
-import { classCollection, confirmDatabaseConnection } from "./index.js";
+import { classCollection, confirmDatabaseConnection, sendMessage } from "./index.js";
 
 //A class object will now be of the form: {email, className, difficulty}
 //Here will implement the class service that will allow a user to create, read, update, and delete classes. For now, this will be a simple implementation that uses local storage to store the classes, but in the future, this will be replaced with a more robust implementation that uses a backend server and database.
@@ -164,6 +164,7 @@ router.get("/", async (req, res) => {
     const userClasses = await getCurrentUserClasses(authToken);
 
     res.status(200).send({classes: userClasses});
+    
     return;
 })
 
@@ -202,6 +203,7 @@ router.post("/", async (req, res) => {
     const newClassObject = {email: req.user.email, className: req.body.className, difficulty: req.body.difficulty};
 
     if(await pushClassToCurrentUser(newClassObject, req.user.email)) {
+        sendMessage(req.user.email, req.body.className, null, "CLASS_CREATED");
         res.status(200).send({message: "Class pushed successfully.", className: req.body.className});
         return;
     } else {
@@ -239,6 +241,7 @@ router.put("/", async (req, res) => {
     //TODO: Implement editing all asignments with the same class name to have the new class name.
 
     if(await handleEditClass(req.body.oldClassName, req.body.newClassName, req.body.newDifficulty, currentUserEmail)) {
+        sendMessage(req.user.email, req.body.newClassName, null, "CLASS_EDITED");
         res.status(200).send({message: "Class edited successfully.", className: req.body.newClassName});
         return
     } else {
@@ -281,6 +284,7 @@ router.delete("/", async (req, res) => {
     }
 
     if(await handleDeleteClass(req.body.className, req.user.email)) {
+        sendMessage(req.user.email, req.body.className, null, "CLASS_DELETED");
         res.status(200).send({message: "Class deleted successfully.", className: req.body.className});
         return
     } else {
