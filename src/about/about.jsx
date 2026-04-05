@@ -79,6 +79,10 @@ export function About() {
                 messageText = `${message.user} added assignment "${message.userAssignmentName}" to class "${message.userClassName}"!`;
             } else if (message.messageType === "ASSIGNMENT_EDITED") {
                 messageText = `${message.user} edited assignment "${message.userAssignmentName}" in class "${message.userClassName}"!`;
+            } else if (message.messageType === "ASSIGNMENT_DELETED") {
+                messageText = `${message.user} deleted assignment "${message.userAssignmentName}" from class "${message.userClassName}"!`;
+            } else if (message.messageType === "CLASS_DELETED") {
+                messageText = `${message.user} deleted class "${message.userClassName}"! (All assignments in that class were also deleted.)`;
             } else if (message.messageType === "CLASS_EDITED") {
                 messageText = `${message.user} edited class "${message.userClassName}"!`;
             }

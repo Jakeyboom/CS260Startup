@@ -1,7 +1,7 @@
 //Here will implement the assignment service that will allow a user to create, read, update, and delete assignments. For now, this will be a simple implementation that uses local storage to store the assignments, but in the future, this will be replaced with a more robust implementation that uses a backend server and database.
 import { verifyClassExists } from "./class-service.js";
 import express from "express";
-import { assignmentCollection, confirmDatabaseConnection } from "./index.js";
+import { assignmentCollection, confirmDatabaseConnection, sendMessage } from "./index.js";
 
 const router = express.Router();
 
@@ -201,6 +201,7 @@ router.post("/", async (req, res) => {
 
     if(await createAssignment({assignmentName: req.body.assignmentName, className: req.body.className, dueDate: req.body.dueDate, difficulty: req.body.difficulty, email: req.user.email})) {
         console.log("Assignment created successfully.");
+        sendMessage(req.user.email, req.body.className, req.body.assignmentName, "ASSIGNMENT_CREATED");
         res.status(200).send("Assignment created successfully.");
         return;
     } else {
@@ -229,6 +230,7 @@ router.put("/", async (req, res) => {
         return;
     } else if(await editAssignment(req.body.oldAssignmentName, req.body.oldClassName, req.body.newAssignmentName, req.body.newClassName, req.body.newDueDate, req.body.newDifficulty, req.user.email)) {
         console.log("Assignment edited successfully.");
+        sendMessage(req.user.email, req.body.newClassName, req.body.newAssignmentName, "ASSIGNMENT_EDITED");
         res.status(200).send({message: "Assignment edited successfully.", newAssignment: {assignmentName: req.body.newAssignmentName, className: req.body.newClassName, dueDate: req.body.newDueDate, difficulty: req.body.newDifficulty}});
         return;
     } else {
@@ -257,6 +259,7 @@ router.delete("/", async (req, res) => {
 
     if(await deleteAssignment(req.body.assignmentName, req.body.className, req.user.email)) {
         console.log("Assignment deleted successfully.");
+        sendMessage(req.user.email, req.body.className, req.body.assignmentName, "ASSIGNMENT_DELETED");
         res.status(200).send("Assignment deleted successfully.");
         return;
     } else {
