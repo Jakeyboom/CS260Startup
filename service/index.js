@@ -110,3 +110,12 @@ export async function confirmDatabaseConnection() {
 }
 
 export { userCollection, classCollection, assignmentCollection };
+
+export function sendMessage(user, className, assignmentName, eventType) {
+    const message = { user, className, assignmentName, messageType: "CONSOLE_EVENT", eventType };
+    socketServer.clients.forEach((client) => {
+        if(client.readyState === 1) {
+            client.send(JSON.stringify(message));
+        }
+    })
+}

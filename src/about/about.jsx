@@ -21,6 +21,11 @@ export function About() {
             console.log("Received WebSocket message: ", event.data);
             try {
                 const messageData = JSON.parse(event.data);
+                if(messageData.type === "CONSOLE_EVENT") {
+
+                } else {
+                    throw new Error("Unknown message type received via WebSocket: " + messageData.type);
+                }
                 //Here, I will add code to handle the message data and update the about page accordingly.  This will likely involve creating a new React component to represent each console message, and then adding that component to the page whenever a new event is received.
             } catch(error) {
                 console.error("Failed to parse WebSocket message data. Error: ", error.message);
