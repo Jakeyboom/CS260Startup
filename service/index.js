@@ -32,8 +32,6 @@ app.use("/api/assignments", isAuthenticated, assignmentRouter)
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-const wss = new WebSocketServer({ port: 8080 });
-
 
 const server = app.listen(port, function () {
     console.log("API services are running on port " + port);
@@ -41,7 +39,7 @@ const server = app.listen(port, function () {
 
 
 //Here, I will create a websocket object.
-const socketServer = new WebSocketServer({ server });
+const socketServer = new WebSocketServer({ server, path: "/ws" });
 
 //Here, I will setup the websocket server to listen for incoming connections and handle them appropriately.
 socketServer.on("connection", (ws) => {

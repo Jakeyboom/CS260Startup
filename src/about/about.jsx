@@ -8,9 +8,9 @@ import { ConsoleMessage, ConsoleNotifier } from './console-events-notifier.js';
 
 export function About() {
     React.useEffect(() => {
-        const wsPort = 4000;
         const protocol = window.location.protocol === 'http:' ? 'ws:' : 'wss:';
-        const socket = new WebSocket(`${protocol}//${window.location.hostname}:${wsPort}/ws`);
+        const wsHost = import.meta.env.DEV ? `${window.location.hostname}:4000` : window.location.host;
+        const socket = new WebSocket(`${protocol}//${wsHost}/ws`);
 
         socket.onopen = () => {
             console.log("WebSocket connection established.");
