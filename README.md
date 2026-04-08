@@ -101,7 +101,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [X] **Bundled using Vite** - I did not complete this part of the deliverable.
     Was bundled and tested using vite
-- [ ] **Components** - I did not complete this part of the deliverable.
+- [X] **Components** - I did not complete this part of the deliverable.
     Added app components for relative functionality (at least for the layout)
 - [X] **Router** - I did not complete this part of the deliverable.
     Implemented a router to create a seemless experience.
@@ -137,8 +137,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [X] **Backend listens for WebSocket connection** - Backend is always listening for a WebSocket connection in index.js
+- [X] **Frontend makes WebSocket connection** - The Frontend makes a WebSocket connection to listen for console events in the about page
+- [X] **Data sent over WebSocket connection** - Simple details regarding class and assignment creation/editing is sent through WebSocket as a kind of "log"
+- [X] **WebSocket data displayed** - WebSocket data is displayed in the grey box in the About page.
+- [X] **Application is fully functional** - Application functionality has been fully implemented.
